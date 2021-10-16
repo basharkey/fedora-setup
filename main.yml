@@ -1,0 +1,16 @@
+---
+- name: My task
+  hosts: localhost
+  pre_tasks:
+    - include_vars:
+        dir: vars/packages/
+
+  tasks:
+    - debug:
+        msg: "fedora {{ fedora_packages }}"
+
+    - debug:
+        msg: "rpmfusion {{ rpmfusion_packages }}"
+
+    - debug:
+        msg: "flatpak {{ flatpak_packages }}"
