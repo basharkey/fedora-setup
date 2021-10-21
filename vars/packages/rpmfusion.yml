@@ -1,4 +1,0 @@
----
-rpmfusion_packages:
-  - 'vlc'                                 # media player
-  - 'obs-studio'                          # recording and livestreaming software

@@ -1,5 +1,0 @@
----
-flatpak_packages:
-  - 'com.spotify.Client'
-  - 'com.discordapp.Discord'
-  - 'io.freetubeapp.FreeTube'
