@@ -28,24 +28,8 @@
     name: "{{ rpmfusion_packages }}"
     state: latest
 
-- name: Enable v4l2loopback copr repository
-  community.general.copr:
-    host: copr.fedorainfracloud.org
-    state: enabled
-    name: sentry/v4l2loopback
-
-- name: Install v4l2loopback-dkms
-  dnf:
-    name: v4l2loopback-dkms
-    state: latest
-
-- name:
-  become: false
-  flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
-    method: user
+- include: "copr.yml"
+- include: "flatpak.yml"
 
 #- name: Install Flatpak packages
 #  become: false
@@ -54,24 +38,3 @@
 #    name: "{{ flatpak_packages }}"
 #    state: present
 #    method: user
-
-- name: Install Spotify
-  become: false
-  flatpak:
-    name: com.spotify.Client
-    state: present
-    method: user
-
-- name: Install Discord
-  become: false
-  flatpak:
-    name: com.discordapp.Discord
-    state: present
-    method: user
-
-- name: Install Freetube
-  become: false
-  flatpak:
-    name: io.freetubeapp.FreeTube
-    state: present
-    method: user

@@ -1,0 +1,28 @@
+- name: Enable Flathub repository
+  become: false
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
+    method: user
+
+- name: Install Spotify
+  become: false
+  flatpak:
+    name: com.spotify.Client
+    state: present
+    method: user
+
+- name: Install Discord
+  become: false
+  flatpak:
+    name: com.discordapp.Discord
+    state: present
+    method: user
+
+- name: Install Freetube
+  become: false
+  flatpak:
+    name: io.freetubeapp.FreeTube
+    state: present
+    method: user
