@@ -1,0 +1,18 @@
+---
+# tasks file for vfio
+- name: Check iommu enabled in grub config
+  command: egrep "(amd|intel)_iommu=on" /etc/default/grub
+  register: iommu_on
+  ignore_errors: yes
+
+- name: Grub enable AMD iommu
+  command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
+  when: (ansible_processor[1] == "AuthenticAMD" and iommu_on is not succeeded)
+
+- name: Grub enable Intel iommu
+  command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
+  when: (ansible_processor[1] == "GenuineIntel" and iommu_on is not succeeded)
+
+- name: Write grub config
+  command: grub2-mkconfig > /etc/grub2-efi.cfg 
+  when: iommu_on is not succeeded
