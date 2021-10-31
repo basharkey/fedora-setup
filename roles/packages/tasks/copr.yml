@@ -1,3 +1,4 @@
+---
 - name: Enable v4l2loopback copr repository
   community.general.copr:
     host: copr.fedorainfracloud.org

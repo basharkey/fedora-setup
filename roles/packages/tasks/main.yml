@@ -30,11 +30,3 @@
 
 - include: "copr.yml"
 - include: "flatpak.yml"
-
-#- name: Install Flatpak packages
-#  become: false
-#  flatpak:
-#    # will work in future ansible versions
-#    name: "{{ flatpak_packages }}"
-#    state: present
-#    method: user
