@@ -1,0 +1,19 @@
+---
+# tasks file for cpu-governor-hook
+- name: Create VM hook directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+  loop:
+    - "/etc/libvirt/hooks/qemu.d/{{ vm_name }}/prepare/begin"
+    - "/etc/libvirt/hooks/qemu.d/{{ vm_name }}/release/end"
+
+- name: Copy cpu governor scripts
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0755"
+  loop:
+    - { src: "cpu-mode-performance.sh", dest: "/etc/libvirt/hooks/qemu.d/{{ vm_name }}/prepare/begin" }
+    - { src: "cpu-mode-ondemand.sh", dest: "/etc/libvirt/hooks/qemu.d/{{ vm_name }}/release/end" }
