@@ -1,2 +1,3 @@
 ---
 # vars file for vfio
+pci_ids: "10de:10f0,10de:1b80"

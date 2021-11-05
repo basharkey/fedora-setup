@@ -10,7 +10,7 @@
   block:
     - name: Create directory
       file:
-        path: /etc/libvirt/hooks/qemu.d
+        path: /etc/libvirt/hooks/qemu.d/
         state: directory
 
     - name: Copy hooks script

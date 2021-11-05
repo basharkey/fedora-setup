@@ -5,14 +5,38 @@
   register: iommu_on
   ignore_errors: yes
 
-- name: Grub enable AMD iommu
-  command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
-  when: (ansible_processor[1] == "AuthenticAMD" and iommu_on is not succeeded)
-
-- name: Grub enable Intel iommu
-  command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
-  when: (ansible_processor[1] == "GenuineIntel" and iommu_on is not succeeded)
-
-- name: Write grub config
-  command: grub2-mkconfig > /etc/grub2-efi.cfg 
+- name: Grub enable iommu
   when: iommu_on is not succeeded
+  block:
+    - name: Grub enable AMD iommu
+      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
+      when: ansible_processor[1] == "AuthenticAMD"
+    
+    - name: Grub enable Intel iommu
+      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
+      when: ansible_processor[1] == "GenuineIntel"
+    
+    - name: Write grub config
+      command: grub2-mkconfig > /etc/grub2-efi.cfg 
+
+- name: Template vfio options config
+  template:
+    src: vfio-pci-ids.conf.j2
+    dest: /etc/modprobe.d/vfio-pci-ids.conf
+    force: yes
+  register: vfio_options
+
+- name: Check for vfio modules config
+  stat:
+    path: /etc/modules-load.d/vfio.conf
+  register: vfio_modules
+
+- name: Enable vfio modules
+  when: not vfio_modules.stat.exists
+  copy:
+    src: vfio.conf
+    dest: /etc/modules-load.d/
+
+- name: Update initramfs
+  command: dracut -fv
+  when: not vfio_modules.stat.exists or vfio_options.changed

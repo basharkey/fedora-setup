@@ -2,14 +2,13 @@
 - hosts: localhost
   become: yes
 
-  vars_prompt:
-
-    - name: vm_name
-      prompt: Enter virtual machine name
-      private: no
+    #vars_prompt:
+    #  - name: vm_name
+    #    prompt: Enter virtual machine name
+    #    private: no
 
   roles:
     #- packages
-    #- vfio
+    - vfio
     #- libvirt-hooks
-    - cpu-governor-hook
+    #- cpu-governor-hook
