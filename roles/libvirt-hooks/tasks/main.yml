@@ -17,7 +17,7 @@
       copy:
         src: qemu
         dest: /etc/libvirt/hooks/qemu
-        mode: '0755'
+        mode: "0755"
 
     - name: Restart service libvirtd
       service:
