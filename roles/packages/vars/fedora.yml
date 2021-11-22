@@ -55,3 +55,4 @@ fedora_packages:
   - "nextcloud-client"                     # nextcloud
   - "lxpolkit"                             # gui polkit agent
   - "wf-recorder"                          # wayland screen recorder
+  - "wlsunset"                             # wayland daytime colour temperature utility
