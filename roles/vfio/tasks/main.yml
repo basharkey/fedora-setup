@@ -1,42 +1,43 @@
 ---
 # tasks file for vfio
-- name: Check iommu enabled in grub config
-  command: egrep "(amd|intel)_iommu=on" /etc/default/grub
-  register: iommu_on
-  ignore_errors: yes
-
-- name: Grub enable iommu
-  when: iommu_on is not succeeded
+- name: Setup vfio
+  when: vfio
   block:
-    - name: Grub enable AMD iommu
-      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
-      when: ansible_processor[1] == "AuthenticAMD"
+    - name: Grub enable iommu
+      block:
+        - name: Check if iommu enabled in grub config
+          command: egrep "(amd|intel)_iommu=on" /etc/default/grub
+
+      rescue:
+        - name: Grub enable amd iommu
+          command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
+          when: ansible_processor[1] == "AuthenticAMD"
+        
+        - name: Grub enable intel iommu
+          command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
+          when: ansible_processor[1] == "GenuineIntel"
+        
+        - name: Write grub config
+          command: grub2-mkconfig > /etc/grub2-efi.cfg 
     
-    - name: Grub enable Intel iommu
-      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
-      when: ansible_processor[1] == "GenuineIntel"
+    - name: Template vfio options config
+      template:
+        src: vfio-pci-ids.conf.j2
+        dest: /etc/modprobe.d/vfio-pci-ids.conf
+        force: yes
+      register: vfio_options
     
-    - name: Write grub config
-      command: grub2-mkconfig > /etc/grub2-efi.cfg 
-
-- name: Template vfio options config
-  template:
-    src: vfio-pci-ids.conf.j2
-    dest: /etc/modprobe.d/vfio-pci-ids.conf
-    force: yes
-  register: vfio_options
-
-- name: Check for vfio modules config
-  stat:
-    path: /etc/modules-load.d/vfio.conf
-  register: vfio_modules
-
-- name: Enable vfio modules
-  when: not vfio_modules.stat.exists
-  copy:
-    src: vfio.conf
-    dest: /etc/modules-load.d/
-
-- name: Update initramfs
-  command: dracut -fv
-  when: not vfio_modules.stat.exists or vfio_options.changed
+    - name: Check for vfio modules config
+      stat:
+        path: /etc/modules-load.d/vfio.conf
+      register: vfio_modules
+    
+    - name: Enable vfio modules
+      when: not vfio_modules.stat.exists
+      copy:
+        src: vfio.conf
+        dest: /etc/modules-load.d/
+    
+    - name: Update initramfs
+      command: dracut -fv
+      when: not vfio_modules.stat.exists or vfio_options.changed
