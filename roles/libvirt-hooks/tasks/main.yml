@@ -1,23 +1,23 @@
 ---
 # tasks file for libvirt-hooks
-- name: Check if libvirt hooks installed
-  stat:
-    path: /etc/libvirt/hooks/qemu
-  register: hooks
-
 - name: Install libvirt hooks
-  when: not hooks.stat.exists
+  when: libvirt_hooks
   block:
-    - name: Create directory
+    - name: Check if libvirt hooks installed
+      command: test -f /etc/libvirt/hooks/qemu
+
+  rescue:
+    - name: Create hooks directory
       file:
         path: /etc/libvirt/hooks/qemu.d/
         state: directory
+        mode: 0755
 
     - name: Copy hooks script
       copy:
         src: qemu
         dest: /etc/libvirt/hooks/qemu
-        mode: "0755"
+        mode: 0755
 
     - name: Restart service libvirtd
       service:
