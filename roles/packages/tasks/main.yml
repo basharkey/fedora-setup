@@ -1,32 +1,76 @@
 ---
 # tasks file for packages
-- include_vars:
-    dir: vars/
+- name: Upgrade all packages
+  dnf:
+    name: "*"
+    state: latest
 
-- name: Import RPM Fusion free GPG key
+- name: Load package vars
+  include_vars:
+    dir: vars
+      #extensions: yml
+
+- name: Install fedora packages
+  dnf:
+    name: "{{ fedora_packages }}"
+    state: latest
+
+- name: Import rpm fusion free gpg key
   rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020"
+    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-gpg-KEY-rpmfusion-free-fedora-2020"
     state: present
 
-- name: Import RPM Fusion non-free GPG key
+- name: Import rpm fusion non-free gpg key
   rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020"
+    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-gpg-KEY-rpmfusion-nonfree-fedora-2020"
     state: present
 
-- name: Enable RPM Fusion free repository
+- name: Enable rpm fusion free repository
   dnf:
     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
     state: present
 
-- name: Enable RPM Fusion non-free repository
+- name: Enable rpm fusion non-free repository
   dnf:
     name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
     state: present
 
-- name: Install RPM Fusion packages
+- name: Install rpm fusion packages
   dnf:
     name: "{{ rpmfusion_packages }}"
     state: latest
 
-- include: "copr.yml"
-- include: "flatpak.yml"
+- name: Install flatpak packages
+  block:
+    - name: Enable Flathub repository
+      flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
+        method: user
+
+#   - name: Install Flatpak packages
+#     flatpak:
+#       # will work in future ansible versions
+#       name: "{{ flatpak_packages }}"
+#       state: present
+#       method: user
+    
+    - name: Install spotify
+      flatpak:
+        name: com.spotify.Client
+        state: present
+        method: user
+    
+    - name: Install discord
+      flatpak:
+        name: com.discordapp.Discord
+        state: present
+        method: user
+    
+    - name: Install freetube
+      flatpak:
+        name: io.freetubeapp.FreeTube
+        state: present
+        method: user
+  become: false
