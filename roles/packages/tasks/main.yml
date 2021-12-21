@@ -17,12 +17,12 @@
 
 - name: Import rpm fusion free gpg key
   rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-gpg-KEY-rpmfusion-free-fedora-2020"
+    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020"
     state: present
 
 - name: Import rpm fusion non-free gpg key
   rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-gpg-KEY-rpmfusion-nonfree-fedora-2020"
+    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020"
     state: present
 
 - name: Enable rpm fusion free repository
