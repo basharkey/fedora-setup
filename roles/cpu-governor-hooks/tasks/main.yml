@@ -1,0 +1,32 @@
+---
+# tasks file for cpu-governor-hooks
+- name: Install cpu governor hooks
+  when: cpu_governor_hooks
+  block:
+    - name: Create vm hook prepare directories
+      file:
+        path: "/etc/libvirt/hooks/qemu.d/{{ item }}/prepare/begin/"
+        state: directory
+        recurse: yes
+      loop: "{{ cpu_hook_vm_names }}"
+    
+    - name: Create vm hook release directories
+      file:
+        path: "/etc/libvirt/hooks/qemu.d/{{ item }}/release/end/"
+        state: directory
+        recurse: yes
+      loop: "{{ cpu_hook_vm_names }}"
+    
+    - name: Copy cpu governor prepare scripts
+      copy:
+        src: cpu-mode-performance.sh
+        dest: "/etc/libvirt/hooks/qemu.d/{{ item }}/prepare/begin/cpu-mode-performance.sh"
+        mode: 0755
+      loop: "{{ cpu_hook_vm_names }}"
+    
+    - name: Copy cpu governor release scripts
+      copy:
+        src: cpu-mode-ondemand.sh
+        dest: "/etc/libvirt/hooks/qemu.d/{{ item }}/release/end/cpu-mode-ondemand.sh"
+        mode: 0755
+      loop: "{{ cpu_hook_vm_names }}"
