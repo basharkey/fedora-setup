@@ -1,0 +1,29 @@
+---
+# tasks file for configs
+- name: Copy user configs
+  synchronize:
+    src: home/
+    dest: "/home/{{ user }}"
+    recursive: yes
+
+- name: Copy system configs
+  synchronize:
+    src: etc/
+    dest: /etc
+    recursive: yes
+
+- name: Reload all kernel modules
+  systemd:
+    name: systemd-modules-load
+    state: restarted
+
+- name: Create auto login override dir structure
+  file:
+    path: /etc/systemd/system/getty@tty1.service.d
+    recurse: yes
+    state: directory
+
+- name: Template auto login override config
+  template:
+    src: override.conf.j2
+    dest: /etc/systemd/system/getty@tty1.service.d/override.conf
