@@ -1,0 +1,59 @@
+---
+- name: Get pci bus 
+  xml:
+    path: "/tmp/{{ item }}.xml"
+    xpath: /device/capability/bus
+    content: text
+  register: xmlresp
+
+- name: Set pci_bus
+  set_fact:
+    pci_bus: "{{ '%#x' % xmlresp.matches[0].bus | int }}"
+
+- name: Get pci slot 
+  xml:
+    path: "/tmp/{{ item }}.xml"
+    xpath: /device/capability/slot
+    content: text
+  register: xmlresp
+
+- name: Set pci_slot
+  set_fact:
+    pci_slot: "{{ '%#x' % xmlresp.matches[0].slot | int }}"
+
+- name: Get pci function 
+  xml:
+    path: "/tmp/{{ item }}.xml"
+    xpath: /device/capability/function
+    content: text
+  register: xmlresp
+
+- name: Set pci_function
+  set_fact:
+    pci_function: "{{ '%#x' % xmlresp.matches[0].function | int }}"
+
+- name: debug
+  debug:
+    var: pci_bus
+
+- name: debug
+  debug:
+    var: pci_slot
+
+- name: debug
+  debug:
+    var: pci_function
+
+- name: Template pci device xml
+  template:
+    src: pci-device.xml.j2
+    dest: "/tmp/{{ item }}-hostdev.xml"
+    mode: 0755
+    force: yes
+
+- name: Virsh add pci device
+  command: "virsh attach-device --config {{ vfio_vm_name }} /tmp/{{ item }}-hostdev.xml"
+  register: result
+  failed_when:
+    - result.rc != 0
+    - "'device is already in the domain configuration' not in result.stderr"

@@ -1,0 +1,86 @@
+---
+# tasks file for vm-vfio
+- name: Setup vfio
+  when: vfio
+  block:
+    - name: Grub enable iommu
+      block:
+        - name: Check if iommu enabled in grub config
+          command: egrep "(amd|intel)_iommu=on" /etc/default/grub
+
+      rescue:
+        - name: Grub enable amd iommu
+          command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
+          when: ansible_processor[1] == "AuthenticAMD"
+        
+        - name: Grub enable intel iommu
+          command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
+          when: ansible_processor[1] == "GenuineIntel"
+        
+        - name: Write grub config
+          command: grub2-mkconfig > /etc/grub2-efi.cfg 
+
+    - name: Get xml dumps for pci devices
+      shell: "virsh nodedev-dumpxml {{ item }} > /tmp/{{ item }}.xml"
+      loop: "{{ vfio_pci_devices }}"
+    
+    - name: Install python3 lxml # Some dependancy issue I guess
+      dnf:
+        name: python3-lxml
+        state: latest
+    
+    - name: Set initial config
+      set_fact:
+        modprobe_conf: "options vfio-pci ids="
+    
+    - name: Add pci ids to config
+      include_tasks: gen-modprobe-conf.yml
+      loop: "{{ vfio_pci_devices }}"
+    
+    - name: Template modprobe config
+      template:
+        src: vfio-options.conf.j2
+        dest: /etc/modprobe.d/vfio.conf
+        mode: 0644
+        force: yes
+      register: vfio_options
+    
+    - name: Check for vfio modules config
+      stat:
+        path: /etc/modules-load.d/vfio.conf
+      register: vfio_modules
+    
+    - name: Enable vfio modules
+      when: not vfio_modules.stat.exists
+      copy:
+        src: vfio-modules.conf
+        dest: /etc/modules-load.d/vfio.conf
+    
+    - name: Update initramfs
+      command: dracut -fv
+      when: not vfio_modules.stat.exists or vfio_options.changed
+
+    - name: Install virtio-win repo
+      get_url:
+        url: https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo
+        dest: /etc/yum.repos.d/virtio-win.repo
+    
+    - name: Install virtio-win drivers iso
+      # /usr/share/virtio-win/virtio-win.iso
+      dnf:
+        name: virtio-win
+        state: latest
+
+    - name: Template vm config
+      template:
+        src: vm-vfio.xml.j2
+        dest: "/etc/libvirt/qemu/{{ vfio_vm_name }}.xml"
+        mode: 0600
+        force: no
+
+    - name: Import vm into libvirt
+      command: "virsh define /etc/libvirt/qemu/{{ vfio_vm_name }}.xml"
+
+    - name: Add pci devices
+      include_tasks: add-pci-device.yml
+      loop: "{{ vfio_pci_devices }}"

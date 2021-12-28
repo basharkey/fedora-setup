@@ -1,14 +1,21 @@
 ---
-- hosts: localhost
+- hosts: desktop
   become: yes
+  pre_tasks:
+    - name: Get username
+      command: id -u -n
+      register: id 
+      become: no
 
-    #vars_prompt:
-    #  - name: vm_name
-    #    prompt: Enter virtual machine name
-    #    private: no
+    - name: Set username var
+      set_fact:
+        user: "{{ id.stdout }}"
 
   roles:
     #- packages
-    - vfio
+    #- vfio
     #- libvirt-hooks
-    #- cpu-governor-hook
+    #- cpu-governor-hooks
+    # Not needed anymore https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_keyboard/mouse_via_Evdev
+    #- evdev-passthrough
+    - vm-vfio
