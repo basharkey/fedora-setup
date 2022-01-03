@@ -57,3 +57,4 @@ fedora_packages:
   - "wf-recorder"                          # wayland screen recorder
   - "wlsunset"                             # wayland daytime colour temperature utility
   - "v4l2loopback-dkms"                    # create virtual camera devices
+  - "openssh-askpass"                      # prompt when using ssh-agent keys

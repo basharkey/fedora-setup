@@ -38,4 +38,4 @@
     #- evdev-passthrough
     #- vm-vfio
     - configs
-    - samba
+    #- samba
