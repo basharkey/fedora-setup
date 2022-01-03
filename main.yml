@@ -4,12 +4,30 @@
   pre_tasks:
     - name: Get username
       command: id -u -n
-      register: id 
+      register: result
       become: no
 
-    - name: Set username var
+    - name: Set user var
       set_fact:
-        user: "{{ id.stdout }}"
+        user: "{{ result.stdout }}"
+
+    - name: Get uid
+      command: id -u
+      register: result
+      become: no
+
+    - name: Set uid var
+      set_fact:
+        uid: "{{ result.stdout }}"
+
+    - name: Get gid
+      command: id -g
+      register: result
+      become: no
+
+    - name: Set gid var
+      set_fact:
+        gid: "{{ result.stdout }}"
 
   roles:
     #- packages
@@ -20,3 +38,4 @@
     #- evdev-passthrough
     #- vm-vfio
     - configs
+    - samba
