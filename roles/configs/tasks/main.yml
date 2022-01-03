@@ -27,3 +27,8 @@
   template:
     src: override.conf.j2
     dest: /etc/systemd/system/getty@tty1.service.d/override.conf
+
+- name: Add user to groups
+  user:
+    name: "{{ user }}"
+    groups: "{{ user_groups }}"
