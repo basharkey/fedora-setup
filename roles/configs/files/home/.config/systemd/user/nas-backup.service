@@ -1,0 +1,12 @@
+[Unit]
+Description=nas-backup job
+After=network-online.target
+Wants=network-online.target
+Wants=nas-backup.timer
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/rsync -rtsv --info progress2 --exclude-from ~/.config/nas-backup/exclude --files-from ~/.config/nas-backup/include ~/ ~/nas/desktop-backup/
+
+[Install]
+WantedBy=multi-user.target
