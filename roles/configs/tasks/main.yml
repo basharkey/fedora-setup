@@ -68,11 +68,10 @@
     - name: Clone waybar-weather repo
       git:
         repo: https://github.com/basharkey/waybar-weather
-        dest: "/home/{{ user }}/projects/waybar-weather"
-      become: no
+        dest: "/tmp/waybar-weather"
 
     - name: Copy waybar-weather.py to path
       copy:
-        src: "/home/{{ user }}/projects/waybar-weather/waybar-weather.py" 
+        src: "/tmp/waybar-weather/waybar-weather.py" 
         dest: /usr/local/bin/waybar-weather.py
         mode: 0755
