@@ -23,7 +23,7 @@ set $menu wofi --show=drun\,run --gtk-dark | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/f33/default/f33.png fill
+output * bg /usr/share/backgrounds/default.png fill
 #
 # Example configuration:
 #
