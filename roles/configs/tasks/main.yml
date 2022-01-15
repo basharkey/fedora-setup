@@ -3,6 +3,21 @@
 - name: Setup configs
   when: configs
   block:
+    - name: Create home dir structure
+      file:
+        path: "/home/{{ user }}/{{ item }}"
+        state: directory
+        recurse: yes
+        mode: 0755
+      loop:
+        - Documents
+        - Downloads
+        - Pictures
+        - Videos
+        - Nextcloud
+        - projects
+      become: no
+
     - name: Copy user configs
       synchronize:
         src: home/
@@ -41,10 +56,23 @@
         name: "{{ user }}"
         groups: "{{ user_groups }}"
     
-    - name: Enable systemd user units
+    - name: Enable and start systemd user units
       systemd:
         name: "{{ item }}"
         state: started
         enabled: yes
         scope: user
-      loop: systemd_user_units
+      loop: "{{ systemd_user_units }}"
+      become: no
+
+    - name: Clone waybar-weather repo
+      git:
+        repo: https://github.com/basharkey/waybar-weather
+        dest: "/home/{{ user }}/projects/waybar-weather"
+      become: no
+
+    - name: Copy waybar-weather.py to path
+      copy:
+        src: "/home/{{ user }}/projects/waybar-weather/waybar-weather.py" 
+        dest: /usr/local/bin/waybar-weather.py
+        mode: 0755
