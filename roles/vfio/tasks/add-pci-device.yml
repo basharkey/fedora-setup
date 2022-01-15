@@ -54,6 +54,4 @@
 - name: Virsh add pci device
   command: "virsh attach-device --config {{ vfio_vm_name }} /tmp/{{ item }}-hostdev.xml"
   register: result
-  failed_when:
-    - result.rc != 0
-    - "'device is already in the domain configuration' not in result.stderr"
+  failed_when: result.rc != 0 and "device is already in the domain configuration" not in result.stderr
