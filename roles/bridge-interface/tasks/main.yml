@@ -28,17 +28,33 @@
 
 - name: Create bridge interface
   nmcli:
-    conn_name: bridge-br0
-    ifname: br0
+    conn_name: "bridge-{{ bridge_interface_name }}"
+    ifname: "{{ bridge_interface_name }}"
     type: bridge
     # solves long bootup times
     stp: no
     state: present
 
-- name: Enslave main interface
+- name: Attach main interface to bridge
   nmcli:
-    conn_name: br-slave-1
+    conn_name: "{{ bridge_interface_name }}-slave-1"
     ifname: "{{ bridge_interface_slave }}"
-    master: br0
+    master: "{{ bridge_interface_name }}"
     type: bridge-slave
     state: present
+
+- name: Template libvirt bridged network xml
+  template:
+    src: bridged-network.xml.j2
+    dest: /tmp/bridged-network.xml
+    mode: 0755
+    force: yes
+
+- name: Define libvirt bridged network
+  command: virsh net-define /tmp/bridged-network.xml
+
+- name: Enable libvirt bridged network at boot
+  command: "virsh net-autostart {{ bridge_interface_name }}"
+
+- name: Start libvirt bridged network
+  command: "virsh net-start {{ bridge_interface_name }}"
