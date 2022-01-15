@@ -1,67 +1,70 @@
 ---
 # tasks file for bridge-interface
-- name: Copy kernel module config
-  copy:
-    src: br_netfilter.conf
-    dest: /etc/modules-load.d/br_netfilter.conf
-    mode: 0755
-
-- name: Load br_netfilter kernel module
-  modprobe:
-    name: br_netfilter
-    state: present
-
-- name: Copy kernel variable config
-  copy:
-    src: 99-netfilter-bridge.conf
-    dest: /etc/sysctl.d/99-netfilter-bridge.conf
-    mode: 0755
-
-- name: Set kernel variables
-  sysctl:
-    name: "{{ item }}"
-    value: 0
-  loop:
-    - net.bridge.bridge-nf-call-ip6tables
-    - net.bridge.bridge-nf-call-iptables
-    - net.bridge.bridge-nf-call-arptables
-
-- name: Create bridge interface
-  nmcli:
-    conn_name: "bridge-{{ bridge_interface_name }}"
-    ifname: "{{ bridge_interface_name }}"
-    type: bridge
-    # solves long bootup times
-    stp: no
-    state: present
-
-- name: Attach main interface to bridge
-  nmcli:
-    conn_name: "{{ bridge_interface_name }}-slave-1"
-    ifname: "{{ bridge_interface_slave }}"
-    master: "{{ bridge_interface_name }}"
-    type: bridge-slave
-    state: present
-
-- name: Template libvirt bridge network xml
-  template:
-    src: bridge-network.xml.j2
-    dest: /tmp/bridge-network.xml
-    mode: 0755
-    force: yes
-
-- name: Ensure libvirtd is running
-  systemd:
-    name: libvirtd
-    state: started
-
-- name: Define libvirt bridge network
-  command: virsh net-define /tmp/bridge-network.xml
-  failed_when: result.rc != 0 and "network 'libvirt_bridge_network' already exists" not in result.stderr
-
-- name: Enable libvirt bridge network at boot
-  command: "virsh net-autostart {{ libvirt_bridge_network }}"
-
-- name: Start libvirt bridge network
-  command: "virsh net-start {{ libvirt_bridge_network }}"
-  failed_when: result.rc != 0 and "network is already active" not in result.stderr
+- name: Setup bridge-interface
+  when: bridge_interface
+  block:
+    - name: Copy kernel module config
+      copy:
+        src: br_netfilter.conf
+        dest: /etc/modules-load.d/br_netfilter.conf
+        mode: 0755
+    
+    - name: Load br_netfilter kernel module
+      modprobe:
+        name: br_netfilter
+        state: present
+    
+    - name: Copy kernel variable config
+      copy:
+        src: 99-netfilter-bridge.conf
+        dest: /etc/sysctl.d/99-netfilter-bridge.conf
+        mode: 0755
+    
+    - name: Set kernel variables
+      sysctl:
+        name: "{{ item }}"
+        value: 0
+      loop:
+        - net.bridge.bridge-nf-call-ip6tables
+        - net.bridge.bridge-nf-call-iptables
+        - net.bridge.bridge-nf-call-arptables
+    
+    - name: Create bridge interface
+      nmcli:
+        conn_name: "bridge-{{ br_primary_int }}"
+        ifname: "{{ br_primary_int }}"
+        type: bridge
+        # solves long bootup times
+        stp: no
+        state: present
+    
+    - name: Attach main interface to bridge
+      nmcli:
+        conn_name: "{{ br_primary_int }}-slave-1"
+        ifname: "{{ br_secondary_int }}"
+        master: "{{ br_primary_int }}"
+        type: bridge-slave
+        state: present
+    
+    - name: Template libvirt bridge network xml
+      template:
+        src: bridge-network.xml.j2
+        dest: /tmp/bridge-network.xml
+        mode: 0755
+        force: yes
+    
+    - name: Ensure libvirtd is running
+      systemd:
+        name: libvirtd
+        state: started
+    
+    - name: Define libvirt bridge network
+      command: virsh net-define /tmp/bridge-network.xml
+      failed_when: result.rc != 0 and "network 'br_libvirt_net' already exists" not in result.stderr
+    
+    - name: Enable libvirt bridge network at boot
+      command: "virsh net-autostart {{ br_libvirt_net }}"
+    
+    - name: Start libvirt bridge network
+      command: "virsh net-start {{ br_libvirt_net }}"
+      failed_when: result.rc != 0 and "network is already active" not in result.stderr
