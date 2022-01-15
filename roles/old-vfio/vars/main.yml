@@ -1,3 +1,0 @@
----
-# vars file for vfio
-pci_ids: "1111:2222,3333:4444"
