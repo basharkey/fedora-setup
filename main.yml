@@ -36,13 +36,10 @@
           - python3-lxml
 
   roles:
-    #- packages
-    #- vfio
-    #- libvirt-hooks
-    #- cpu-governor-hooks
-    # Not needed anymore https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_keyboard/mouse_via_Evdev
-    #- evdev-passthrough
-    #- vm-vfio
-    #- configs
-    #- samba
+    - packages
+    - configs
+    - samba
     - bridge-interface 
+    - vfio
+    - libvirt-hooks
+    - cpu-governor-hooks
