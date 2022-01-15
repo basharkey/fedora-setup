@@ -19,6 +19,11 @@
       systemd:
         name: systemd-modules-load
         state: restarted
+
+    #- name: Reload all kernel variables
+    #  systemd:
+    #    name: systemd-sysctl
+    #    state: restarted
     
     - name: Create auto login override dir structure
       file:

@@ -37,5 +37,6 @@
     # Not needed anymore https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Passing_keyboard/mouse_via_Evdev
     #- evdev-passthrough
     #- vm-vfio
-    - configs
+    #- configs
     #- samba
+    - bridge-interface 
