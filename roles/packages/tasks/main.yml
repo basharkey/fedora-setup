@@ -8,7 +8,6 @@
 - name: Load package vars
   include_vars:
     dir: vars
-      #extensions: yml
 
 - name: Install fedora packages
   dnf:
