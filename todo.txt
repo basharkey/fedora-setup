@@ -1,0 +1,3 @@
+libvirt bridge adapter
+pull custom apps from github (waybar-weather, waybar-crypto)
+systemd user rsync backup - done
