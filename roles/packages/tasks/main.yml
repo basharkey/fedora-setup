@@ -39,37 +39,26 @@
     name: "{{ rpmfusion_packages }}"
     state: latest
 
-- name: Install flatpak packages
+- name: Setup flatpak
   block:
-    - name: Enable Flathub repository
+    - name: Enable flathub repository
       flatpak_remote:
         name: flathub
         state: present
         flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
         method: user
 
-#   - name: Install Flatpak packages
-#     flatpak:
-#       # will work in future ansible versions
-#       name: "{{ flatpak_packages }}"
-#       state: present
-#       method: user
-    
-    - name: Install spotify
+    #- name: Install flatpak packages
+    #  flatpak:
+    #    # should work in future ansible versions
+    #    name: "{{ flatpak_packages }}"
+    #    state: present
+    #    method: user
+
+    - name: Install flatpak packages
       flatpak:
-        name: com.spotify.Client
+        name: "{{ item }}"
         state: present
         method: user
-    
-    - name: Install discord
-      flatpak:
-        name: com.discordapp.Discord
-        state: present
-        method: user
-    
-    - name: Install freetube
-      flatpak:
-        name: io.freetubeapp.FreeTube
-        state: present
-        method: user
+      loop: "{{ flatpak_packages }}"
   become: false
