@@ -1,5 +1,5 @@
 <network>
-  <name>bridged-network</name>
+  <name>{{ libvirt_bridge_network }}</name>
   <forward mode="bridge" />
   <bridge name="{{ bridge_interface_name }}" />
 </network>

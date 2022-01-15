@@ -43,18 +43,25 @@
     type: bridge-slave
     state: present
 
-- name: Template libvirt bridged network xml
+- name: Template libvirt bridge network xml
   template:
-    src: bridged-network.xml.j2
-    dest: /tmp/bridged-network.xml
+    src: bridge-network.xml.j2
+    dest: /tmp/bridge-network.xml
     mode: 0755
     force: yes
 
-- name: Define libvirt bridged network
-  command: virsh net-define /tmp/bridged-network.xml
+- name: Ensure libvirtd is running
+  systemd:
+    name: libvirtd
+    state: started
 
-- name: Enable libvirt bridged network at boot
-  command: "virsh net-autostart {{ bridge_interface_name }}"
+- name: Define libvirt bridge network
+  command: virsh net-define /tmp/bridge-network.xml
+  failed_when: result.rc != 0 and "network 'libvirt_bridge_network' already exists" not in result.stderr
 
-- name: Start libvirt bridged network
-  command: "virsh net-start {{ bridge_interface_name }}"
+- name: Enable libvirt bridge network at boot
+  command: "virsh net-autostart {{ libvirt_bridge_network }}"
+
+- name: Start libvirt bridge network
+  command: "virsh net-start {{ libvirt_bridge_network }}"
+  failed_when: result.rc != 0 and "network is already active" not in result.stderr
