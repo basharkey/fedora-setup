@@ -3,6 +3,11 @@
 - name: Setup configs
   when: configs
   block:
+    - name: Add user to groups
+      user:
+        name: "{{ user }}"
+        groups: "{{ user_groups }}"
+    
     - name: Create home dir structure
       file:
         path: "/home/{{ user }}/{{ item }}"
@@ -50,11 +55,6 @@
       template:
         src: override.conf.j2
         dest: /etc/systemd/system/getty@tty1.service.d/override.conf
-    
-    - name: Add user to groups
-      user:
-        name: "{{ user }}"
-        groups: "{{ user_groups }}"
     
     - name: Enable and start systemd user units
       systemd:
