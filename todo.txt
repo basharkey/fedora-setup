@@ -1,3 +1,7 @@
-libvirt bridge adapter
-pull custom apps from github (waybar-weather, waybar-crypto)
-systemd user rsync backup - done
+done - libvirt bridge adapter
+done - systemd user rsync backup
+partially done -pull custom apps from github (waybar-weather, waybar-crypto)
+multiple vfio vms
+docker
+thunar --daemon # could replace udiskie for automount
+keepassxc as secrets store
