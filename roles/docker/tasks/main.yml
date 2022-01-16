@@ -1,0 +1,8 @@
+---
+# tasks file for docker
+- name: Setup docker
+  when: docker
+  block:
+    - name: Install geerlingguy.docker
+      include_role:
+        name: geerlingguy.docker

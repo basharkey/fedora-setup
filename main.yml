@@ -43,3 +43,4 @@
     - vfio
     - libvirt-hooks
     - cpu-governor-hooks
+    - docker
