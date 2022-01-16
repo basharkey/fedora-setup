@@ -8,33 +8,26 @@
         name: "{{ user }}"
         groups: "{{ user_groups }}"
     
-    - name: Create home dir structure
-      file:
-        path: "/home/{{ user }}/{{ item }}"
-        state: directory
-        recurse: yes
-        mode: 0755
-      loop:
-        - Documents
-        - Downloads
-        - Pictures
-        - Videos
-        - Nextcloud
-        - projects
-      become: no
-
     - name: Copy user configs
       synchronize:
         src: home/
         dest: "/home/{{ user }}"
         recursive: yes
+      become: no
+    
+    - name: Template user bookmarks
+      template:
+        src: bookmarks.j2
+        dest: "/home/{{ user }}/.config/gtk-3.0/bookmarks"
+        force: yes
+      become: no
     
     - name: Copy system configs
       synchronize:
         src: etc/
         dest: /etc
         recursive: yes
-    
+
     - name: Reload all kernel modules
       systemd:
         name: systemd-modules-load
