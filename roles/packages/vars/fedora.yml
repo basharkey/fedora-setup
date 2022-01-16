@@ -5,7 +5,9 @@ fedora_packages:
   - "waybar"                        # status bar
   - "polkit"                        # required to launch sway
   - "alacritty"                     # wayland terminal emulator
-  - "liberation-mono-fonts"         # Liberation Mono font
+  - "google-noto-emoji-color-fonts" # noto emoji fonts
+  - "google-noto-fonts-common"      # noto common fonts
+  - "google-noto-sans-mono-fonts"   # noto mono fonts
   - "wofi"                          # app launcher for wayland
   - "vim"                           # text editor
   - "wl-clipboard"                  # wayland clipboard utility
