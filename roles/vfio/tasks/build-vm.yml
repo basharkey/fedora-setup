@@ -1,0 +1,14 @@
+---
+- name: Template vm config
+  template:
+    src: vm-vfio.xml.j2
+    dest: "/etc/libvirt/qemu/{{ vm.name }}.xml"
+    mode: 0600
+    force: no
+
+- name: Import vm into libvirt
+  command: "virsh define /etc/libvirt/qemu/{{ vm.name }}.xml"
+
+- name: Add pci devices
+  include_tasks: add-pci-device.yml
+  loop: "{{ vm.pci_devices }}"

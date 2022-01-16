@@ -1,6 +1,6 @@
 <domain type='kvm'>
-  <name>win10-vfio</name>
-  <uuid>4070f8fd-bd56-44c4-bf0f-3cf2285d6f88</uuid>
+  <name>{{ vm.name }}</name>
+  <uuid></uuid>
   <memory unit='KiB'>16777216</memory>
   <currentMemory unit='KiB'>16777216</currentMemory>
   <vcpu placement='static'>8</vcpu>
@@ -38,14 +38,16 @@
   </pm>
   <devices>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
+{% if vm.disk is defined %}
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native'/>
-      <source dev='{{ vfio_vm_disk }}'/>
+      <source dev='{{ vm.disk }}'/>
       <backingStore/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
       <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
     </disk>
+{% endif %}
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
       <source file='/usr/share/virtio-win/virtio-win.iso'/>
@@ -121,14 +123,14 @@
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
-{% if vfio_vm_mouse is defined %}
+{% if vm.mouse is defined %}
     <input type='evdev'>
-      <source dev='{{ vfio_vm_mouse }}'/>
+      <source dev='{{ vm.mouse }}'/>
     </input>
 {% endif %}
-{% if vfio_vm_keyboard is defined %}
+{% if vm.keyboard is defined %}
     <input type='evdev'>
-      <source dev='{{ vfio_vm_keyboard }}' grab='all' repeat='on'/>
+      <source dev='{{ vm.keyboard }}' grab='all' repeat='on'/>
     </input>
 {% endif %}
     <input type='mouse' bus='virtio'>

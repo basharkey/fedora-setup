@@ -32,18 +32,6 @@
   set_fact:
     pci_function: "{{ '%#x' % xmlresp.matches[0].function | int }}"
 
-- name: debug
-  debug:
-    var: pci_bus
-
-- name: debug
-  debug:
-    var: pci_slot
-
-- name: debug
-  debug:
-    var: pci_function
-
 - name: Template pci device xml
   template:
     src: pci-device.xml.j2
@@ -52,6 +40,6 @@
     force: yes
 
 - name: Virsh add pci device
-  command: "virsh attach-device --config {{ vfio_vm_name }} /tmp/{{ item }}-hostdev.xml"
+  command: "virsh attach-device --config {{ vm.name }} /tmp/{{ item }}-hostdev.xml"
   register: result
   failed_when: result.rc != 0 and "device is already in the domain configuration" not in result.stderr
