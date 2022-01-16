@@ -15,7 +15,9 @@ fedora_packages:
   - "pipewire-pulseaudio"           # pipewire pulseaudio implementation
   - "python3-virtualenv"            # virtualenv for python
   - "Thunar"                        # file manager
+  - "thunar-volman"                 # thunar automount
   - "gvfs-fuse"                     # virtual filesystem
+  - "gvfs-smb"                      # smb support for gvfs
   - "gvfs-mtp"                      # mtp/phone support for gvfs
   - "gnome-keyring"                 # framework for managing password and secrets
   - "seahorse"                      # GUI for gnome-keyring
