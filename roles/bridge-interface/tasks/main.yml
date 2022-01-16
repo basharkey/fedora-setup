@@ -23,7 +23,7 @@
     - name: Set kernel variables
       sysctl:
         name: "{{ item }}"
-        value: 0
+        value: "0"
       loop:
         - net.bridge.bridge-nf-call-ip6tables
         - net.bridge.bridge-nf-call-iptables
