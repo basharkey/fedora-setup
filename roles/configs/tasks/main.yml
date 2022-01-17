@@ -65,6 +65,17 @@
 
     - name: Copy waybar-weather.py to path
       copy:
-        src: "/tmp/waybar-weather/waybar-weather.py" 
+        src: /tmp/waybar-weather/waybar-weather.py
         dest: /usr/local/bin/waybar-weather.py
+        mode: 0755
+
+    - name: Clone spotifyvctl repo
+      git:
+        repo: https://github.com/basharkey/spotifyvctl
+        dest: /tmp/spotifyvctl
+
+    - name: Copy spotifyvctl.py to path
+      copy:
+        src: /tmp/spotifyvctl/spotifyvctl.py
+        dest: /usr/local/bin/spotifyvctl.py
         mode: 0755

@@ -13,6 +13,7 @@ fedora_packages:
   - "wl-clipboard"                  # wayland clipboard utility
   - "pipewire"                      # sound server
   - "pipewire-pulseaudio"           # pipewire pulseaudio implementation
+  - "pulseaudio-utils"              # pactl util
   - "python3-virtualenv"            # virtualenv for python
   - "Thunar"                        # file manager
   - "thunar-volman"                 # thunar automount
