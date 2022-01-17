@@ -1,7 +1,7 @@
 done - libvirt bridge adapter
 done - systemd user rsync backup
 partially done -pull custom apps from github (waybar-weather, waybar-crypto)
-multiple vfio vms
-docker
-thunar --daemon # could replace udiskie for automount
-keepassxc as secrets store
+done - multiple vfio vms
+done - thunar --daemon # could replace udiskie for automount
+done - docker
+keepassxc as secret service - version 2.7.0 makes this more viable
