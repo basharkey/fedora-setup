@@ -1,15 +1,15 @@
 # fedora-setup
 ## List pci devices
-`sudo dnf install -y pciutils`
+```
+sudo dnf install -y pciutils
+lspci
+```
 
-`lspci`
-
-
-`sudo dnf install -y libvirt-daemon`
-
-`sudo systemctl start libvirtd`
-
-`sudo virsh nodedev-list | grep pci`
+```
+sudo dnf install -y libvirt-daemon
+sudo systemctl start libvirtd
+sudo virsh nodedev-list | grep pci
+```
 ## Run playbook
 ```
 sudo dnf install -y ansible
