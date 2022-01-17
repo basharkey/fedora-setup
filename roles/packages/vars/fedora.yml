@@ -52,6 +52,7 @@ fedora_packages:
   - "usbutils"                      # usb utilities (lsusb)
   - "cifs-utils"                    # smb mount
   - "gnome-themes-extra"            # adds adwaita-dark
+  - "adwaita-qt5"                   # adwaita for qt
   - "qt5ct"                         # qt theme configuration utility
   - "bind-utils"                    # dig
   - "nextcloud-client"              # nextcloud
