@@ -37,10 +37,10 @@
 
   roles:
     - packages
+    - docker
     - configs
     - samba
     - bridge-interface 
     - vfio
     - libvirt-hooks
     - cpu-governor-hooks
-    - docker
