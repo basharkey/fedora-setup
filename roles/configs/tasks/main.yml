@@ -7,6 +7,24 @@
       user:
         name: "{{ user }}"
         groups: "{{ user_groups }}"
+
+    - name: Create user dirs
+      file:
+        path: "/home/{{ user }}/{{ item }}"
+        state: directory
+        recurse: yes
+        mode: 0755
+      loop:
+        - Documents
+        - Downloads
+        - Pictures
+        - Videos
+        - Music
+        - Desktop
+        - Templates
+        - Public
+        - .config/gtk-3.0
+      become: no
     
     - name: Copy user configs
       synchronize:
