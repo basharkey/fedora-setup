@@ -34,8 +34,8 @@
         conn_name: "bridge-{{ br_primary_int }}"
         ifname: "{{ br_primary_int }}"
         type: bridge
-        # solves long bootup times
-        stp: no
+        # breaks local network DHCP if disabled
+        stp: yes
         state: present
     
     - name: Attach main interface to bridge
