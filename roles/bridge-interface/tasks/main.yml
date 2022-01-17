@@ -53,11 +53,11 @@
         mode: 0755
         force: yes
     
-    - name: Ensure libvirtd is running
+    - name: Ensure virtqemud is running
       systemd:
-        name: libvirtd
+        name: virtqemud
         state: started
-    
+
     - name: Define libvirt bridge network
       command: virsh net-define /tmp/bridge-network.xml
       failed_when: result.rc != 0 and "network 'br_libvirt_net' already exists" not in result.stderr

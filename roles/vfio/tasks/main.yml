@@ -20,6 +20,12 @@
         - name: Write grub config
           command: grub2-mkconfig > /etc/grub2-efi.cfg 
 
+    - name: Start and enable virtqemud
+      systemd:
+        name: virtqemud
+        state: started
+        enabled: yes
+
     - name: Initialize pci device list
       set_fact:
         vfio_pci_devices: []
