@@ -60,3 +60,4 @@ fedora_packages:
   - "wlsunset"                      # wayland daytime colour temperature utility
   - "openssh-askpass"               # prompt when using ssh-agent keys
   - "python3-beautifulsoup4"        # waybar-weather.py dependency
+  - "playerctl"                     # Command line media player controller
