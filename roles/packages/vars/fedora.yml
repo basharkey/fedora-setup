@@ -46,6 +46,7 @@ fedora_packages:
   - "wireshark"                     # packet sniffer
   - "qalculate-gtk"                 # calculator
   #- flameshot                      # screenshot utility doesnt work under wayland
+  - "grimshot"                      # screenshot utility
   - "quiterss"                      # RSS reader
   - "evince"                        # document viewer (pdf)
   - "ristretto"                     # photo viewer (also enables thunar image file previews)
@@ -61,3 +62,4 @@ fedora_packages:
   - "openssh-askpass"               # prompt when using ssh-agent keys
   - "python3-beautifulsoup4"        # waybar-weather.py dependency
   - "playerctl"                     # Command line media player controller
+  - "wireguard-tools"               # wireguard vpn
