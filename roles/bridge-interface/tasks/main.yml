@@ -29,13 +29,13 @@
         - net.bridge.bridge-nf-call-iptables
         - net.bridge.bridge-nf-call-arptables
     
+    # bridge interface will break local DHCP if STP is not disabled on router
     - name: Create bridge interface
       nmcli:
         conn_name: "bridge-{{ br_primary_int }}"
         ifname: "{{ br_primary_int }}"
         type: bridge
-        # breaks local network DHCP if disabled
-        stp: yes
+        stp: no
         state: present
     
     - name: Attach main interface to bridge
