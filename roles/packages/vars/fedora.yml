@@ -48,7 +48,7 @@ fedora_packages:
   #- flameshot                      # screenshot utility doesnt work under wayland
   - "quiterss"                      # RSS reader
   - "evince"                        # document viewer (pdf)
-  - "gthumb"                        # photo viewer
+  - "ristretto"                     # photo viewer (also enables thunar image file previews)
   - "usbutils"                      # usb utilities (lsusb)
   - "cifs-utils"                    # smb mount
   - "gnome-themes-extra"            # adds adwaita-dark
