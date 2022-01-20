@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=FreeTube (disable gpu)
+Exec=flatpak run io.freetubeapp.FreeTube --disable-gpu
