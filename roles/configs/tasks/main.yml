@@ -23,6 +23,7 @@
         - Desktop
         - Templates
         - Public
+        - projects
         - .config/gtk-3.0
       become: no
     
