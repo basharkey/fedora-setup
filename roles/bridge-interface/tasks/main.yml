@@ -7,7 +7,7 @@
       copy:
         src: br_netfilter.conf
         dest: /etc/modules-load.d/br_netfilter.conf
-        mode: 0755
+        mode: 0644
     
     - name: Load br_netfilter kernel module
       modprobe:
