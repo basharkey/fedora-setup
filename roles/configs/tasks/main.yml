@@ -81,16 +81,17 @@
       loop: "{{ systemd_user_units }}"
       become: no
 
-    - name: Clone waybar-weather repo
+    - name: Clone wayweather repo
       git:
-        repo: https://github.com/basharkey/waybar-weather
-        dest: "/tmp/waybar-weather"
+        repo: https://github.com/basharkey/wayweather
+        dest: "/tmp/wayweather"
+      become: no
 
-    - name: Copy waybar-weather.py to path
-      copy:
-        src: /tmp/waybar-weather/waybar-weather.py
-        dest: /usr/local/bin/waybar-weather.py
-        mode: 0755
+    - name: Install wayweather
+      shell: install.sh
+      args:
+        chdir: "/tmp/wayweather"
+      become: no
 
     - name: Clone spotifyvctl repo
       git:
