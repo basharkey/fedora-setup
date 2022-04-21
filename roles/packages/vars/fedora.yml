@@ -8,7 +8,7 @@ fedora_packages:
   - "google-noto-emoji-color-fonts" # noto emoji fonts
   - "google-noto-fonts-common"      # noto common fonts
   - "google-noto-sans-mono-fonts"   # noto mono fonts
-  - "wofi"                          # app launcher for wayland
+  - "fuzzel"                        # app launcher for wayland
   - "vim"                           # text editor
   - "wl-clipboard"                  # wayland clipboard utility
   - "pipewire"                      # sound server
@@ -29,9 +29,9 @@ fedora_packages:
   - "traceroute"                    # traceroute
   - "mlocate"                       # file locater (updatedb/locate)
   - "p7zip"                         # 7zip
-  - "tar" 			    # tar
+  - "tar"                           # tar
   - "rsync"                         # more advanced file copying tool
-  - "openh264" 			    # h.264/mpeg-4 avc
+  - "openh264"                      # h.264/mpeg-4 avc
   - "firefox-wayland"               # web browser
   - "evolution"                     # email client
   - "pavucontrol"                   # GUI app for managing audio

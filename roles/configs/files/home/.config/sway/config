@@ -18,7 +18,16 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu wofi --show=drun\,run --gtk-dark | xargs swaymsg exec --
+#set $menu wofi --show=drun\,run --gtk-dark | xargs swaymsg exec --
+set $menu fuzzel \
+--background-color=222222ff \
+--border-color=333333ff \
+--text-color=ffffffff \
+--selection-color=285577ff \
+--selection-text-color=ffffffff \
+--match-color=888888ff \
+--border-radius=0 \
+| xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -218,11 +227,11 @@ bindsym $mod+Escape mode "$mode_system"
 bindsym $mod+Shift+s exec grimshot copy area
 
 # multimedia
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
-bindsym XF86AudioRaiseVolume exec --no-startup-id spotifyvctl.py raise 5
-bindsym XF86AudioLowerVolume exec --no-startup-id spotifyvctl.py lower 5
-bindsym XF86AudioNext exec --no-startup-id playerctl next
-bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86Tools exec --no-startup-id playerctl -p spotify play-pause
+bindsym XF86Launch7 exec --no-startup-id spotifyvctl.py raise 5
+bindsym XF86Launch8 exec --no-startup-id spotifyvctl.py lower 5
+bindsym XF86Launch5 exec --no-startup-id playerctl next
+bindsym XF86Launch6 exec --no-startup-id playerctl previous
 
 # waybar
 bar {
