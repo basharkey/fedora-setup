@@ -1,40 +1,64 @@
 ---
 fedora_packages:
-  - "sway"                          # window manager
-  - "swaylock"                      # screen locker
-  - "waybar"                        # status bar
-  - "polkit"                        # required to launch sway
-  - "alacritty"                     # wayland terminal emulator
+  # sway
+  - "sway"                          # wayland window manager
+  - "swaylock"                      # wayland screen locker
+  - "swayidle"                      # wayland idle daemon
+  - "mako"                          # wayland notification daemon
+  - "waybar"                        # wayland status bar
+  - "fuzzel"                        # wayland app launcher
+  - "polkit"                        # authorization framework (required to launch sway)
+  - "alacritty"                     # terminal emulator
+  - "wl-clipboard"                  # wayland clipboard utility
+  - "wlsunset"                      # wayland display colour temperature utility
+
+  # cli utilities
+  - "vim"                           # text editor
+  - "git"                           # version control system
+  - "wget"                          # command line utility for retrieving files over HTTP/FTP
+  - "curl"                          # command line utility for retrieving files over HTTP/FTP
+  - "traceroute"                    # traceroute
+  - "mlocate"                       # file finder
+  - "p7zip"                         # 7zip
+  - "tar"                           # tar
+  - "rsync"                         # file synchronization utility
+  - "wireguard-tools"               # wireguard vpn
+  - "usbutils"                      # usb utilities
+  - "cifs-utils"                    # smb/cifs mounting utilities
+  - "bind-utils"                    # dig/dns querying utilities
+  - "python3-virtualenv"            # virtualenv for python
+
+  # sound server
+  - "pipewire"                      # sound server
+  - "pipewire-pulseaudio"           # pipewire pulseaudio implementation
+  - "pulseaudio-utils"              # pulseaudio command line utilities
+  - "playerctl"                     # command line media player controller
+  - "pavucontrol"                   # pulseaudio gui volume control
+  - "easyeffects"                   # pipewire gui equalizer
+
+  # themes and fonts
+  - "gnome-themes-extra"            # gnome themes including adwaita-dark 
+  - "adwaita-qt5"                   # adwaita for qt
+  - "qt5ct"                         # qt theme configuration utility
   - "google-noto-emoji-color-fonts" # noto emoji fonts
   - "google-noto-fonts-common"      # noto common fonts
   - "google-noto-sans-mono-fonts"   # noto mono fonts
-  - "fuzzel"                        # app launcher for wayland
-  - "vim"                           # text editor
-  - "wl-clipboard"                  # wayland clipboard utility
-  - "pipewire"                      # sound server
-  - "pipewire-pulseaudio"           # pipewire pulseaudio implementation
-  - "pulseaudio-utils"              # pactl util
-  - "python3-virtualenv"            # virtualenv for python
-  - "Thunar"                        # file manager
-  - "thunar-volman"                 # thunar automount
+
+  # gui applications
+  - "Thunar"                        # thunar file manager
+  - "thunar-volman"                 # thunar drive automount
+  - "thunar-archive-plugin"         # thunar archive manager plugin
   - "gvfs-fuse"                     # virtual filesystem
   - "gvfs-smb"                      # smb support for gvfs
   - "gvfs-mtp"                      # mtp/phone support for gvfs
-  - "gnome-keyring"                 # framework for managing password and secrets
-  - "seahorse"                      # GUI for gnome-keyring
-  - "@virtualization"               # qemu/kvm virtual machines
-  - "git"                           # version control system
-  - "flatpak"                       # alternative package manager
-  - "wget"                          # tool for retrieving files over HTTP/FTP
-  - "traceroute"                    # traceroute
-  - "mlocate"                       # file locater (updatedb/locate)
-  - "p7zip"                         # 7zip
-  - "tar"                           # tar
-  - "rsync"                         # more advanced file copying tool
-  - "openh264"                      # h.264/mpeg-4 avc
+
   - "firefox-wayland"               # web browser
+  - "@virtualization"               # qemu/kvm virtual machines
+  - "flatpak"                       # alternative package manager
+  - "gnome-keyring"                 # framework for managing password and secrets
+  - "seahorse"                      # gui secrets manager
   - "evolution"                     # email client
-  - "pavucontrol"                   # GUI app for managing audio
+  - "openh264"                      # h.264/mpeg-4 avc
   - "keepassxc"                     # password manager
   - "libreoffice"                   # office software
   - "gimp"                          # photo editor
@@ -50,17 +74,7 @@ fedora_packages:
   - "quiterss"                      # RSS reader
   - "evince"                        # document viewer (pdf)
   - "ristretto"                     # photo viewer (also enables thunar image file previews)
-  - "usbutils"                      # usb utilities (lsusb)
-  - "cifs-utils"                    # smb mount
-  - "gnome-themes-extra"            # adds adwaita-dark
-  - "adwaita-qt5"                   # adwaita for qt
-  - "qt5ct"                         # qt theme configuration utility
-  - "bind-utils"                    # dig
   - "nextcloud-client"              # nextcloud
   - "lxpolkit"                      # gui polkit agent
-  - "wlsunset"                      # wayland daytime colour temperature utility
   - "openssh-askpass"               # prompt when using ssh-agent keys
   - "python3-beautifulsoup4"        # waybar-weather.py dependency
-  - "playerctl"                     # Command line media player controller
-  - "easyeffects"                   # pipewire equalizer
-  - "wireguard-tools"               # wireguard vpn
