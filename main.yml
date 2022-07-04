@@ -29,6 +29,13 @@
       set_fact:
         gid: "{{ result.stdout }}"
 
+
+    - name: Install playbook dependencies
+      dnf:
+        name:
+          - python3-libselinux
+          - python3-lxml
+
   roles:
     - packages
     - docker
