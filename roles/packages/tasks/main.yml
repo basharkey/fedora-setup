@@ -41,7 +41,6 @@
 
 - name: Setup flatpak
   block:
-  become: false
     - name: Enable flathub repository
       flatpak_remote:
         name: flathub
@@ -62,3 +61,4 @@
         state: present
         method: user
       loop: "{{ flatpak_packages }}"
+  become: false
