@@ -36,11 +36,6 @@
     name: systemd-modules-load
     state: restarted
 
-- name: Reload all kernel variables
-  systemd:
-    name: systemd-sysctl
-    state: restarted
-
 # required by greetd to run user only apps
 # e.g. files in "/home/user/.local/bin/"
 - name: Copy sh .profile
