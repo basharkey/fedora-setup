@@ -1,0 +1,8 @@
+[Unit]
+Description=nas automount
+
+[Automount]
+Where={{ smb_mount }}
+
+[Install]
+WantedBy=multi-user.target

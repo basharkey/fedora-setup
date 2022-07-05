@@ -1,0 +1,121 @@
+---
+# tasks file for home
+- name: Add user to groups
+  user:
+    name: "{{ user }}"
+    groups: "{{ user_groups }}"
+
+- name: Create user dirs
+  file:
+    path: "{{ home }}/{{ item }}"
+    state: directory
+    recurse: yes
+    mode: 0755
+  loop:
+    - Documents
+    - Downloads
+    - Pictures
+    - Videos
+    - Music
+    - Desktop
+    - Templates
+    - Public
+    - projects
+    - .local/bin
+    - .config/systemd/user
+    - .config/gtk-3.0
+  become: no
+
+- name: Copy kernel modules
+  copy:
+    src: modules-load.d/
+    dest: /etc/modules-load.d/
+
+- name: Reload all kernel modules
+  systemd:
+    name: systemd-modules-load
+    state: restarted
+
+- name: Reload all kernel variables
+  systemd:
+    name: systemd-sysctl
+    state: restarted
+
+- name: Set graphical as default target
+  command: systemctl set-default graphical.target
+
+- name: Template greetd configuration
+  template:
+    src: greetd/config.toml.j2
+    dest: /etc/greetd/config.toml
+
+- name: Enable greetd service
+  systemd:
+    name: greetd
+    enabled: yes
+
+- name: Template smb mount
+  template:
+    src: smb.mount.j2
+    dest: "/etc/systemd/system/{{ smb_mount[1:] | replace('/','-') }}.mount"
+
+- name: Template smb automount
+  template:
+    src: smb.automount.j2
+    dest: "/etc/systemd/system/{{ smb_mount[1:] | replace('/','-') }}.automount"
+
+- name: Template smb mount credential file
+  template:
+    src: smbpasswd.j2
+    dest: "{{ home }}/.smbpasswd"
+    mode: 0600
+
+- name: Start and enable smb automount
+  systemd:
+    daemon_reload: yes
+    name: "{{ smb_mount[1:] | replace('/','-') }}.automount"
+    state: started
+    enabled: yes
+
+- name: Copy systemd user units
+  copy:
+    src: "systemd/user/"
+    dest: "{{ home }}/.config/systemd/user/"
+  become: no
+
+- name: Start and enable systemd user units
+  systemd:
+    daemon_reload: yes
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+    scope: user
+  loop: "{{ systemd_user_units }}"
+  become: no
+
+- name: Template gtk bookmarks
+  template:
+    src: gtk-3.0/bookmarks.j2
+    dest: "{{ home }}/.config/gtk-3.0/bookmarks"
+    force: yes
+  become: no
+
+- name: Install wayweather dependencies
+  dnf:
+    name:
+      - python3-pyyaml
+      - python3-beautifulsoup4
+
+- name: Install wayweather
+  get_url:
+    url: https://raw.githubusercontent.com/basharkey/wayweather/main/wayweather.py
+    dest: "{{ home }}/.local/bin/wayweather"
+    mode: 0755
+  become: no
+
+- name: Install spotifyvctl
+  get_url:
+    url: https://raw.githubusercontent.com/basharkey/spotifyvctl/main/spotifyvctl.py
+    dest: "{{ home }}/.local/bin/spotifyvctl"
+    mode: 0755
+  become: no

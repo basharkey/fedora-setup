@@ -1,5 +1,0 @@
-# logon daemons
-exec --no-startup-id lxpolkit
-exec --no-startup-id thunar --daemon
-exec --no-startup-id nextcloud --background
-exec --no-startup-id wlsunset
