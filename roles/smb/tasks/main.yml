@@ -1,0 +1,25 @@
+---
+# tasks file for smb
+- name: Template smb mount
+  template:
+    src: smb.mount.j2
+    dest: "/etc/systemd/system/{{ smb_mount[1:] | replace('/','-') }}.mount"
+
+- name: Template smb automount
+  template:
+    src: smb.automount.j2
+    dest: "/etc/systemd/system/{{ smb_mount[1:] | replace('/','-') }}.automount"
+
+- name: Template smb mount credential file
+  template:
+    src: smbpasswd.j2
+    dest: "{{ home }}/.smbpasswd"
+    mode: 0600
+
+- name: Start and enable smb automount
+  systemd:
+    daemon_reload: yes
+    name: "{{ smb_mount[1:] | replace('/','-') }}.automount"
+    state: started
+    enabled: yes
+

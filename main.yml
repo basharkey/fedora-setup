@@ -40,8 +40,8 @@
     #- packages
     #- geerlingguy.docker
     - home
+    - smb
     #
-    #- samba
     #- bridge-interface 
     #- vfio
     #- libvirt-hooks
