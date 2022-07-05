@@ -70,6 +70,23 @@
   loop: "{{ systemd_user_units }}"
   become: no
 
+- name: Check if dotfiles repo already exists in home dir
+  stat:
+    path: "{{ home }}/.git"
+  register: dotfiles
+
+- name: Put dotfiles repo in home dir
+  when: not dotfiles.stat.exists
+  command: "{{ item }}"
+  args:
+    chdir: "{{ home }}"
+  loop:
+    - git init
+    - git remote add origin https://github.com/basharkey/dotfiles.git
+    - git fetch
+    - git checkout -t origin/main -f
+  become: no
+
 - name: Template gtk bookmarks
   template:
     src: gtk-3.0/bookmarks.j2
