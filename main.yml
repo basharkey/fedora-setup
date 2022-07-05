@@ -28,7 +28,6 @@
         register: gid 
       - set_fact:
           gid: "{{ gid.stdout }}"
-      become: no
 
     - name: Install playbook dependencies
       dnf:
@@ -39,10 +38,9 @@
   roles:
     #- packages
     #- geerlingguy.docker
-    - home
-    - smb
-    #
-    #- bridge-interface 
+    #- home
+    #- smb
+    - bridge-interface 
     #- vfio
     #- libvirt-hooks
     #- cpu-governor-hooks

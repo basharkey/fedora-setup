@@ -1,5 +1,10 @@
 ---
 # tasks file for smb
+- name: Install cifs-utils
+  dnf:
+    name: cifs-utils
+    state: latest
+
 - name: Template smb mount
   template:
     src: smb.mount.j2
