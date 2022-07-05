@@ -9,6 +9,7 @@ fedora_packages:
   - "fuzzel"                        # wayland app launcher
   - "polkit"                        # authorization framework (required to launch sway)
   - "alacritty"                     # terminal emulator
+  - "greetd"                        # generic greater daemon
   - "wl-clipboard"                  # wayland clipboard utility
   - "wlsunset"                      # wayland display colour temperature utility
 
@@ -26,6 +27,8 @@ fedora_packages:
   - "usbutils"                      # usb utilities
   - "cifs-utils"                    # smb/cifs mounting utilities
   - "bind-utils"                    # dig/dns querying utilities
+  - "python3"                       # python
+  - "python3-pip"                   # python package manager
   - "python3-virtualenv"            # virtualenv for python
 
   # sound server

@@ -2,33 +2,33 @@
 - hosts: desktop
   become: yes
   pre_tasks:
-    - name: Get username
-      command: id -u -n
-      register: result
+    - name: Get pre-task vars
+      block:
+      - name: Get username var
+        command: id -u -n
+        register: user
+      - set_fact:
+          user: "{{ user.stdout }}"
+
+      - name: Get user home dir
+        user:
+          name: "{{ user }}"
+        register: home
+      - set_fact:
+          home: "{{ home.home }}"
+
+      - name: Get uid var
+        command: id -u
+        register: uid
+      - set_fact:
+          uid: "{{ uid.stdout }}"
+
+      - name: Get gid var
+        command: id -g
+        register: gid 
+      - set_fact:
+          gid: "{{ gid.stdout }}"
       become: no
-
-    - name: Set user var
-      set_fact:
-        user: "{{ result.stdout }}"
-
-    - name: Get uid
-      command: id -u
-      register: result
-      become: no
-
-    - name: Set uid var
-      set_fact:
-        uid: "{{ result.stdout }}"
-
-    - name: Get gid
-      command: id -g
-      register: result
-      become: no
-
-    - name: Set gid var
-      set_fact:
-        gid: "{{ result.stdout }}"
-
 
     - name: Install playbook dependencies
       dnf:
@@ -37,11 +37,13 @@
           - python3-lxml
 
   roles:
-    - packages
-    - docker
-    - configs
-    - samba
-    - bridge-interface 
-    - vfio
-    - libvirt-hooks
-    - cpu-governor-hooks
+    #- packages
+    #- geerlingguy.docker
+    - home
+    #
+    #- samba
+    #- bridge-interface 
+    #- vfio
+    #- libvirt-hooks
+    #- cpu-governor-hooks
+    #- test
