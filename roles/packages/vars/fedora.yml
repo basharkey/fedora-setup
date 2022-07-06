@@ -15,6 +15,7 @@ fedora_packages:
 
   # cli utilities
   - "vim"                           # text editor
+  - "vim-fugitive"                  # vim git plugin
   - "git"                           # version control system
   - "wget"                          # command line utility for retrieving files over HTTP/FTP
   - "curl"                          # command line utility for retrieving files over HTTP/FTP
@@ -23,6 +24,7 @@ fedora_packages:
   - "p7zip"                         # 7zip
   - "tar"                           # tar
   - "rsync"                         # file synchronization utility
+  - "pciutils"                      # lspci
   - "wireguard-tools"               # wireguard vpn
   - "usbutils"                      # usb utilities
   - "cifs-utils"                    # smb/cifs mounting utilities

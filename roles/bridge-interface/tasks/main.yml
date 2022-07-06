@@ -39,20 +39,22 @@
     type: bridge-slave
     state: present
 
-- name: Template libvirt bridge network xml
-  template:
-    src: bridge-network.xml.j2
-    dest: /tmp/bridge-network.xml
-    mode: 0755
-    force: yes
-
 - name: Ensure virtqemud is running
   systemd:
     name: virtqemud
     state: started
 
-- name: Define libvirt bridge network
-  command: virsh net-define /tmp/bridge-network.xml
+- name: Ensure virtnetworkd is running
+  systemd:
+    name: virtnetworkd
+    state: started
+
+- name: Generate libvirt bridge network definition var
+  set_fact:
+    bridge_template: "{{ lookup('template', 'bridge-network.xml.j2') }}"
+
+- name: Add libvirt bridge network definition
+  shell: "virsh net-define <(echo '{{ bridge_template | string }}')"
   register: result
   failed_when: result.rc != 0 and "network '" ~ br_libvirt_net ~ "' already exists" not in result.stderr
 
