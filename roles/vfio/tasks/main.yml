@@ -1,88 +1,48 @@
 ---
 # tasks file for vfio
-- name: Setup vfio
-  when: vfio
+- name: Grub enable iommu
   block:
-    - name: Grub enable iommu
-      block:
-        - name: Check if iommu enabled in grub config
-          command: egrep "(amd|intel)_iommu=on" /etc/default/grub
-
-      rescue:
-        - name: Grub enable amd iommu
-          command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
-          when: ansible_processor[1] == "AuthenticAMD"
-        
-        - name: Grub enable intel iommu
-          command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
-          when: ansible_processor[1] == "GenuineIntel"
-        
-        - name: Write grub config
-          command: grub2-mkconfig > /etc/grub2-efi.cfg 
-
-    - name: Start and enable virtqemud
-      systemd:
-        name: virtqemud
-        state: started
-        enabled: yes
-
-    - name: Initialize pci device list
-      set_fact:
-        vfio_pci_devices: []
-
-    - name: Combine pci device lists
-      set_fact:
-        vfio_pci_devices: "{{ vfio_pci_devices +  item.pci_devices }}"
-      with_items: "{{ vfio_vms }}"
-
-    - name: Get xml dumps for pci devices
-      shell: "virsh nodedev-dumpxml {{ item }} > /tmp/{{ item }}.xml"
-      loop: "{{ vfio_pci_devices }}"
+    - name: Check if iommu enabled in grub config
+      command: egrep "(amd|intel)_iommu=on" /etc/default/grub
+  rescue:
+    - name: Grub enable amd iommu
+      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
+      when: ansible_processor[1] == "AuthenticAMD"
     
-    - name: Set initial config
-      set_fact:
-        modprobe_conf: "options vfio-pci ids="
+    - name: Grub enable intel iommu
+      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
+      when: ansible_processor[1] == "GenuineIntel"
     
-    - name: Add pci ids to config
-      include_tasks: gen-modprobe-conf.yml
-      loop: "{{ vfio_pci_devices }}"
-    
-    - name: Template modprobe config
-      template:
-        src: vfio-options.conf.j2
-        dest: /etc/modprobe.d/vfio.conf
-        mode: 0644
-        force: yes
-      register: vfio_options
-    
-    - name: Check for vfio modules config
-      stat:
-        path: /etc/modules-load.d/vfio.conf
-      register: vfio_modules
-    
-    - name: Enable vfio modules
-      when: not vfio_modules.stat.exists
-      copy:
-        src: vfio-modules.conf
-        dest: /etc/modules-load.d/vfio.conf
-    
-    - name: Update initramfs
-      command: dracut -fv
-      when: not vfio_modules.stat.exists or vfio_options.changed
+    - name: Write grub config
+      command: grub2-mkconfig > /etc/grub2-efi.cfg 
 
-    - name: Install virtio-win repo
-      get_url:
-        url: https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo
-        dest: /etc/yum.repos.d/virtio-win.repo
-    
-    - name: Install virtio-win drivers iso
-      # /usr/share/virtio-win/virtio-win.iso
-      dnf:
-        name: virtio-win
-        state: latest
+- name: Start and enable virtqemud
+  systemd:
+    name: virtqemud
+    state: started
+    enabled: yes
 
-    - name: Build vm
-      include_tasks: build-vm.yml
-      loop: "{{ vfio_vms  }}"
-      loop_control:
-        loop_var: vm
+- name: Copy vfio modules config
+  copy:
+    src: vfio-modules.conf
+    dest: /etc/modules-load.d/vfio.conf
+
+- name: Template vfio module options config
+  template:
+    src: vfio-options.conf.j2
+    dest: /etc/modprobe.d/vfio.conf
+    mode: 0644
+
+- name: Update initramfs
+  command: dracut -fv
+
+- name: Install virtio-win repo
+  get_url:
+    url: https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo
+    dest: /etc/yum.repos.d/virtio-win.repo
+
+- name: Install virtio-win drivers iso
+  # /usr/share/virtio-win/virtio-win.iso
+  dnf:
+    name: virtio-win
+    state: latest

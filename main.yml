@@ -39,10 +39,12 @@
   roles:
     #- packages
     #- geerlingguy.docker
-    - home
+    #- home
     #- smb
     #- bridge-interface 
+    #
     #- vfio
+    - passthrough-vm
     #- libvirt-hooks
     #- cpu-governor-hooks
     #- test

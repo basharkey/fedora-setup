@@ -1,0 +1,60 @@
+<domain type='qemu'>
+  <name>{{ vm.name }}</name>
+  <uuid>{{ uuid }}</uuid>
+  <memory unit='GiB'>{{ vm.memory }}</memory>
+  <vcpu placement='static'>{{ vm.cores * vm.threads }}</vcpu>
+  <os>
+    <type arch='x86_64' machine='q35'>hvm</type>
+    <loader readonly='yes' type='pflash'>/usr/share/edk2/ovmf/OVMF_CODE.fd</loader>
+    <nvram>/var/lib/libvirt/qemu/nvram/{{ vm.name }}_VARS.fd</nvram>
+  </os>
+  <features>
+    <acpi/>
+    <hyperv>
+      <vendor_id state='on' value='1234567879ab'/>
+    </hyperv>
+    <kvm>
+      <hidden state='on'/>
+    </kvm>
+    <vmport state='off'/>
+  </features>
+  <cpu mode='host-model' check='partial'>
+    <topology sockets='1' dies='1' cores='{{ vm.cores }}' threads='{{ vm.threads }}'/>
+  </cpu>
+  <clock offset='localtime'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+  <devices>
+{% if vm.disk is defined %}
+    <disk type='block' device='disk'>
+      <driver name='qemu' type='raw' cache='none' io='native'/>
+      <source dev='{{ vm.disk }}'/>
+      <target dev='vda' bus='virtio'/>
+      <boot order='1'/>
+    </disk>
+{% endif %}
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/usr/share/virtio-win/virtio-win.iso'/>
+      <target dev='sda' bus='sata'/>
+      <readonly/>
+    </disk>
+    <controller type='pci' index='0' model='pcie-root'/>
+    <interface type='network'>
+      <source network='default'/>
+      <model type='virtio'/>
+    </interface>
+{% if vm.mouse is defined %}
+    <input type='evdev'>
+      <source dev='{{ vm.mouse }}'/>
+    </input>
+{% endif %}
+{% if vm.keyboard is defined %}
+    <input type='evdev'>
+      <source dev='{{ vm.keyboard }}' grab='all' repeat='on'/>
+    </input>
+{% endif %}
+  </devices>
+</domain>

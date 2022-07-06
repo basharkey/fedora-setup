@@ -1,4 +1,4 @@
-# fedora-setup
+# fedora-ansible
 ## List pci devices
 ```
 sudo dnf install -y pciutils

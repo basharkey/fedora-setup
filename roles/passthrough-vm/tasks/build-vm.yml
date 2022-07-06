@@ -1,0 +1,27 @@
+---
+- name: Get vm uuid
+  block:
+    - name: Check get vm uuid if it is already defined
+      command: "virsh domuuid {{ vm.name }}"
+      register: uuid
+    - set_fact:
+        uuid: " {{ uuid.stdout }}"
+  rescue:
+    - name: Set uuid to empty string
+      set_fact:
+        uuid: ""
+
+- template:
+    src: vm.xml.j2
+    dest: "/etc/libvirt/qemu/{{ vm.name }}.xml"
+
+- name: Define vm
+  virt:
+    command: define
+    xml: "{{ lookup('template', 'vm.xml.j2') }}"
+
+- name: Build pci devices
+  include_tasks: build-pci.yml
+  loop: "{{ vm.pci_devices  }}"
+  loop_control:
+    loop_var: device

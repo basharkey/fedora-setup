@@ -1,1 +1,1 @@
-{{ modprobe_conf }}
+options vfio-pci ids={{ vfio_bind_ids | join(",") }}
