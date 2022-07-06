@@ -37,14 +37,10 @@
           - python3-lxml
 
   roles:
-    #- packages
-    #- geerlingguy.docker
-    #- home
-    #- smb
-    #- bridge-interface 
-    #
-    #- vfio
+    - packages
+    - geerlingguy.docker
+    - home
+    - smb
+    - bridge-interface 
+    - vfio
     - passthrough-vm
-    #- libvirt-hooks
-    #- cpu-governor-hooks
-    #- test

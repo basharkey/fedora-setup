@@ -21,7 +21,47 @@
     xml: "{{ lookup('template', 'vm.xml.j2') }}"
 
 - name: Build pci devices
+  when: vm.pci_devices is defined
   include_tasks: build-pci.yml
   loop: "{{ vm.pci_devices  }}"
   loop_control:
     loop_var: device
+
+- name: Setup libvirt hooks
+  when: vm.libvirt_hooks
+  block:
+    - name: Create hook directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        recurse: yes
+      loop:
+        - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin/"
+        - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end/"
+
+    - name: Copy hooks script
+      copy:
+        src: hooks/qemu
+        dest: /etc/libvirt/hooks/qemu
+        mode: 0755
+    
+    - name: Copy power on hook scripts
+      synchronize:
+        src: hooks/begin/
+        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin/"
+        rsync_opts:
+          - "--chmod=F0755"
+          - "--chown=root:root"
+
+    - name: Copy shutdown hook scripts
+      synchronize:
+        src: hooks/end/
+        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end/"
+        rsync_opts:
+          - "--chmod=F0755"
+          - "--chown=root:root"
+
+    - name: Restart virtqemud to load hooks
+      systemd:
+        name: virtqemud
+        state: restarted
