@@ -88,6 +88,7 @@
     - git remote add origin https://github.com/basharkey/dotfiles.git
     - git fetch
     - git checkout -t origin/main -f
+    - git remote set-url origin git@github.com:basharkey/dotfiles.git
   become: no
 
 - name: Template gtk bookmarks
