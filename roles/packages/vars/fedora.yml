@@ -32,6 +32,7 @@ fedora_packages:
   - "python3"                       # python
   - "python3-pip"                   # python package manager
   - "python3-virtualenv"            # virtualenv for python
+  - "pandoc"                        # markup format converter
 
   # sound server
   - "pipewire"                      # sound server

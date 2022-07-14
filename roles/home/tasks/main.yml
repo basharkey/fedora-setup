@@ -23,6 +23,7 @@
     - projects
     - .local/bin
     - .config/systemd/user
+    - .config/nas-backup
     - .config/gtk-3.0
   become: no
 
@@ -56,6 +57,12 @@
   systemd:
     name: greetd
     enabled: yes
+
+- name: Copy nas-backup configs
+  copy:
+    src: nas-backup/
+    dest: "{{ home }}/.config/nas-backup/"
+  become: no
 
 - name: Copy systemd user units
   copy:
