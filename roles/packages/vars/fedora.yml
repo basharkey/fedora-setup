@@ -61,9 +61,6 @@ fedora_packages:
   - "firefox-wayland"               # web browser
   - "@virtualization"               # qemu/kvm virtual machines
   - "flatpak"                       # alternative package manager
-  - "gnome-keyring"                 # framework for managing password and secrets
-  - "gnome-keyring-pam"             # required to create/unlock keyring on login
-  - "seahorse"                      # gui secrets manager
   - "evolution"                     # email client
   - "openh264"                      # h.264/mpeg-4 avc
   - "keepassxc"                     # password manager
