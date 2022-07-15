@@ -12,6 +12,7 @@ fedora_packages:
   - "greetd"                        # generic greater daemon
   - "wl-clipboard"                  # wayland clipboard utility
   - "wlsunset"                      # wayland display colour temperature utility
+  - "xdg-desktop-portal-gnome"      # fixes urls not opening for flatpak apps
 
   # cli utilities
   - "vim"                           # text editor
