@@ -41,8 +41,16 @@
     url: https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo
     dest: /etc/yum.repos.d/virtio-win.repo
 
+# install virtio-win driver version 0.1.208
+# newer versions used for virtio nic cause vm to freeze
 - name: Install virtio-win drivers iso
-  # /usr/share/virtio-win/virtio-win.iso
   dnf:
-    name: virtio-win
-    state: latest
+    name: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.208-1/virtio-win-0.1.208-1.noarch.rpm
+    state: present
+    disable_gpg_check: yes
+
+#- name: Install virtio-win drivers iso
+#  # /usr/share/virtio-win/virtio-win.iso
+#  dnf:
+#    name: virtio-win
+#    state: latest

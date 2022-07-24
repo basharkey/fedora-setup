@@ -2,7 +2,20 @@
   <name>{{ vm.name }}</name>
   <uuid>{{ uuid }}</uuid>
   <memory unit='GiB'>{{ vm.memory }}</memory>
-  <vcpu placement='static'>{{ vm.cores * vm.threads }}</vcpu>
+  <vcpu placement='static'>8</vcpu>
+  <iothreads>1</iothreads>
+  <cputune>
+    <vcpupin vcpu='0' cpuset='0'/>
+    <vcpupin vcpu='1' cpuset='1'/>
+    <vcpupin vcpu='2' cpuset='2'/>
+    <vcpupin vcpu='3' cpuset='3'/>
+    <vcpupin vcpu='4' cpuset='4'/>
+    <vcpupin vcpu='5' cpuset='5'/>
+    <vcpupin vcpu='6' cpuset='6'/>
+    <vcpupin vcpu='7' cpuset='7'/>
+    <emulatorpin cpuset='8-9'/>
+    <iothreadpin iothread='1' cpuset='10-11'/>
+  </cputune>
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>
     <loader readonly='yes' type='pflash'>/usr/share/edk2/ovmf/OVMF_CODE.fd</loader>
@@ -19,8 +32,8 @@
     </kvm>
     <vmport state='off'/>
   </features>
-  <cpu mode='host-model' check='partial'>
-    <topology sockets='1' dies='1' cores='{{ vm.cores }}' threads='{{ vm.threads }}'/>
+  <cpu mode='host-passthrough' check='none'>
+    <topology sockets='1' cores='4' threads='2'/>
   </cpu>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>
@@ -30,7 +43,7 @@
   <devices>
 {% if vm.disk is defined %}
     <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='none' io='native'/>
+      <driver name='qemu' type='raw' cache='writeback' discard='unmap' iothread='1' queues='8'/>
       <source dev='{{ vm.disk }}'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
@@ -46,6 +59,7 @@
     <interface type='network'>
       <source network='default'/>
       <model type='virtio'/>
+      <driver queues='8'/>
     </interface>
 {% if vm.mouse is defined %}
     <input type='evdev'>
