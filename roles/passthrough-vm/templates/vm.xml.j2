@@ -5,16 +5,16 @@
   <vcpu placement='static'>8</vcpu>
   <iothreads>1</iothreads>
   <cputune>
-    <vcpupin vcpu='0' cpuset='0'/>
-    <vcpupin vcpu='1' cpuset='1'/>
-    <vcpupin vcpu='2' cpuset='2'/>
-    <vcpupin vcpu='3' cpuset='3'/>
-    <vcpupin vcpu='4' cpuset='4'/>
-    <vcpupin vcpu='5' cpuset='5'/>
-    <vcpupin vcpu='6' cpuset='6'/>
-    <vcpupin vcpu='7' cpuset='7'/>
-    <emulatorpin cpuset='8-9'/>
-    <iothreadpin iothread='1' cpuset='10-11'/>
+    <vcpupin vcpu='0' cpuset='8'/>
+    <vcpupin vcpu='1' cpuset='9'/>
+    <vcpupin vcpu='2' cpuset='10'/>
+    <vcpupin vcpu='3' cpuset='11'/>
+    <vcpupin vcpu='4' cpuset='12'/>
+    <vcpupin vcpu='5' cpuset='13'/>
+    <vcpupin vcpu='6' cpuset='14'/>
+    <vcpupin vcpu='7' cpuset='15'/>
+    <emulatorpin cpuset='4-5'/>
+    <iothreadpin iothread='1' cpuset='6-7'/>
   </cputune>
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>
@@ -56,8 +56,8 @@
       <readonly/>
     </disk>
     <controller type='pci' index='0' model='pcie-root'/>
-    <interface type='network'>
-      <source network='default'/>
+    <interface type='bridge'>
+      <source bridge='br0'/>
       <model type='virtio'/>
       <driver queues='8'/>
     </interface>

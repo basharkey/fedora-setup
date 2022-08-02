@@ -30,36 +30,36 @@
 - name: Setup libvirt hooks
   when: vm.libvirt_hooks
   block:
-    - name: Create hook directories
+    - name: Create libvirt hooks script directory
       file:
-        path: "{{ item }}"
+        path: /etc/libvirt/hooks
         state: directory
-        recurse: yes
-      loop:
-        - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin/"
-        - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end/"
 
-    - name: Copy hooks script
+    - name: Copy libvirt hooks script
       copy:
         src: hooks/qemu
         dest: /etc/libvirt/hooks/qemu
         mode: 0755
     
+    - name: Create vm hook directories
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin"
+        - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end"
+
     - name: Copy power on hook scripts
-      synchronize:
-        src: hooks/begin/
-        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin/"
-        rsync_opts:
-          - "--chmod=F0755"
-          - "--chown=root:root"
+      copy:
+        src: hooks/begin
+        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare"
+        mode: 0755
 
     - name: Copy shutdown hook scripts
-      synchronize:
-        src: hooks/end/
-        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end/"
-        rsync_opts:
-          - "--chmod=F0755"
-          - "--chown=root:root"
+      copy:
+        src: hooks/end
+        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release"
+        mode: 0755
 
     - name: Restart virtqemud to load hooks
       systemd:
