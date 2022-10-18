@@ -3,7 +3,6 @@
   <uuid>{{ uuid }}</uuid>
   <memory unit='GiB'>{{ vm.memory }}</memory>
   <vcpu placement='static'>8</vcpu>
-  <iothreads>1</iothreads>
   <cputune>
     <vcpupin vcpu='0' cpuset='8'/>
     <vcpupin vcpu='1' cpuset='9'/>
@@ -13,20 +12,17 @@
     <vcpupin vcpu='5' cpuset='13'/>
     <vcpupin vcpu='6' cpuset='14'/>
     <vcpupin vcpu='7' cpuset='15'/>
-    <emulatorpin cpuset='4-5'/>
-    <iothreadpin iothread='1' cpuset='6-7'/>
+    <emulatorpin cpuset='6-7'/>
   </cputune>
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>
     <loader readonly='yes' type='pflash'>/usr/share/edk2/ovmf/OVMF_CODE.fd</loader>
     <nvram>/var/lib/libvirt/qemu/nvram/{{ vm.name }}_VARS.fd</nvram>
+    <smbios mode='host'/>
   </os>
   <features>
     <acpi/>
     <apic/>
-    <hyperv>
-      <vendor_id state='on' value='1234567879ab'/>
-    </hyperv>
     <kvm>
       <hidden state='on'/>
     </kvm>
@@ -43,9 +39,9 @@
   <devices>
 {% if vm.disk is defined %}
     <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='writeback' discard='unmap' iothread='1' queues='8'/>
+      <driver name='qemu' type='raw' cache='writeback' discard='unmap'/>
       <source dev='{{ vm.disk }}'/>
-      <target dev='vda' bus='virtio'/>
+      <target dev='sdb' bus='sata'/>
       <boot order='1'/>
     </disk>
 {% endif %}
