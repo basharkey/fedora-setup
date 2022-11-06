@@ -1,0 +1,10 @@
+[Unit]
+Description=manpack timer
+
+[Timer]
+Unit=manpack.service
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target

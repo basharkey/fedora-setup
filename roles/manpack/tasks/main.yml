@@ -1,0 +1,62 @@
+---
+- name: Install audit
+  dnf:
+    name: audit
+    state: latest
+
+- name: Copy auditd.conf
+  copy:
+    src: auditd.conf
+    dest: /etc/audit/auditd.conf
+    mode: 0640
+
+- name: Copy manpack.rules
+  copy:
+    src: manpack.rules
+    dest: /etc/audit/rules.d/manpack.rules
+    mode: 0640
+
+- name: Template auditd.service that allows manual restarts
+  template:
+    src: auditd.service.j2
+    dest: /etc/systemd/system/auditd.service
+    mode: 0644
+
+- name: Restart and enable auditd.service
+  systemd:
+    daemon_reload: yes
+    name: auditd.service
+    state: restarted
+    enabled: yes
+
+- name: Copy manpack.sh
+  copy:
+    src: manpack.sh
+    dest: /usr/local/sbin/manpack.sh
+    mode: 0755
+
+- name: Create manpack dir
+  file:
+    path: "{{ manpack_dir }}"
+    state: directory
+    recurse: yes
+    mode: 0755
+
+- name: Template manpack.service
+  template:
+    src: manpack.service.j2
+    dest: /etc/systemd/system/manpack.service
+    mode: 0644
+
+- name: Copy manpack.timer
+  copy:
+    src: manpack.timer
+    dest: /etc/systemd/system/manpack.timer
+    mode: 0644
+
+- name: Start and enable manpack.timer
+  systemd:
+    daemon_reload: yes
+    name: manpack.timer
+    state: started
+    enabled: yes
