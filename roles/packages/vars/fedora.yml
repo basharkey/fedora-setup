@@ -87,3 +87,4 @@ fedora_packages:
   - "lxpolkit"                      # gui polkit agent
   - "openssh-askpass"               # prompt when using ssh-agent keys
   - "python3-beautifulsoup4"        # waybar-weather.py dependency
+  - "clementine"                    # music player and playlist creator
