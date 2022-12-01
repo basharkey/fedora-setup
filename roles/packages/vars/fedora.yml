@@ -52,9 +52,7 @@ fedora_packages:
   - "google-noto-sans-mono-fonts"   # noto mono fonts
 
   # gui applications
-  - "Thunar"                        # thunar file manager
-  - "thunar-volman"                 # thunar drive automount
-  - "thunar-archive-plugin"         # thunar archive manager plugin
+  - "pcmanfm"                       # file manager
   - "xarchiver"                     # xfce archive manager
   - "gvfs-fuse"                     # virtual filesystem
   - "gvfs-smb"                      # smb support for gvfs
