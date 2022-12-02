@@ -38,7 +38,7 @@ if [[ "$pkgs_installed" = *[![:space:]]* ]]; then
         touch "$ldnf_log"
     fi
 
-    echo -e "\nLDNF added packages to log:"
+    echo -e "\nLDNF packages added to log:"
     for pkg in ${pkgs_installed}; do
         # add packages to log
         echo "$pkg" >> "$ldnf_log"
@@ -48,7 +48,7 @@ fi
 
 # check if $pkgs_remove contains non-whitespace (is empty)
 if [[ "$pkgs_removed" = *[![:space:]]* ]]; then
-    echo -e "\nLDNF removed packages from log:"
+    echo -e "\nLDNF packages removed from log:"
     for pkg in ${pkgs_removed}; do
         # remove packages from log
         sed -i "/$pkg/d" "$ldnf_log"
