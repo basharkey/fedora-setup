@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
-# when command fails exit script instead of continuing
-set -o errexit
-# treat command as failed if one command in a pipline fails
-set -o pipefail
+# ldnf v2.0
 
 if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     echo 'Usage: ldnf [dnf options] DNF COMMAND
@@ -20,41 +17,41 @@ for i in $*; do
     params="$params $i"
 done
 
-dnf=$(dnf --color=always$params | tee /dev/tty)
-echo "$dnf"
-pkgs=$(
-    # get text between 'Installed:' and 'Complete!'
-    awk '/Installed:/,/Complete!/' <<< "$dnf" |
-    # remove lines that contain 'Installed:'
-    grep --invert-match 'Installed:' |
-    # remove lines that contain 'Complete!'
-    grep --invert-match 'Complete!' |
-    # format package names as lines
-    xargs --max-args 1 |
-    # remove package version from package name
-    awk --field-separator '-[0-9]+.' '{ print $1 }'
-)
+pkgs_old=$(dnf list --installed | tail -n +2 | cut -d' ' -f1 | cut -d'.' -f1)
+
+dnf$params
+
+pkgs_new=$(dnf list --installed | tail -n +2 | cut -d' ' -f1 | cut -d'.' -f1)
+pkgs_diff=$(diff <(echo "$pkgs_old") <(echo "$pkgs_new"))
+
+# > installed packages
+pkgs_installed=$(grep '>' <<< "$pkgs_diff" | cut -d' ' -f2)
+# < removed packages
+pkgs_removed=$(grep '<' <<< "$pkgs_diff" | cut -d' ' -f2)
 
 ldnf_log=/var/log/ldnf.log
-logging=false
-for pkg in ${pkgs}; do
-    if ! grep --quiet --word-regexp "$pkg" "$ldnf_log"; then
-        logging=true
-    fi
-done
-
-if $logging; then
-    # create ldnf log if it doesn't exist
+# check if $pkgs_installed contains non-whitespace (is empty)
+if [[ "$pkgs_installed" = *[![:space:]]* ]]; then
+    # create ldnf log if it does not exist
     if [ ! -f "$ldnf_log" ]; then
         mkdir -p "$(dirname $ldnf_log)"
         touch "$ldnf_log"
     fi
 
-    echo -e "\nLDNF logging:"
-    for pkg in ${pkgs}; do
-        if ! grep --quiet --word-regexp "$pkg" "$ldnf_log"; then
-            echo "  $pkg"
-            echo "$pkg" >> "$ldnf_log"
-        fi
+    echo -e "\nLDNF added packages to log:"
+    for pkg in ${pkgs_installed}; do
+        # add packages to log
+        echo "$pkg" >> "$ldnf_log"
+        echo "  $pkg"
+    done
+fi
+
+# check if $pkgs_remove contains non-whitespace (is empty)
+if [[ "$pkgs_removed" = *[![:space:]]* ]]; then
+    echo -e "\nLDNF removed packages from log:"
+    for pkg in ${pkgs_removed}; do
+        # remove packages from log
+        sed -i "/$pkg/d" "$ldnf_log"
+        echo "  $pkg"
     done
 fi
