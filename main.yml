@@ -44,4 +44,4 @@
     - bridge-interface 
     - vfio
     - passthrough-vm
-    - manpack
+    - ldnf
