@@ -34,7 +34,7 @@ ldnf_log=/var/log/ldnf.log
 if [[ "$pkgs_installed" = *[![:space:]]* ]]; then
     # create ldnf log if it does not exist
     if [[ ! -f "$ldnf_log" ]]; then
-        mkdir -p "$(dirname $ldnf_log)"
+        mkdir -p "$(dirname "$ldnf_log")"
         touch "$ldnf_log"
     fi
 

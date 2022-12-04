@@ -10,14 +10,15 @@ exec_option () {
 
 all_args_except_last=${@:1:$#-1}
 last_arg=${@:$#}
-cache_file=~/.cache/toggle/toggle
+
+cache_file="$HOME/.cache/toggle/$@"
 
 # split last arg into array
 IFS=' ' read -a options <<< "$last_arg"
 
 # if cache file doesn't exit
 if [[ ! -f "$cache_file" ]]; then
-    mkdir -p "$(dirname $cache_file)"
+    mkdir -p "$(dirname "$cache_file")"
     # set $current_option to last option so it flips back to first option
     current_option="${options[@]: -1:1}"
 # else set to $current_option to $cache_file value
