@@ -80,9 +80,11 @@ fedora_packages:
   - "grimshot"                      # screenshot utility
   - "quiterss"                      # RSS reader
   - "evince"                        # document viewer (pdf)
-  - "ristretto"                     # photo viewer (also enables thunar image file previews)
+  - "feh"                           # photo viewer
   - "nextcloud-client"              # nextcloud
   - "lxpolkit"                      # gui polkit agent
   - "openssh-askpass"               # prompt when using ssh-agent keys
   - "python3-beautifulsoup4"        # waybar-weather.py dependency
   - "clementine"                    # music player and playlist creator
+  - "gscan2pdf"                     # scanner application
+  - "cups"                          # printing service

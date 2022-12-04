@@ -1,6 +1,7 @@
 ---
 rpmfusion_packages:
   - "vlc"                                 # media player
+  - "mpv"                                 # media player
   - "obs-studio"                          # recording and livestreaming software
   - "wf-recorder"                         # wayland screen recorder
   - "akmod-v4l2loopback"                  # virtual video devices kernel module
