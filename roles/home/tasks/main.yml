@@ -112,11 +112,24 @@
     force: yes
   become: no
 
+- name: Install toggle dependencies
+  dnf:
+    name: festival
+    state: present
+
+- name: Install toggle
+  copy:
+    src: toggle.sh
+    dest: "{{ home }}/.local/bin/toggle"
+    mode: 0755
+  become: no
+
 - name: Install wayweather dependencies
   dnf:
     name:
       - python3-pyyaml
       - python3-beautifulsoup4
+    state: present
 
 - name: Install wayweather
   get_url:
