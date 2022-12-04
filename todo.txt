@@ -1,13 +1,3 @@
-done - libvirt bridge adapter
-done - systemd user rsync backup
-done - multiple vfio vms
-done - thunar --daemon # could replace udiskie for automount
-done - docker
-partially done -pull custom apps from github (waybar-weather, waybar-crypto)
-
-keepassxc as secret service - version 2.7.0 makes this more viable
-sync all files from nas to desktop
-
 Laptop
 packages
 iwl7260-firmware

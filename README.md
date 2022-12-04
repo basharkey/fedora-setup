@@ -1,10 +1,11 @@
 # fedora-ansible
 1. Edit hosts.yml file
 2. Edit vault.yml file
-3. `make deps` install playbook dependencies and encrypt vault.yml
-3. `make install` run playbook
+3. `make deps` to install playbook dependencies
+4. `make vault` to encrypt vault.yml
+5. `make install` to run playbook
 
-## Get PCI IDs for hosts file
+## Get PCI IDs for hosts.yml
 Install `lspci`:
 ```
 sudo dnf install -y pciutils
