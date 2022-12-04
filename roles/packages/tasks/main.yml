@@ -1,11 +1,5 @@
 ---
 # tasks file for packages
-- name: Upgrade all packages
-  dnf:
-    name: "*"
-    state: latest
-    exclude: "{{ package_upgrade_exclusions }}"
-
 - name: Load package vars
   include_vars:
     dir: vars
