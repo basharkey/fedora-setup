@@ -79,6 +79,14 @@
   loop: "{{ systemd_user_units }}"
   become: no
 
+- name: Start and enable systemd system units
+  systemd:
+    daemon_reload: yes
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: "{{ systemd_system_units }}"
+
 - name: Check if dotfiles repo already exists in home dir
   stat:
     path: "{{ home }}/.git"
