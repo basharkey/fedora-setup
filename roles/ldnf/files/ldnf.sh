@@ -13,13 +13,13 @@ ldnf search feh
     exit
 fi
 
-for i in $*; do
-    params="$params $i"
+for i in "$@"; do
+    args="$args $i"
 done
 
 pkgs_old=$(dnf list --installed | tail -n +2 | cut -d' ' -f1 | cut -d'.' -f1)
 
-dnf$params
+dnf$args
 
 pkgs_new=$(dnf list --installed | tail -n +2 | cut -d' ' -f1 | cut -d'.' -f1)
 pkgs_diff=$(diff <(echo "$pkgs_old") <(echo "$pkgs_new"))
@@ -33,7 +33,7 @@ ldnf_log=/var/log/ldnf.log
 # check if $pkgs_installed contains non-whitespace (is empty)
 if [[ "$pkgs_installed" = *[![:space:]]* ]]; then
     # create ldnf log if it does not exist
-    if [ ! -f "$ldnf_log" ]; then
+    if [[ ! -f "$ldnf_log" ]]; then
         mkdir -p "$(dirname $ldnf_log)"
         touch "$ldnf_log"
     fi
