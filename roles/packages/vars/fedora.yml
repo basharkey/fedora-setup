@@ -62,6 +62,7 @@ fedora_packages:
   - "@virtualization"               # qemu/kvm virtual machines
   - "flatpak"                       # alternative package manager
   - "evolution"                     # email client
+  - "evolution-ews"                 # evolution extension for exchange web services
   - "openh264"                      # h.264/mpeg-4 avc
   - "keepassxc"                     # password manager
   - "seahorse"                      # secrets manager
@@ -69,11 +70,6 @@ fedora_packages:
   - "blueman"                       # bluetooth manager
   - "libreoffice"                   # office software
   - "gimp"                          # photo editor
-  - "Zim"                           # desktop wiki/notes
-  - "gtkspell3"                     # Zim spell check plugin dependency
-  - "python3-sphinx"                # Zim spell check plugin dependency
-  - "python3-enchant"               # Zim spell check plugin dependency
-  - "gtksourceview3"                # Zim source view plugin dependency
   - "wireshark"                     # packet sniffer
   - "qalculate-gtk"                 # calculator
   #- flameshot                      # screenshot utility doesnt work under wayland
@@ -84,7 +80,6 @@ fedora_packages:
   - "nextcloud-client"              # nextcloud
   - "lxpolkit"                      # gui polkit agent
   - "openssh-askpass"               # prompt when using ssh-agent keys
-  - "python3-beautifulsoup4"        # waybar-weather.py dependency
   - "clementine"                    # music player and playlist creator
   - "gscan2pdf"                     # scanner application
   - "cups"                          # printing service
