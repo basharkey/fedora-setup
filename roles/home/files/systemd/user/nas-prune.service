@@ -6,7 +6,7 @@ Wants=nas-prune.timer
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/rsync -rtsv --info progress2 --delete-excluded --exclude-from %h/.config/nas-backup/exclude --files-from %h/.config/nas-backup/include %h/ %h/nas/desktop-backup/
+ExecStart=/usr/bin/rsync -rtsv --info progress2 --delete-excluded --exclude-from %h/.config/nas-backup/exclude --files-from %h/.config/nas-backup/include %h/ %h/nas/desktop/
 
 [Install]
 WantedBy=multi-user.target
