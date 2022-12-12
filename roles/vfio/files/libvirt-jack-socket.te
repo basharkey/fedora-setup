@@ -1,0 +1,18 @@
+
+module libvirt-jack-socket 1.0;
+
+require {
+	type svirt_t;
+	type user_tmp_t;
+        type unconfined_t;
+	type system_dbusd_t;
+	type system_dbusd_var_run_t;
+	class sock_file write;
+        class unix_stream_socket connectto;
+}
+
+#============= svirt_t ==============
+allow svirt_t system_dbusd_var_run_t:sock_file write;
+allow svirt_t user_tmp_t:sock_file write;
+allow svirt_t system_dbusd_t:unix_stream_socket connectto;
+allow svirt_t unconfined_t:unix_stream_socket connectto;

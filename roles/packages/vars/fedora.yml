@@ -42,6 +42,7 @@ fedora_packages:
   - "playerctl"                     # command line media player controller
   - "pavucontrol"                   # pulseaudio gui volume control
   - "easyeffects"                   # pipewire gui equalizer
+  - "qjackctl"                      # jack gui
 
   # themes and fonts
   - "gnome-themes-extra"            # gnome themes including adwaita-dark 

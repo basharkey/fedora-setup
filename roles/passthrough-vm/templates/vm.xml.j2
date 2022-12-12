@@ -1,4 +1,8 @@
+{% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
+<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+{% else %}
 <domain type='kvm'>
+{% endif %}
   <name>{{ vm.name }}</name>
   <uuid>{{ uuid }}</uuid>
   <memory unit='GiB'>{{ vm.memory }}</memory>
@@ -61,6 +65,18 @@
       <model type='virtio'/>
       <driver queues='8'/>
     </interface>
+{% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
+    <sound model='ich9'>
+    </sound>
+    <audio id='1' type='jack'>
+{% if vm.audio_input_device is defined %}
+      <input clientName='{{ vm.name }}' connectPorts='{{ vm.audio_input_device }}'/>
+{% endif %}
+{% if vm.audio_output_device is defined %}
+      <output clientName='{{ vm.name }}' connectPorts='{{ vm.audio_output_device }}'/>
+{% endif %}
+    </audio>
+{% endif %}
 {% if vm.mouse is defined %}
     <input type='evdev'>
       <source dev='{{ vm.mouse }}'/>
@@ -71,5 +87,11 @@
       <source dev='{{ vm.keyboard }}' grab='all' repeat='on'/>
     </input>
 {% endif %}
-  </devices>
+{% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
+    </devices>
+      <qemu:commandline>
+      <qemu:env name='PIPEWIRE_RUNTIME_DIR' value='/run/user/{{ uid }}'/>
+      <qemu:env name='PIPEWIRE_LATENCY' value='512/48000'/>
+    </qemu:commandline>
+{% endif %}
 </domain>

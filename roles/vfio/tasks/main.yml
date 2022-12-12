@@ -1,5 +1,4 @@
 ---
-# tasks file for vfio
 - name: Grub enable iommu
   block:
     - name: Check if iommu enabled in grub config
@@ -15,6 +14,44 @@
     
     - name: Write grub config
       command: grub2-mkconfig > /etc/grub2-efi.cfg 
+
+- name: Template qemu.conf
+  template:
+    src: qemu.conf.j2
+    dest: /etc/libvirt/qemu.conf
+    mode: 0644
+
+- name: Install qemu jack dependencies
+  dnf:
+    name:
+      - pipewire-jack-audio-connection-kit
+      - qemu-audio-jack
+    state: present
+
+- name: Install libvirt-jack-socket selinux module
+  block: 
+    - name: Check if libvirt-jack-socket selinux module is installed
+      shell: semodule -l | grep libvirt-jack-socket
+  rescue:
+    - name: Copy libvirt-jack-socket selinux type enforcement file
+      copy:
+        src: libvirt-jack-socket.te
+        dest: /tmp/libvirt-jack-socket.te
+
+    - name: Compile libvirt-jack-socket selinux module file
+      command: checkmodule -M -m -o libvirt-jack-socket.mod libvirt-jack-socket.te
+      args:
+        chdir: /tmp
+
+    - name: Build libvirt-jack-socket selinux policy package
+      command: semodule_package -o libvirt-jack-socket.pp -m libvirt-jack-socket.mod
+      args:
+        chdir: /tmp
+
+    - name: Install libvirt-jack-socket selinux policy package
+      command: semodule -i libvirt-jack-socket.pp
+      args:
+        chdir: /tmp
 
 - name: Start and enable virtqemud
   systemd:
@@ -45,4 +82,4 @@
   # /usr/share/virtio-win/virtio-win.iso
   dnf:
     name: virtio-win
-    state: latest
+    state: present
