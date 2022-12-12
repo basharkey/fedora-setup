@@ -3,7 +3,7 @@
 - name: Install cifs-utils
   dnf:
     name: cifs-utils
-    state: latest
+    state: present
 
 - name: Template smb mount
   template:

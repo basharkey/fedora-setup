@@ -7,7 +7,7 @@
 - name: Install fedora packages
   dnf:
     name: "{{ fedora_packages }}"
-    state: latest
+    state: present
 
 - name: Import rpm fusion free gpg key
   rpm_key:
@@ -32,7 +32,7 @@
 - name: Install rpm fusion packages
   dnf:
     name: "{{ rpmfusion_packages }}"
-    state: latest
+    state: present
 
 - name: Setup flatpak
   block:

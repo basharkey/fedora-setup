@@ -35,13 +35,14 @@
         name:
           - python3-libselinux
           - python3-lxml
+        state: present
 
   roles:
     - packages
     - geerlingguy.docker
     - home
     - smb
-    - bridge-interface 
+    - bridge-interface
     - vfio
     - passthrough-vm
     - ldnf
