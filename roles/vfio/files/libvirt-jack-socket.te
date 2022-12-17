@@ -1,4 +1,7 @@
 
+# allows libvirt to access users pipewire socket for vm audio passthrough
+# https://looking-glass.io/wiki/Using_JACK_and_PipeWire
+
 module libvirt-jack-socket 1.0;
 
 require {
