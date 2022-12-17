@@ -3,25 +3,33 @@
 {% else %}
 <domain type='kvm'>
 {% endif %}
+
   <name>{{ vm.name }}</name>
   <uuid>{{ uuid }}</uuid>
   <memory unit='GiB'>{{ vm.memory }}</memory>
-  <vcpu placement='static'>12</vcpu>
+  <vcpu placement='static'>{{ vm.cores * vm.threads }}</vcpu>
+{% if vm.iothread_pins is defined and vm.disk is defined and vm.disk_type == 'virtio' %}
+  <iothreads>1</iothreads>
+{% endif %}
+
+{% if vm.cpu_pins is defined or vm.emulator_pins is defined or vm.io_pins is defined %}
   <cputune>
-    <vcpupin vcpu='0' cpuset='0'/>
-    <vcpupin vcpu='1' cpuset='1'/>
-    <vcpupin vcpu='2' cpuset='2'/>
-    <vcpupin vcpu='3' cpuset='3'/>
-    <vcpupin vcpu='4' cpuset='4'/>
-    <vcpupin vcpu='5' cpuset='5'/>
-    <vcpupin vcpu='6' cpuset='6'/>
-    <vcpupin vcpu='7' cpuset='7'/>
-    <vcpupin vcpu='8' cpuset='8'/>
-    <vcpupin vcpu='9' cpuset='9'/>
-    <vcpupin vcpu='10' cpuset='10'/>
-    <vcpupin vcpu='11' cpuset='11'/>
-    <emulatorpin cpuset='12'/>
+{% if vm.cpu_pins is defined %}
+{% for cpu_pin in vm.cpu_pins %}
+    <vcpupin vcpu='{{ cpu_pin.vcpu }}' cpuset='{{ cpu_pin.cpuset }}'/>
+{% endfor %}
+{% endif %}
+
+{% if vm.emulator_pins is defined %}
+    <emulatorpin cpuset='{{ vm.emulator_pins }}'/>
+{% endif %}
+
+{% if vm.iothread_pins is defined and vm.disk is defined and vm.disk_type == 'virtio' %}
+    <iothreadpin iothread='1' cpuset='{{ vm.iothread_pins }}'/>
+{% endif %}
   </cputune>
+{% endif %}
+
   <os>
     <type arch='x86_64' machine='q35'>hvm</type>
     <loader readonly='yes' type='pflash'>/usr/share/edk2/ovmf/OVMF_CODE.fd</loader>
@@ -37,7 +45,7 @@
     <vmport state='off'/>
   </features>
   <cpu mode='host-passthrough' check='none'>
-    <topology sockets='1' cores='6' threads='2'/>
+    <topology sockets='1' cores='{{ vm.cores }}' threads='{{ vm.threads }}'/>
   </cpu>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>
@@ -45,7 +53,21 @@
     <timer name='hpet' present='no'/>
   </clock>
   <devices>
+
 {% if vm.disk is defined %}
+{% if vm.disk_type == 'virtio' %}
+    <disk type='block' device='disk'>
+{% if vm.iothread_pins is defined %}
+      # The optional queues attribute specifies the number of queues for the controller. For best performance, it's recommended to specify a value matching the number of vCPUs. Since 1.0.5 (QEMU and KVM only)
+      <driver name='qemu' type='raw' cache='writeback' discard='unmap' iothread='1' queues='{{ vm.cores * vm.threads }}'/>
+{% else %}
+      <driver name='qemu' type='raw' cache='writeback' discard='unmap' queues='{{ vm.cores * vm.threads }}'/>
+{% endif %}
+      <source dev='{{ vm.disk }}'/>
+      <target dev='vda' bus='virtio'/>
+      <boot order='1'/>
+    </disk>
+{% else %}
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='writeback' discard='unmap'/>
       <source dev='{{ vm.disk }}'/>
@@ -53,6 +75,8 @@
       <boot order='1'/>
     </disk>
 {% endif %}
+{% endif %}
+
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
       <source file='/usr/share/virtio-win/virtio-win.iso'/>
@@ -60,11 +84,12 @@
       <readonly/>
     </disk>
     <controller type='pci' index='0' model='pcie-root'/>
-    <interface type='bridge'>
-      <source bridge='br0'/>
+    <interface type='network'>
+      <source network='default'/>
       <model type='virtio'/>
-      <driver queues='8'/>
+      <driver queues='{{ vm.cores * vm.threads }}'/>
     </interface>
+
 {% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
     <sound model='ich9'>
     </sound>
@@ -72,21 +97,27 @@
 {% if vm.audio_input_device is defined %}
       <input clientName='{{ vm.name }}' connectPorts='{{ vm.audio_input_device }}'/>
 {% endif %}
+
 {% if vm.audio_output_device is defined %}
       <output clientName='{{ vm.name }}' connectPorts='{{ vm.audio_output_device }}'/>
 {% endif %}
     </audio>
 {% endif %}
+
 {% if vm.mouse is defined %}
     <input type='evdev'>
       <source dev='{{ vm.mouse }}'/>
     </input>
+    <input type='mouse' bus='virtio'/>
 {% endif %}
+
 {% if vm.keyboard is defined %}
     <input type='evdev'>
       <source dev='{{ vm.keyboard }}' grab='all' repeat='on'/>
     </input>
+    <input type='keyboard' bus='virtio'/>
 {% endif %}
+
 {% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
     </devices>
       <qemu:commandline>

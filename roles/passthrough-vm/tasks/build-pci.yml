@@ -1,19 +1,19 @@
 ---
-- name: Get pci bus
+- name: "Get {{ device }} pci bus"
   set_fact:
     bus: "0x{{ device | split(':') | first }}"
 
-- name: Get pci slot
+- name: "Get {{ device }} pci slot"
   set_fact:
     slot: "0x{{ device | regex_search(':(.*)\\.', '\\1') | first }}"
 
-- name: Get pci function
+- name: "Get {{ device }} pci function"
   set_fact:
     function: "0x{{ device.split('.')[1] }}"
 
-- name: Generate pci device definition var
+- name: "Generate {{ device }} pci device definition var"
   set_fact:
     device_template: "{{ lookup('template', 'pci-device.xml.j2') }}"
 
-- name: Add pci device definition
+- name: "Add {{ device }} pci device definition"
   shell: "virsh attach-device --config {{ vm.name }} <(echo '{{ device_template | string }}')"

@@ -1,5 +1,5 @@
 ---
-- name: Get vm uuid
+- name: "Get {{ vm.name }} vm uuid if it already exists"
   block:
     - name: Check get vm uuid if it is already defined
       command: "virsh domuuid {{ vm.name }}"
@@ -7,61 +7,58 @@
     - set_fact:
         uuid: " {{ uuid.stdout }}"
   rescue:
-    - name: Set uuid to empty string
+    - name: "Set {{ vm.name }} vm uuid to empty string"
       set_fact:
         uuid: ""
 
-- template:
+- name: "Template {{ vm.name }} libvirt xml file"
+  template:
     src: vm.xml.j2
     dest: "/etc/libvirt/qemu/{{ vm.name }}.xml"
 
-- name: Define vm
+- name: "Define {{ vm.name }} vm"
   virt:
     command: define
     xml: "{{ lookup('template', 'vm.xml.j2') }}"
 
-- name: Build pci devices
+- name: "Build {{ vm.name }} pci devices"
   when: vm.pci_devices is defined
   include_tasks: build-pci.yml
   loop: "{{ vm.pci_devices  }}"
   loop_control:
     loop_var: device
 
-- name: Setup libvirt hooks
+- name: "Setup {{ vm.name }} libvirt hooks"
   when: vm.libvirt_hooks
   block:
-    - name: Create libvirt hooks script directory
-      file:
-        path: /etc/libvirt/hooks
-        state: directory
-
-    - name: Copy libvirt hooks script
-      copy:
-        src: hooks/qemu
-        dest: /etc/libvirt/hooks/qemu
-        mode: 0755
-    
-    - name: Create vm hook directories
+    - name: "Create {{ vm.name }} libvirt hook directories"
       file:
         path: "{{ item }}"
         state: directory
+        mode: 0755
       loop:
         - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin"
         - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end"
 
-    - name: Copy power on hook scripts
+    - name: "Copy {{ vm.name }} libvirt hooks script"
       copy:
-        src: hooks/begin
-        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare"
+        src: qemu
+        dest: /etc/libvirt/hooks/qemu
+        mode: 0755
+    
+    - name: "Template {{ vm.name }} libvirt prepare hook script"
+      template:
+        src: cpu-prepare.sh.j2
+        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin/cpu-prepare.sh"
         mode: 0755
 
-    - name: Copy shutdown hook scripts
-      copy:
-        src: hooks/end
-        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release"
+    - name: "Template {{ vm.name }} libvirt release hook script"
+      template:
+        src: cpu-release.sh.j2
+        dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end/cpu-release.sh"
         mode: 0755
 
-    - name: Restart virtqemud to load hooks
+    - name: "Restart virtqemud to load {{ vm.name }} libvirt hooks"
       systemd:
         name: virtqemud
         state: restarted

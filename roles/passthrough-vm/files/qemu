@@ -31,4 +31,3 @@ elif [ -d "$HOOKPATH" ]; then
         fi
     done <<< "$(find -L "$HOOKPATH" -maxdepth 1 -type f -executable -print;)"
 fi
-
