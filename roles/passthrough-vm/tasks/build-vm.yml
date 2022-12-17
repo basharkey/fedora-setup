@@ -15,6 +15,7 @@
   template:
     src: vm.xml.j2
     dest: "/etc/libvirt/qemu/{{ vm.name }}.xml"
+    mode: 0600
 
 - name: "Define {{ vm.name }} vm"
   virt:

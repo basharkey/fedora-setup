@@ -8,7 +8,7 @@
   <uuid>{{ uuid }}</uuid>
   <memory unit='GiB'>{{ vm.memory }}</memory>
   <vcpu placement='static'>{{ vm.cores * vm.threads }}</vcpu>
-{% if vm.iothread_pins is defined and vm.disk is defined and vm.disk_type == 'virtio' %}
+{% if vm.iothread_pins is defined and vm.disk is defined and vm.disk_driver == 'virtio' %}
   <iothreads>1</iothreads>
 {% endif %}
 
@@ -24,7 +24,7 @@
     <emulatorpin cpuset='{{ vm.emulator_pins }}'/>
 {% endif %}
 
-{% if vm.iothread_pins is defined and vm.disk is defined and vm.disk_type == 'virtio' %}
+{% if vm.iothread_pins is defined and vm.disk is defined and vm.disk_driver == 'virtio' %}
     <iothreadpin iothread='1' cpuset='{{ vm.iothread_pins }}'/>
 {% endif %}
   </cputune>
@@ -55,22 +55,31 @@
   <devices>
 
 {% if vm.disk is defined %}
-{% if vm.disk_type == 'virtio' %}
-    <disk type='block' device='disk'>
-{% if vm.iothread_pins is defined %}
-      # The optional queues attribute specifies the number of queues for the controller. For best performance, it's recommended to specify a value matching the number of vCPUs. Since 1.0.5 (QEMU and KVM only)
-      <driver name='qemu' type='raw' cache='writeback' discard='unmap' iothread='1' queues='{{ vm.cores * vm.threads }}'/>
+{% if vm.disk.split('.') | length == 2 and vm.disk.split('.')[1] == 'qcow2'%}
+{% set disk_type = 'file' %}
+{% set driver_type = 'qcow2' %}
+{% set disk_source = 'file' %}
 {% else %}
-      <driver name='qemu' type='raw' cache='writeback' discard='unmap' queues='{{ vm.cores * vm.threads }}'/>
+{% set disk_type = 'block' %}
+{% set driver_type = 'raw' %}
+{% set disk_source = 'dev' %}
 {% endif %}
-      <source dev='{{ vm.disk }}'/>
+    <disk type='{{ disk_type }}' device='disk'>
+
+{% if vm.disk_driver == 'virtio' %}
+{% if vm.iothread_pins is defined %}
+      <!--The optional queues attribute specifies the number of queues for the controller. For best performance, it's recommended to specify a value matching the number of vCPUs. Since 1.0.5 (QEMU and KVM only)-->
+      <driver name='qemu' type='{{ driver_type }}' cache='writeback' discard='unmap' iothread='1' queues='{{ vm.cores * vm.threads }}'/>
+{% else %}
+      <driver name='qemu' type='{{ driver_type }}' cache='writeback' discard='unmap' queues='{{ vm.cores * vm.threads }}'/>
+{% endif %}
+      <source {{ disk_source }}='{{ vm.disk }}'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
     </disk>
 {% else %}
-    <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='writeback' discard='unmap'/>
-      <source dev='{{ vm.disk }}'/>
+      <driver name='qemu' type='{{ driver_type }}' cache='writeback' discard='unmap'/>
+      <source {{ disk_source }}='{{ vm.disk }}'/>
       <target dev='sdb' bus='sata'/>
       <boot order='1'/>
     </disk>
@@ -117,9 +126,9 @@
     </input>
     <input type='keyboard' bus='virtio'/>
 {% endif %}
+    </devices>
 
 {% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
-    </devices>
       <qemu:commandline>
       <qemu:env name='PIPEWIRE_RUNTIME_DIR' value='/run/user/{{ uid }}'/>
       <qemu:env name='PIPEWIRE_LATENCY' value='512/48000'/>
