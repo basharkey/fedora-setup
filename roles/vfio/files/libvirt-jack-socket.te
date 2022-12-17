@@ -5,12 +5,12 @@
 module libvirt-jack-socket 1.0;
 
 require {
-	type svirt_t;
-	type user_tmp_t;
+        type svirt_t;
+        type user_tmp_t;
         type unconfined_t;
-	type system_dbusd_t;
-	type system_dbusd_var_run_t;
-	class sock_file write;
+        type system_dbusd_t;
+        type system_dbusd_var_run_t;
+        class sock_file write;
         class unix_stream_socket connectto;
 }
 
