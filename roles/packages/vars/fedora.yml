@@ -73,8 +73,8 @@ fedora_packages:
   - "gimp"                          # photo editor
   - "wireshark"                     # packet sniffer
   - "qalculate-gtk"                 # calculator
-  #- flameshot                      # screenshot utility doesnt work under wayland
   - "grimshot"                      # screenshot utility
+  - "swappy"                        # screenshot editor
   - "quiterss"                      # RSS reader
   - "evince"                        # document viewer (pdf)
   - "vimiv"                         # image viewer
