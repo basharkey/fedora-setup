@@ -1,5 +1,4 @@
 ---
-# tasks file for home
 - name: Add user to groups
   user:
     name: "{{ user }}"
@@ -85,23 +84,66 @@
     enabled: yes
   loop: "{{ systemd_system_units }}"
 
-- name: Check if dotfiles repo already exists in home dir
+- name: Check if dotfiles repo already exists
   stat:
-    path: "{{ home }}/.git"
+    path: "{{ home }}/projects/dotfiles"
   register: dotfiles
 
-- name: Put dotfiles repo in home dir
+- name: Install dotfiles
   when: not dotfiles.stat.exists
-  command: "{{ item }}"
-  args:
-    chdir: "{{ home }}"
-  loop:
-    - git init
-    - git remote add origin https://github.com/basharkey/dotfiles.git
-    - git fetch
-    - git checkout -t origin/main -f
-    - git remote set-url origin git@github.com:basharkey/dotfiles.git
-  become: no
+  block:
+    - name: Clone dotfiles repo
+      command: git clone https://github.com/basharkey/dotfiles.git
+      args:
+        chdir: "{{ home }}/projects"
+      become: no
+    
+    - name: Set dotfiles repo remote to ssh
+      command: git remote set-url origin git@github.com:basharkey/dotfiles.git
+      args:
+        chdir: "{{ home }}/projects/dotfiles"
+      become: no
+
+    - name: Get user dotfiles
+      find:
+        paths: "{{ home }}/projects/dotfiles/user"
+        file_type: file
+        recurse: yes
+      register: dotfiles_user
+
+    - name: Soft link user dotfiles
+      file:
+        src: "{{ dotfile.path }}"
+        # split {{ dotfile.path }} into list
+        # get difference between {{ dotfile.path }} list and list containing parent dir
+        # prepend {{ home }} list to {{ dotfile.path }} list
+        # join paths of {{ home }} list with {{ dotfile.path }} list
+        dest: "{{ ( [ home ] + dotfile.path | split('/') | difference(dotfile.path | split('/') | first) ) | path_join }}"
+        state: link
+      loop: dotfiles_user
+      loop_control:
+        loop_var: dotfile
+      become: no
+
+    - name: Get system dotfiles
+      find:
+        paths: "{{ home }}/projects/dotfiles/system"
+        file_type: file
+        recurse: yes
+      register: dotfiles_system
+
+    - name: Soft link system dotfiles
+      file:
+        src: "{{ dotfile.path }}"
+        # split {{ dotfile.path }} into list
+        # get difference between {{ dotfile.path }} list and list containing parent dir
+        # prepend {{ home }} list to {{ dotfile.path }} list
+        # join paths of {{ home }} list with {{ dotfile.path }} list
+        dest: "{{ ( [ home ] + dotfile.path | split('/') | difference(dotfile.path | split('/') | first) ) | path_join }}"
+        state: link
+      loop: dotfiles_system
+      loop_control:
+        loop_var: dotfile
 
 - name: Template gtk bookmarks
   template:
