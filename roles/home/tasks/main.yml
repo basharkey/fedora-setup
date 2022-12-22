@@ -36,16 +36,14 @@
     name: systemd-modules-load
     state: restarted
 
-# required by greetd to run user only apps
-# e.g. files in "/home/user/.local/bin/"
-- name: Copy sh .profile
-  copy:
-    src: .profile
-    dest: "{{ home }}/.profile"
-  become: no
-
 - name: Set graphical as default target
   command: systemctl set-default graphical.target
+
+- name: Copy sway wrapper script
+  copy:
+    src: sway-run.sh
+    dest: /usr/local/bin/sway-run.sh
+    mode: 0755
 
 - name: Template greetd configuration
   template:
