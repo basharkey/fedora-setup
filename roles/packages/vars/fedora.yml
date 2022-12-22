@@ -4,7 +4,7 @@ fedora_packages:
   - "sway"                          # wayland window manager
   - "swaylock"                      # wayland screen locker
   - "swayidle"                      # wayland idle daemon
-  - "mako"                          # wayland notification daemon
+  - "dunst"                         # wayland notification daemon
   - "waybar"                        # wayland status bar
   - "fuzzel"                        # wayland app launcher
   - "polkit"                        # authorization framework (required to launch sway)
@@ -77,7 +77,7 @@ fedora_packages:
   - "grimshot"                      # screenshot utility
   - "quiterss"                      # RSS reader
   - "evince"                        # document viewer (pdf)
-  - "feh"                           # photo viewer
+  - "vimiv"                         # image viewer
   - "nextcloud-client"              # nextcloud
   - "lxpolkit"                      # gui polkit agent
   - "openssh-askpass"               # prompt when using ssh-agent keys
