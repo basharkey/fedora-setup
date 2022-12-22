@@ -18,6 +18,8 @@ if [ -f "$user_env" ]; then
     source "$user_env"
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
+
 exec sway $@
 
 #
