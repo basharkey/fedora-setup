@@ -30,6 +30,7 @@ fedora_packages:
   - "usbutils"                      # usb utilities
   - "cifs-utils"                    # smb/cifs mounting utilities
   - "bind-utils"                    # dig/dns querying utilities
+  - "NetworkManager-tui"            # network manager curses ui
   - "python3"                       # python
   - "python3-pip"                   # python package manager
   - "python3-virtualenv"            # virtualenv for python
@@ -68,7 +69,7 @@ fedora_packages:
   - "keepassxc"                     # password manager
   - "seahorse"                      # secrets manager
   - "gnome-keyring"                 # framework for managing password and secrets
-  - "blueman"                       # bluetooth manager
+  - "blueberry"                     # bluetooth manager
   - "libreoffice"                   # office software
   - "gimp"                          # photo editor
   - "wireshark"                     # packet sniffer
@@ -84,3 +85,8 @@ fedora_packages:
   - "clementine"                    # music player and playlist creator
   - "gscan2pdf"                     # scanner application
   - "cups"                          # printing service
+
+fedora_laptop_packages:
+  - "iwl7260-firmware"              # nic firmware for lenovo e560
+  - "NetworkManager-wifi"           # network manager wifi plugin
+  - "tlp"                           # laptop battery optimizer

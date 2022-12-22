@@ -57,3 +57,9 @@
         method: user
       loop: "{{ flatpak_packages }}"
   become: false
+
+- name: Install fedora laptop packages
+  dnf:
+    name: "fedora_latpop_packages"
+    state: present
+  tags: laptop

@@ -38,11 +38,12 @@
         state: present
 
   roles:
-    - packages
-    - geerlingguy.docker
-    - home
-    - smb
-    - bridge-interface
-    - vfio
-    - passthrough-vm
-    - ldnf
+    - { role: "packages", tags: ["install", "laptop"] }
+    - { role: "geerlingguy.docker", tags: ["install", "laptop"] }
+    - { role: "home", tags:  ["install", "laptop"] }
+    - { role: "ldnf", tags: ["install", "laptop"] }
+    - { role: "smb", tags: "install" }
+    - { role: "bridge-interface", tags: "install" }
+    - { role: "vfio", tags: "install" }
+    - { role: "passthrough-vm", tags: "install" }
+    #- { role: "test", tags: "install" }
