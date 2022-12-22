@@ -29,6 +29,7 @@
         - set_fact:
             gid: "{{ gid.stdout }}"
       become: no
+      tags: main
 
     - name: Install playbook dependencies
       dnf:
@@ -36,6 +37,7 @@
           - python3-libselinux
           - python3-lxml
         state: present
+      tags: main
 
   roles:
     - { role: "packages", tags: ["install", "laptop"] }

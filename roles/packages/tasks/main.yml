@@ -9,6 +9,12 @@
     name: "{{ fedora_packages }}"
     state: present
 
+- name: Install fedora laptop packages
+  dnf:
+    name: "{{ fedora_laptop_packages }}"
+    state: present
+  tags: laptop
+
 - name: Import rpm fusion free gpg key
   rpm_key:
     key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020"
@@ -57,9 +63,3 @@
         method: user
       loop: "{{ flatpak_packages }}"
   become: false
-
-- name: Install fedora laptop packages
-  dnf:
-    name: "fedora_laptop_packages"
-    state: present
-  tags: laptop
