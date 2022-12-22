@@ -60,6 +60,6 @@
 
 - name: Install fedora laptop packages
   dnf:
-    name: "fedora_latpop_packages"
+    name: "fedora_laptop_packages"
     state: present
   tags: laptop
