@@ -1,19 +1,7 @@
 ---
-# tasks file for packages
 - name: Load package vars
   include_vars:
     dir: vars
-
-- name: Install fedora packages
-  dnf:
-    name: "{{ fedora_packages }}"
-    state: present
-
-- name: Install fedora laptop packages
-  dnf:
-    name: "{{ fedora_laptop_packages }}"
-    state: present
-  tags: laptop
 
 - name: Import rpm fusion free gpg key
   rpm_key:
@@ -39,6 +27,17 @@
   dnf:
     name: "{{ rpmfusion_packages }}"
     state: present
+
+- name: Install fedora packages
+  dnf:
+    name: "{{ fedora_packages }}"
+    state: present
+
+- name: Install fedora laptop packages
+  dnf:
+    name: "{{ fedora_laptop_packages }}"
+    state: present
+  tags: laptop
 
 - name: Setup flatpak
   block:
