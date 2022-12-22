@@ -110,7 +110,6 @@
 
     - name: Copy system dotfiles
       command: "cp -rT {{ dotfiles_path }}/system /"
-      become: no
 
 - name: Template gtk bookmarks
   template:
