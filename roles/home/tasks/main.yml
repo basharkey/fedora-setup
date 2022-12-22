@@ -98,6 +98,16 @@
         dest: "{{ dotfiles_path }}"
       become: no
 
+    - name: Switch to dotfiles laptop branch
+      command: "{{ item }}"
+      args:
+        chdir: "{{ dotfiles_path }}"
+      loop:
+        - git fetch origin laptop:laptop
+        - git checkout laptop
+      become: no
+      tags: laptop
+
     - name: Set dotfiles repo remote to ssh
       command: git remote set-url origin git@github.com:basharkey/dotfiles.git
       args:

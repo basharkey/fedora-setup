@@ -4,4 +4,6 @@ deps:
 vault:
 	ansible-vault encrypt vault.yml
 install:
-	ansible-playbook main.yml -i hosts.yml -e @vault.yml --ask-vault-pass
+	ansible-playbook main.yml -i hosts.yml -e @vault.yml --ask-vault-pass --tags install --skip-tags laptop
+laptop:
+	ansible-playbook main.yml -i hosts.yml -e @vault.yml --ask-vault-pass --tags laptop
