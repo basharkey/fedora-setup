@@ -90,3 +90,4 @@ fedora_laptop_packages:
   - "iwl7260-firmware"              # nic firmware for lenovo e560
   - "NetworkManager-wifi"           # network manager wifi plugin
   - "tlp"                           # laptop battery optimizer
+  - "light"                         # backlight control utility
