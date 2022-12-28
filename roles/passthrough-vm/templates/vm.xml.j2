@@ -1,8 +1,4 @@
-{% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
 <domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
-{% else %}
-<domain type='kvm'>
-{% endif %}
 
   <name>{{ vm.name }}</name>
   <uuid>{{ uuid }}</uuid>
@@ -128,10 +124,14 @@
 {% endif %}
     </devices>
 
-{% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
       <qemu:commandline>
+        <!--Increase resizable bar size to support cards with large VRAM (RTX 4090)-->
+        <!--https://forum.level1techs.com/t/solved-rtx-3090-gpu-passthrough-just-displays-a-black-screen-with-qemu/175538/2-->
+        <qemu:arg value="-fw_cfg"/>
+        <qemu:arg value="opt/ovmf/X-PciMmio64Mb,string=65536"/>
+{% if vm.audio_input_device is defined or vm.audio_output_device is defined %}
       <qemu:env name='PIPEWIRE_RUNTIME_DIR' value='/run/user/{{ uid }}'/>
       <qemu:env name='PIPEWIRE_LATENCY' value='512/48000'/>
-    </qemu:commandline>
 {% endif %}
+    </qemu:commandline>
 </domain>
