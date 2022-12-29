@@ -1,5 +1,4 @@
 ---
-# tasks file for bridge-interface
 - name: Copy br_netfilter kernel module config
   copy:
     src: br_netfilter.conf
@@ -22,22 +21,34 @@
     name: systemd-sysctl
     state: restarted
 
-# bridge interface will break local DHCP if STP is not enabled
-- name: Create bridge interface
+- name: Create primary bridge interface
   nmcli:
-    conn_name: "bridge-{{ br_primary_int }}"
-    ifname: "{{ br_primary_int }}"
+    conn_name: "{{ bridge_primary_interface }}-pri"
+    ifname: "{{ bridge_primary_interface }}"
+    autoconnect: yes
     type: bridge
-    stp: yes
+    stp: no
     state: present
 
-- name: Attach main interface to bridge
+- name: Attach secondary interface to bridge
   nmcli:
-    conn_name: "{{ br_primary_int }}-slave-1"
-    ifname: "{{ br_secondary_int }}"
-    master: "{{ br_primary_int }}"
+    conn_name: "{{ bridge_primary_interface }}-sec"
+    ifname: "{{ bridge_secondary_interface }}"
+    master: "{{ bridge_primary_interface }}"
+    autoconnect: yes
     type: bridge-slave
+    # fixes local dhcp and packet loss issues
+    hairpin: no
     state: present
+
+- name: Disable default interface from starting on boot
+  nmcli:
+    conn_name: "{{ bridge_secondary_interface }}"
+    autoconnect: no
+    state: present
+
+- name: Bring default interface down
+  command: "nmcli connection down {{ bridge_secondary_interface }}"
 
 - name: Ensure virtqemud is running
   systemd:
@@ -56,12 +67,12 @@
 - name: Add libvirt bridge network definition
   shell: "virsh net-define <(echo '{{ bridge_template | string }}')"
   register: result
-  failed_when: result.rc != 0 and "network '" ~ br_libvirt_net ~ "' already exists" not in result.stderr
+  failed_when: result.rc != 0 and "network '" ~ bridge_libvirt_network ~ "' already exists" not in result.stderr
 
 - name: Enable libvirt bridge network at boot
-  command: "virsh net-autostart {{ br_libvirt_net }}"
+  command: "virsh net-autostart {{ bridge_libvirt_network }}"
 
 - name: Start libvirt bridge network
-  command: "virsh net-start {{ br_libvirt_net }}"
+  command: "virsh net-start {{ bridge_libvirt_network }}"
   register: result
   failed_when: result.rc != 0 and "network is already active" not in result.stderr
