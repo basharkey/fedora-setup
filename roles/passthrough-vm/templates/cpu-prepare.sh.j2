@@ -3,18 +3,8 @@
 # switch cpu governor to performance mode
 for file in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do echo "performance" > $file; done
 
-{% set host_cores = [] %}
-{% for cpu_pin in vm.cpu_pins -%}
-{{ host_cores.append(cpu_pin.cpuset) }}
-{%- endfor %}
-{% if vm.emulator_pins is defined -%}
-{{ host_cores.append(vm.emulator_pins) }}
-{%- endif %}
-{% if vm.iothread_pins is defined -%}
-{{ host_cores.append(vm.iothread_pins) }}
-{%- endif %}
-# tell host to only schedule new processes on host_cores
-host_cores={{ host_cores | join(',') }}
+# tell host to only schedule new processes on host_pins
+host_cores={{ host_pins }}
 systemctl set-property --runtime -- user.slice AllowedCPUs=$host_cores
 systemctl set-property --runtime -- system.slice AllowedCPUs=$host_cores
 systemctl set-property --runtime -- init.scope AllowedCPUs=$host_cores
