@@ -1,0 +1,49 @@
+---
+- name: Install sway
+  dnf:
+    name: sway
+    exclude: sway-systemd # not required when running sway as systemd user service
+    state: present
+
+- name: Create global sway config directory
+  file:
+    path: /etc/sway/config.d
+    state: directory
+    mode: '0755'
+
+- name: Copy sway systemd user session config
+  copy:
+    src: systemd-user-session.conf
+    dest: /etc/sway/config.d/systemd-user-session.conf
+    mode: '0644'
+
+- name: Copy systemd user sway session target
+  copy:
+    src: sway-session.target
+    dest: /etc/systemd/user/sway-session.target
+    mode: '0644'
+
+- name: Copy systemd user sway service
+  copy:
+    src: sway.service
+    dest: /etc/systemd/user/sway.service
+    mode: '0644'
+
+- name: Install greetd
+  dnf:
+    name: greetd
+    state: present
+
+- name: Template greetd config
+  template:
+    src: config.toml.j2
+    dest: /etc/greetd/config.toml.j2
+    mode: '0644'
+
+- name: Enable greetd service
+  systemd:
+    name: greetd.service
+    state: enabled
+
+- name: Set default target to graphical
+  command: systemctl set-default graphical.target

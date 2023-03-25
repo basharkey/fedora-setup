@@ -1,0 +1,10 @@
+[terminal]
+vt = 1
+
+[default_session]
+command = "agreety --cmd systemctl start --wait --user sway.service"
+user = "{{ USER }}"
+
+[initial_session]
+command = "systemctl start --wait --user sway.service"
+user = "{{ USER }}"
