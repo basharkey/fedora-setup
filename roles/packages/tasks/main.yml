@@ -55,14 +55,6 @@
 
 - name: Install flatpak packages
  flatpak:
-   # should work in future ansible versions
    name: "{{ flatpak_packages }}"
    state: present
    method: user
-
-# - name: Install flatpak packages
-#   flatpak:
-#     name: "{{ item }}"
-#     state: present
-#     method: user
-#   loop: "{{ flatpak_packages }}"

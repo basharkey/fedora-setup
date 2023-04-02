@@ -2,7 +2,7 @@
 vt = 1
 
 [default_session]
-command = "agreety --cmd systemctl start --wait --user sway.service"
+command = 'agreety --cmd "systemctl start --wait --user sway.service"'
 user = "{{ ansible_user_id }}"
 
 [initial_session]

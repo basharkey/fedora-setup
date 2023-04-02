@@ -5,16 +5,6 @@
     exclude: sway-systemd # Not required when running sway as a systemd service
     state: present
   become: yes
-
-- name: Load vars
-  include_vars:
-    dir: vars
-
-- name: Install sway desktop environment packages
-  dnf:
-    name: "{{ sway_desktop_environment_packages }}"
-    state: present
-  become: yes
   
 - name: Create global sway config directory
   file:
@@ -53,14 +43,14 @@
 - name: Template greetd config
   template:
     src: config.toml.j2
-    dest: /etc/greetd/config.toml.j2
+    dest: /etc/greetd/config.toml
     mode: '0644'
   become: yes
   
 - name: Enable greetd service
   systemd:
     name: greetd.service
-    state: enabled
+    enabled: yes
   become: yes
   
 - name: Set default target to graphical
