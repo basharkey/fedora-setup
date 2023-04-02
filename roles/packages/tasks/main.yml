@@ -3,62 +3,66 @@
   include_vars:
     dir: vars
 
+- name: Install fedora packages
+  dnf:
+    name: "{{ fedora_packages }}"
+    state: present
+  become: yes
+
 - name: Import rpm fusion free gpg key
   rpm_key:
     key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020"
     state: present
+  become: yes
 
 - name: Import rpm fusion non-free gpg key
   rpm_key:
     key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020"
     state: present
+  become: yes
 
 - name: Enable rpm fusion free repository
   dnf:
     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
     state: present
+  become: yes
 
 - name: Enable rpm fusion non-free repository
   dnf:
     name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
     state: present
+  become: yes
 
 - name: Install rpm fusion packages
   dnf:
     name: "{{ rpmfusion_packages }}"
     state: present
-
-- name: Install fedora packages
-  dnf:
-    name: "{{ fedora_packages }}"
-    state: present
+  become: yes
 
 - name: Install fedora laptop packages
   dnf:
     name: "{{ fedora_laptop_packages }}"
     state: present
   tags: laptop
+  become: yes
 
-- name: Setup flatpak
-  block:
-    - name: Enable flathub repository
-      flatpak_remote:
-        name: flathub
-        state: present
-        flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
-        method: user
+- name: Enable flathub repository
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
+    method: user
 
-    #- name: Install flatpak packages
-    #  flatpak:
-    #    # should work in future ansible versions
-    #    name: "{{ flatpak_packages }}"
-    #    state: present
-    #    method: user
+- name: Install flatpak packages
+ flatpak:
+   # should work in future ansible versions
+   name: "{{ flatpak_packages }}"
+   state: present
+   method: user
 
-    - name: Install flatpak packages
-      flatpak:
-        name: "{{ item }}"
-        state: present
-        method: user
-      loop: "{{ flatpak_packages }}"
-  become: false
+# - name: Install flatpak packages
+#   flatpak:
+#     name: "{{ item }}"
+#     state: present
+#     method: user
+#   loop: "{{ flatpak_packages }}"

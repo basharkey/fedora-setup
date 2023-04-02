@@ -1,51 +1,6 @@
 ---
-- hosts: desktop
-  become: yes
-  pre_tasks:
-    - name: Get pre-task vars
-      block:
-        - name: Get username var
-          command: id -u -n
-          register: user
-        - set_fact:
-            user: "{{ user.stdout }}"
-
-        - name: Get user home dir
-          user:
-            name: "{{ user }}"
-          register: home
-        - set_fact:
-            home: "{{ home.home }}"
-
-        - name: Get uid var
-          command: id -u
-          register: uid
-        - set_fact:
-            uid: "{{ uid.stdout }}"
-
-        - name: Get gid var
-          command: id -g
-          register: gid 
-        - set_fact:
-            gid: "{{ gid.stdout }}"
-      become: no
-      tags: main
-
-    - name: Install playbook dependencies
-      dnf:
-        name:
-          - python3-libselinux
-          - python3-lxml
-        state: present
-      tags: main
+- hosts: all
 
   roles:
-    - { role: "packages", tags: ["install", "laptop"] }
-    - { role: "geerlingguy.docker", tags: ["install", "laptop"] }
-    - { role: "home", tags:  ["install", "laptop"] }
-    - { role: "ldnf", tags: ["install", "laptop"] }
-    - { role: "smb", tags: "install" }
-    - { role: "bridge-interface", tags: "install" }
-    - { role: "vfio", tags: "install" }
-    - { role: "passthrough-vm", tags: "install" }
-    #- { role: "test", tags: "install" }
+    - sway
+    - packages

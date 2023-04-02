@@ -54,6 +54,7 @@ fedora_packages:
   - "google-noto-sans-mono-fonts"   # noto mono fonts
 
   # gui applications
+  - "emacs"
   - "pcmanfm"                       # file manager
   - "xarchiver"                     # xfce archive manager
   - "gvfs-fuse"                     # virtual filesystem
