@@ -2,7 +2,7 @@
 - name: Install sway
   dnf:
     name: sway
-    exclude: sway-systemd # Not required when running sway as a systemd service
+    exclude: sway-systemd # Not required when running sway as a systemd user service
     state: present
   become: yes
   
@@ -33,26 +33,24 @@
     dest: /etc/systemd/user/sway.service
     mode: '0644'
   become: yes
-  
-- name: Install greetd
-  dnf:
-    name: greetd
-    state: present
-  become: yes
-  
-- name: Template greetd config
-  template:
-    src: config.toml.j2
-    dest: /etc/greetd/config.toml
-    mode: '0644'
-  become: yes
-  
-- name: Enable greetd service
+
+- name: Enable systemd user sway service
   systemd:
-    name: greetd.service
+    daemon_reload: yes
+    name: sway.service
     enabled: yes
+    scope: user
+
+- name: Create systemd getty service overrides directory
+  file:
+    path: /etc/systemd/system/getty@tty1.service.d
+    state: directory
+    mode: '0755'
   become: yes
   
-- name: Set default target to graphical
-  command: systemctl set-default graphical.target
+- name: Template systemd getty service autologin config
+  template:
+    src: autologin.conf.j2
+    dest: /etc/systemd/system/getty@tty1.service.d/autologin.conf
+    mode: '0644'
   become: yes
