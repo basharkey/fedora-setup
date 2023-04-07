@@ -1,94 +1,92 @@
 ---
 fedora_packages:
-  # sway
-  - "sway"                          # wayland window manager
-  - "swaylock"                      # wayland screen locker
-  - "swayidle"                      # wayland idle daemon
-  - "dunst"                         # wayland notification daemon
-  - "waybar"                        # wayland status bar
-  - "fuzzel"                        # wayland app launcher
-  - "polkit"                        # authorization framework (required to launch sway)
-  - "alacritty"                     # terminal emulator
-  - "greetd"                        # generic greater daemon
-  - "wl-clipboard"                  # wayland clipboard utility
-  - "wlsunset"                      # wayland display colour temperature utility
-  - "xdg-desktop-portal-gnome"      # fixes urls not opening for flatpak apps
+  # Sway
+  - "sway"    				# i3-compatible window manager for Wayland
+  - "swaylock"    			# Screen locker for Wayland
+  - "swayidle"    			# An idle daemon for wayland compositors
+  - "dunst"    				# Lightweight and customizable notification-daemon
+  - "waybar"    			# Highly customizable Wayland bar for Sway and Wlroots based compositors
+  - "fuzzel"    			# Application launcher for wlroots based Wayland compositors
+  - "polkit"    			# An authorization framework
+  - "alacritty"    			# Fast, cross-platform, OpenGL terminal emulator
+  - "wl-clipboard"    			# Command-line copy/paste utilities for Wayland
+  - "wlsunset"    			# Day/night gamma adjustments for Sway
+  - "xdg-desktop-portal-gnome"		# Backend implementation for xdg-desktop-portal using GNOME
 
-  # cli utilities
-  - "vim"                           # text editor
-  - "vim-fugitive"                  # vim git plugin
-  - "git"                           # version control system
-  - "wget"                          # command line utility for retrieving files over HTTP/FTP
-  - "curl"                          # command line utility for retrieving files over HTTP/FTP
-  - "traceroute"                    # traceroute
-  - "mlocate"                       # file finder
-  - "p7zip"                         # 7zip
-  - "tar"                           # tar
-  - "rsync"                         # file synchronization utility
-  - "pciutils"                      # lspci
-  - "wireguard-tools"               # wireguard vpn
-  - "usbutils"                      # usb utilities
-  - "cifs-utils"                    # smb/cifs mounting utilities
-  - "bind-utils"                    # dig/dns querying utilities
-  - "NetworkManager-tui"            # network manager curses ui
-  - "python3"                       # python
-  - "python3-pip"                   # python package manager
-  - "python3-virtualenv"            # virtualenv for python
-  - "pandoc"                        # markup format converter
+  # CLI utilities
+  - "vim-enchanced"			# A version of the VIM editor which includes recent enhancements
+  - "vim-fugitive"    			# A Git wrapper so awesome, it should be illegal
+  - "git"    				# Fast Version Control System
+  - "wget"    				# A utility for retrieving files using the HTTP or FTP protocols
+  - "curl"    				# A utility for getting files from remote servers (FTP, HTTP, and others)
+  - "traceroute"    			# Traces the route taken by packets over an IPv4/IPv6 network
+  - "mlocate"    			# An utility for finding files by name
+  - "p7zip"    				# Very high compression ratio file archiver
+  - "tar"    				# GNU file archiving program
+  - "rsync"    				# A program for synchronizing files over a network
+  - "pciutils"    			# PCI bus related utilities
+  - "wireguard-tools"    		# Fast, modern, secure VPN tunnel
+  - "usbutils"    			# Linux USB utilities
+  - "cifs-utils"    			# Utilities for mounting and managing CIFS mounts
+  - "bind-utils"    			# Utilities for querying DNS name servers
+  - "NetworkManager-tui"    		# NetworkManager curses-based UI
+  - "python3"    			# Python 3.10 interpreter
+  - "python3-pip"    			# A tool for installing and managing Python3 packages
+  - "python3-virtualenv"		# Tool to create isolated Python environments
+  - "pandoc"    			# Conversion between markup formats
 
-  # sound server
-  - "pipewire"                      # sound server
-  - "pipewire-pulseaudio"           # pipewire pulseaudio implementation
-  - "pulseaudio-utils"              # pulseaudio command line utilities
-  - "playerctl"                     # command line media player controller
-  - "pavucontrol"                   # pulseaudio gui volume control
-  - "easyeffects"                   # pipewire gui equalizer
-  - "qjackctl"                      # jack gui
+  # Sound server
+  - "pipewire"    			# Media Sharing Server
+  - "pipewire-pulseaudio"		# PipeWire PulseAudio implementation
+  - "pulseaudio-utils"    		# PulseAudio sound server utilities
+  - "playerctl"    			# Command-line MPRIS-compatible Media Player Controller
+  - "pavucontrol"    			# Volume control for PulseAudio
+  - "easyeffects"    			# Audio effects for PipeWire applications
+  - "qjackctl"    			# Qt based JACK control application
 
-  # themes and fonts
-  - "gnome-themes-extra"            # gnome themes including adwaita-dark 
-  - "adwaita-qt5"                   # adwaita for qt
-  - "qt5ct"                         # qt theme configuration utility
-  - "google-noto-emoji-color-fonts" # noto emoji fonts
-  - "google-noto-fonts-common"      # noto common fonts
-  - "google-noto-sans-mono-fonts"   # noto mono fonts
+  # Themes and fonts
+  - "gnome-themes-extra"  		# GNOME Extra Themes
+  - "adwaita-qt5"    			# Adwaita Qt5 theme
+  - "qt5ct"                             # Qt5 Configuration Tool
+  - "google-noto-emoji-color-fonts"	# Google “Noto Color Emoji” colored emoji font
+  - "google-noto-fonts-common"    	# Common files for Noto fonts
+  - "google-noto-sans-mono-fonts"    	# Noto Sans Mono font
 
-  # gui applications
-  - "emacs"
-  - "pcmanfm"                       # file manager
-  - "xarchiver"                     # xfce archive manager
-  - "gvfs-fuse"                     # virtual filesystem
-  - "gvfs-smb"                      # smb support for gvfs
-  - "gvfs-mtp"                      # mtp/phone support for gvfs
+  # GUI applications
+  - "pcmanfm"    			# Extremly fast and lightweight file manager
+  - "xarchiver"    			# Archive manager for Xfce
+  - "gvfs-fuse"    			# FUSE support for gvfs
+  - "gvfs-smb"    			# Windows fileshare support for gvfs
+  - "gvfs-mtp"    			# MTP support for gvfs
 
-  - "firefox-wayland"               # web browser
-  - "@virtualization"               # qemu/kvm virtual machines
-  - "flatpak"                       # alternative package manager
-  - "evolution"                     # email client
-  - "evolution-ews"                 # evolution extension for exchange web services
-  - "openh264"                      # h.264/mpeg-4 avc
-  - "keepassxc"                     # password manager
-  - "seahorse"                      # secrets manager
-  - "gnome-keyring"                 # framework for managing password and secrets
-  - "blueberry"                     # bluetooth manager
-  - "libreoffice"                   # office software
-  - "gimp"                          # photo editor
-  - "wireshark"                     # packet sniffer
-  - "qalculate-gtk"                 # calculator
-  - "grimshot"                      # screenshot utility
-  - "swappy"                        # screenshot editor
-  - "quiterss"                      # RSS reader
-  - "evince"                        # document viewer (pdf)
-  - "vimiv"                         # image viewer
-  - "nextcloud-client"              # nextcloud
-  - "lxpolkit"                      # gui polkit agent
-  - "openssh-askpass"               # prompt when using ssh-agent keys
-  - "clementine"                    # music player and playlist creator
-  - "gscan2pdf"                     # scanner application
-  - "cups"                          # printing service
+  - "firefox-wayland"    		# Firefox Wayland launcher.
+  - "@virtualization"    		# These packages provide a graphical virtualization environment.
+  - "flatpak"    			# Application deployment framework for desktop apps
+  - "evolution"    			# Mail and calendar client for GNOME
+  - "evolution-ews"    			# Evolution extension for Exchange Web Services
+  #- "openh264"    			# H.264 codec library
+  - "keepassxc"    			# Cross-platform password manager
+  - "seahorse"    			# A GNOME application for managing encryption keys
+  - "gnome-keyring"    			# Framework for managing passwords and other secrets
+  - "blueman"    			# GTK+ Bluetooth Manager
+  - "libreoffice"    			# Free Software Productivity Suite
+  - "gimp"    				# GNU Image Manipulation Program
+  - "wireshark"    			# Network traffic analyzer
+  - "qalculate-gtk"    			# A multi-purpose desktop calculator for GNU/Linux
+  - "grimshot"    			# Helper for screenshots within sway
+  - "swappy"    			# Wayland native snapshot editing tool, inspired by Snappy on macOS
+  - "evince"    			# Document viewer
+  - "vimiv"    				# An image viewer with vim-like keybindings
+  - "nextcloud-client"    		# The Nextcloud Client
+  - "lxpolkit"    			# Simple PolicyKit authentication agent
+  - "openssh-askpass"    		# A passphrase dialog for OpenSSH and X
+  - "clementine"    			# A music player and library organizer
+  - "gscan2pdf"    			# GUI for producing a multipage PDF from a scan
+  - "cups"    				# CUPS printing system
+  - "emacs"    				# GNU Emacs text editor
 
 fedora_laptop_packages:
-  - "iwl7260-firmware"              # nic firmware for lenovo e560
-  - "NetworkManager-wifi"           # network manager wifi plugin
-  - "tlp"                           # laptop battery optimizer
-  - "light"                         # backlight control utility
+  - "iwl7260-firmware"    		# Firmware for Intel(R) Wireless WiFi Link 726x/8000/9000 Series Adapters
+  - "NetworkManager-wifi"    		# Wifi plugin for NetworkManager
+  - "tlp"    				# Optimize laptop battery life
+  - "light"    				# Control backlight controllers

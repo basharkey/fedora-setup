@@ -3,4 +3,4 @@
 
   roles:
     - sway
-    # - packages
+    - packages
