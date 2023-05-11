@@ -72,7 +72,7 @@
 
 - name: Template gtk bookmarks
   template:
-    src: gtk-3.0/bookmarks.j2
+    src: bookmarks.j2
     dest: "{{ HOME }}/.config/gtk-3.0/bookmarks"
     mode: '0644'
   become: no
