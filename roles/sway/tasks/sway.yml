@@ -39,7 +39,6 @@
     src: systemd-user-units/
     dest: "{{ HOME }}/.config/systemd/user"
     mode: '0644'
-  become: no
 
 - name: Enable systemd user units
   systemd:
@@ -61,32 +60,40 @@
     state: directory
     mode: '0755'
   loop: "{{ user_dirs }}"
-  become: no
 
-- name: Create gtk bookmarks dir
+- name: Create GTK bookmarks dir
   file:
     path: "{{ HOME }}/.config/gtk-3.0"
     state: directory
     mode: '0755'
-  become: no
 
-- name: Template gtk bookmarks
+- name: Template GTK bookmarks
   template:
     src: bookmarks.j2
     dest: "{{ HOME }}/.config/gtk-3.0/bookmarks"
     mode: '0644'
-  become: no
 
-# - name: Check if local dotfiles repo exists
-#   stat:
-#     path: "{{ HOME }}/dotfiles"
-#   register: dotfiles
+- name: Check if local dotfiles repo already exists
+  stat:
+    path: "{{ HOME }}/dotfiles"
+  regsiter: dotfiles
 
-# - name: Setup local dotfiles repo
-#   when: dotfiles.stat.isdir is defined and dotfiles.stat.isdir
-#   block:
-
-- name: Clone dotfiles repo
+- name: Clone/update dotfiles repo
   git:
     repo: https://github.com/basharkey/dotfiles.git
     dest: "{{ HOME }}/dotfiles"
+
+- name: Set dotfiles repo remote origin to SSH URI
+  command: git remote set-url origin git@github.com:basharkey/dotfiles.git
+  args:
+    chdir: "{{ HOME/dotfiles }}"
+
+- name: Copy dotfiles
+  when: dotfiles.stat.isdir is defined and dotfiles.stat.isdir
+  block:
+    - name: Copy user dotfiles
+      command: "cp -rT {{ HOME }}/dotfiles/user {{ HOME }}"
+
+    - name: Copy system dotfiles
+      command: "cp -rT {{ HOME }}/dotfiles/system /"
+      become: yes
