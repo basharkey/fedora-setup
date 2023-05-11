@@ -14,7 +14,7 @@ fedora_packages:
   - "xdg-desktop-portal-gnome"		# Backend implementation for xdg-desktop-portal using GNOME
 
   # CLI utilities
-  - "vim-enchanced"			# A version of the VIM editor which includes recent enhancements
+  - "vim-enhanced"			# A version of the VIM editor which includes recent enhancements
   - "vim-fugitive"    			# A Git wrapper so awesome, it should be illegal
   - "git"    				# Fast Version Control System
   - "wget"    				# A utility for retrieving files using the HTTP or FTP protocols
