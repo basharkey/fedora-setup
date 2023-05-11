@@ -41,21 +41,10 @@
     mode: '0644'
   become: no
 
-- name: User systemd daemon reload
+- name: Enable systemd user units
   systemd:
     daemon_reload: yes
-    scope: user
-
-- name: Find all systemd user units
-  find:
-    paths: "{{ HOME }}/.config/systemd/user"
-    file_type: file
-    patterns: '*.service,*.timer'
-  register: systemd_user_units
-
-- name: Enable all systemd user units
-  systemd:
-    name: "{{ item.path | basename }}"
+    name: "{{ item }}"
     enabled: yes
     scope: user
-  loop: "{{ systemd_user_units.files }}"
+  loop: "{{ systemd_user_units }}"
