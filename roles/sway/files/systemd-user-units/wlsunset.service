@@ -1,0 +1,12 @@
+[Unit]
+Description=Day/night gamma adjustments for Sway
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+# Pull args from config
+ExecStartPre=mapfile -t <%h/.config/wlsunset/config
+ExecStart=/usr/bin/wlsunset "${MAPFILE[@]}"
+
+[Install]
+WantedBy=sway-session.target

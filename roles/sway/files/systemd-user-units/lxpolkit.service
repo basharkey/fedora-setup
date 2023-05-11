@@ -1,0 +1,10 @@
+[Unit]
+Description=Simple PolicyKit authentication agent
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/lxpolkit
+
+[Install]
+WantedBy=sway-session.target

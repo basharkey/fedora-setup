@@ -1,0 +1,61 @@
+---
+- name: Install sway
+  dnf:
+    name: sway
+    exclude: sway-systemd # Not required when running sway as a systemd user service
+    state: present
+  become: yes
+  
+- name: Create global sway config directory
+  file:
+    path: /etc/sway/config.d
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Copy sway systemd user session config
+  copy:
+    src: systemd-user-session.conf
+    dest: /etc/sway/config.d/systemd-user-session.conf
+    mode: '0644'
+  become: yes
+
+- name: Create getty service overrides directory
+  file:
+    path: /etc/systemd/system/getty@tty1.service.d
+    state: directory
+    mode: '0755'
+  become: yes
+  
+- name: Template getty service autologin config
+  template:
+    src: autologin.conf.j2
+    dest: /etc/systemd/system/getty@tty1.service.d/autologin.conf
+    mode: '0644'
+  become: yes
+
+- name: Copy systemd user units
+  copy:
+    src: systemd-user-units
+    dest: "{{ HOME }}/.config/systemd/user"
+    mode: '0644'
+  become: no
+
+- name: User systemd daemon reload
+  systemd:
+    daemon_reload: yes
+    scope: user
+
+- name: Find all systemd user units
+  find:
+    paths: "{{ HOME }}/.config/systemd/user"
+    file_type: file
+    patterns: '*.service,*.timer'
+  register: systemd_user_units
+
+- name: Enable all systemd user units
+  systemd:
+    name: "{{ item.path | basename }}"
+    enabled: yes
+    scope: user
+  loop: "{{ systemd_user_units }}"

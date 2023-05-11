@@ -3,6 +3,7 @@
   user:
     name: "{{ user }}"
     groups: "{{ user_groups }}"
+  become: yes
 
 - name: Create user dirs
   file:

@@ -1,56 +1,147 @@
 ---
-- name: Install sway
-  dnf:
-    name: sway
-    exclude: sway-systemd # Not required when running sway as a systemd user service
-    state: present
-  become: yes
-  
-- name: Create global sway config directory
-  file:
-    path: /etc/sway/config.d
-    state: directory
-    mode: '0755'
-  become: yes
+- name: sway
+  include_tasks:
+    file: sway.yml
+# - name: Add user to groups
+#   user:
+#     name: "{{ user }}"
+#     groups: "{{ user_groups }}"
+#   become: yes
 
-- name: Copy sway systemd user session config
-  copy:
-    src: systemd-user-session.conf
-    dest: /etc/sway/config.d/systemd-user-session.conf
-    mode: '0644'
-  become: yes
+# - name: Create user dirs
+#   file:
+#     path: "{{ home }}/{{ item }}"
+#     state: directory
+#     mode: 0755
+#   loop:
+#     - Documents
+#     - Downloads
+#     - Pictures
+#     - Videos
+#     - Music
+#     - Desktop
+#     - Templates
+#     - Public
+#     - projects
+#     - .local/bin
+#     - .config/systemd/user
+#     - .config/nas-backup
+#     - .config/gtk-3.0
+#   become: no
 
-- name: Copy systemd user sway session target
-  copy:
-    src: sway-session.target
-    dest: /etc/systemd/user/sway-session.target
-    mode: '0644'
-  become: yes
+# - name: Copy kernel modules
+#   copy:
+#     src: modules-load.d/
+#     dest: /etc/modules-load.d/
 
-- name: Copy systemd user sway service
-  copy:
-    src: sway.service
-    dest: /etc/systemd/user/sway.service
-    mode: '0644'
-  become: yes
+# - name: Reload all kernel modules
+#   systemd:
+#     name: systemd-modules-load
+#     state: restarted
 
-- name: Enable systemd user sway service
-  systemd:
-    daemon_reload: yes
-    name: sway.service
-    enabled: yes
-    scope: user
+# - name: Copy nas-backup configs
+#   copy:
+#     src: nas-backup/
+#     dest: "{{ home }}/.config/nas-backup/"
+#   become: no
 
-- name: Create systemd getty service overrides directory
-  file:
-    path: /etc/systemd/system/getty@tty1.service.d
-    state: directory
-    mode: '0755'
-  become: yes
-  
-- name: Template systemd getty service autologin config
-  template:
-    src: autologin.conf.j2
-    dest: /etc/systemd/system/getty@tty1.service.d/autologin.conf
-    mode: '0644'
-  become: yes
+# - name: Copy systemd user units
+#   copy:
+#     src: "systemd/user/"
+#     dest: "{{ home }}/.config/systemd/user/"
+#   become: no
+
+# - name: Start and enable systemd user units
+#   systemd:
+#     daemon_reload: yes
+#     name: "{{ item }}"
+#     state: started
+#     enabled: yes
+#     scope: user
+#   loop: "{{ systemd_user_units }}"
+#   become: no
+
+# - name: Start and enable systemd system units
+#   systemd:
+#     daemon_reload: yes
+#     name: "{{ item }}"
+#     state: started
+#     enabled: yes
+#   loop: "{{ systemd_system_units }}"
+
+# - name: Check if dotfiles repo already exists
+#   stat:
+#     path: "{{ dotfiles_path }}"
+#   register: dotfiles
+
+# - name: Install dotfiles
+#   when: not dotfiles.stat.exists
+#   block:
+#     - name: Clone dotfiles repo
+#       git:
+#         repo: https://github.com/basharkey/dotfiles.git
+#         dest: "{{ dotfiles_path }}"
+#       become: no
+
+#     - name: Switch to dotfiles laptop branch
+#       command: "{{ item }}"
+#       args:
+#         chdir: "{{ dotfiles_path }}"
+#       loop:
+#         - git fetch origin laptop:laptop
+#         - git checkout laptop
+#       become: no
+#       tags: laptop
+
+#     - name: Set dotfiles repo remote to ssh
+#       command: git remote set-url origin git@github.com:basharkey/dotfiles.git
+#       args:
+#         chdir: "{{ dotfiles_path }}"
+#       become: no
+
+#     - name: Copy user dotfiles
+#       command: "cp -rT {{ dotfiles_path }}/user {{ home }}"
+#       become: no
+
+#     - name: Copy system dotfiles
+#       command: "cp -rT {{ dotfiles_path }}/system /"
+
+# - name: Template gtk bookmarks
+#   template:
+#     src: gtk-3.0/bookmarks.j2
+#     dest: "{{ home }}/.config/gtk-3.0/bookmarks"
+#     force: yes
+#   become: no
+
+# - name: Install toggle dependencies
+#   dnf:
+#     name: festival
+#     state: present
+
+# - name: Install toggle
+#   copy:
+#     src: toggle.sh
+#     dest: "{{ home }}/.local/bin/toggle"
+#     mode: 0755
+#   become: no
+
+# - name: Install wayweather dependencies
+#   dnf:
+#     name:
+#       - python3-pyyaml
+#       - python3-beautifulsoup4
+#     state: present
+
+# - name: Install wayweather
+#   get_url:
+#     url: https://raw.githubusercontent.com/basharkey/wayweather/main/wayweather.py
+#     dest: "{{ home }}/.local/bin/wayweather"
+#     mode: 0755
+#   become: no
+
+# - name: Install spotifyvctl
+#   get_url:
+#     url: https://raw.githubusercontent.com/basharkey/spotifyvctl/main/spotifyvctl.py
+#     dest: "{{ home }}/.local/bin/spotifyvctl"
+#     mode: 0755
+#   become: no

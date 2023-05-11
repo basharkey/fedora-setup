@@ -11,7 +11,7 @@ WantedBy=default.target
 
 [Service]
 Type=simple
-# Load this here instead of EnvironmentFile so we can use %t
+# Load env var here instead of the EnvironmentFile so we can use %t
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
 EnvironmentFile=-%h/.config/sway/env
 # Allows you to logout and login to sway again

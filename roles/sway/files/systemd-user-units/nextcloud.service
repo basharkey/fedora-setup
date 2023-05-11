@@ -1,0 +1,10 @@
+[Unit]
+Description=The Nextcloud Client
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/nextcloud --background
+
+[Install]
+WantedBy=sway-session.target
