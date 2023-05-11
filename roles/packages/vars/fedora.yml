@@ -1,9 +1,6 @@
 ---
 fedora_packages:
-  # Sway
-  - "sway"    				# i3-compatible window manager for Wayland
-  - "swaylock"    			# Screen locker for Wayland
-  - "swayidle"    			# An idle daemon for wayland compositors
+  # Desktop environment
   - "dunst"    				# Lightweight and customizable notification-daemon
   - "waybar"    			# Highly customizable Wayland bar for Sway and Wlroots based compositors
   - "fuzzel"    			# Application launcher for wlroots based Wayland compositors

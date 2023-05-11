@@ -48,3 +48,45 @@
     enabled: yes
     scope: user
   loop: "{{ systemd_user_units }}"
+
+- name: Add user to groups
+  user:
+    name: "{{ USER }}"
+    groups: "{{ user_groups }}"
+  become: yes
+
+- name: Create user dirs
+  file:
+    path: "{{ HOME }}/{{ item }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ user_dirs }}"
+  become: no
+
+- name: Create gtk bookmarks dir
+  file:
+    path: "{{ HOME }}/.config/gtk-3.0"
+    state: directory
+    mode: '0755'
+  become: no
+
+- name: Template gtk bookmarks
+  template:
+    src: gtk-3.0/bookmarks.j2
+    dest: "{{ HOME }}/.config/gtk-3.0/bookmarks"
+    mode: '0644'
+  become: no
+
+# - name: Check if local dotfiles repo exists
+#   stat:
+#     path: "{{ HOME }}/dotfiles"
+#   register: dotfiles
+
+# - name: Setup local dotfiles repo
+#   when: dotfiles.stat.isdir is defined and dotfiles.stat.isdir
+#   block:
+
+- name: Clone dotfiles repo
+  git:
+    repo: https://github.com/basharkey/dotfiles.git
+    dest: "{{ HOME }}/dotfiles"

@@ -11,3 +11,21 @@ systemd_user_units:
   - ssh-agent.service
   - nas-backup.timer
   # - nas-prune.timer
+
+user_groups:
+  - wheel
+  - wireshark
+  - libvirt
+  - docker
+
+user_dirs:
+  - Documents
+  - Downloads
+  - Pictures
+  - Videos
+  - Music
+  - Desktop
+  - Templates
+  - Public
+  - projects
+  - .local/bin
