@@ -89,7 +89,7 @@
     chdir: "{{ HOME }}/dotfiles"
 
 - name: Copy dotfiles
-  when: not dotfiles.stat.isdir is defined and not dotfiles.stat.isdir
+  when: not dotfiles.stat.isdir is defined
   block:
     - name: Copy user dotfiles
       command: "cp -rT {{ HOME }}/dotfiles/user {{ HOME }}"
