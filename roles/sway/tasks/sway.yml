@@ -76,7 +76,7 @@
 - name: Check if local dotfiles repo already exists
   stat:
     path: "{{ HOME }}/dotfiles"
-  regsiter: dotfiles
+  register: dotfiles
 
 - name: Clone/update dotfiles repo
   git:
