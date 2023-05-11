@@ -86,7 +86,7 @@
 - name: Set dotfiles repo remote origin to SSH URI
   command: git remote set-url origin git@github.com:basharkey/dotfiles.git
   args:
-    chdir: "{{ HOME/dotfiles }}"
+    chdir: "{{ HOME }}/dotfiles"
 
 - name: Copy dotfiles
   when: dotfiles.stat.isdir is defined and dotfiles.stat.isdir
