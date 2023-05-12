@@ -3,4 +3,5 @@
 
   roles:
     - packages
+    - geerlingguy.docker
     - sway

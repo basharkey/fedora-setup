@@ -8,8 +8,9 @@
 - name: Install toggle
   copy:
     src: toggle.sh
-    dest: "{{ HOME }}/.local/bin/toggle.sh"
+    dest: /usr/local/bin/toggle.sh"
     mode: '0755'
+  become: yes
 
 - name: Install wayweather dependencies
   dnf:
@@ -23,8 +24,9 @@
 - name: Install wayweather
   get_url:
     url: https://raw.githubusercontent.com/basharkey/wayweather/main/wayweather.py
-    dest: "{{ HOME }}/.local/bin/wayweather.py"
+    dest: /usr/local/bin/wayweather.py"
     mode: '0755'
+  become: yes
 
 - name: Install spotifyvctl dependencies
   dnf:
@@ -37,5 +39,6 @@
 - name: Install spotifyvctl
   get_url:
     url: https://raw.githubusercontent.com/basharkey/spotifyvctl/main/spotifyvctl.py
-    dest: "{{ HOME }}/.local/bin/spotifyvctl.py"
+    dest: /usr/local/bin/spotifyvctl.py
     mode: '0755'
+  become: yes
