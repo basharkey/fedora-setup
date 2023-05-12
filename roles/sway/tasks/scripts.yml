@@ -8,7 +8,7 @@
 - name: Install toggle
   copy:
     src: toggle.sh
-    dest: /usr/local/bin/toggle.sh"
+    dest: /usr/local/bin/toggle.sh
     mode: '0755'
   become: yes
 
@@ -24,7 +24,7 @@
 - name: Install wayweather
   get_url:
     url: https://raw.githubusercontent.com/basharkey/wayweather/main/wayweather.py
-    dest: /usr/local/bin/wayweather.py"
+    dest: /usr/local/bin/wayweather.py
     mode: '0755'
   become: yes
 
