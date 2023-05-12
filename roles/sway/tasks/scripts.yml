@@ -3,6 +3,7 @@
   dnf:
     name: festival
     state: present
+  become: yes
 
 - name: Install toggle
   copy:
@@ -17,6 +18,7 @@
       - python3-pyyaml
       - python3-beautifulsoup4
     state: present
+  become: yes
 
 - name: Install wayweather
   get_url:
@@ -30,6 +32,7 @@
       - python3
       - pulseaudio-utils
     state: present
+  become: yes
 
 - name: Install spotifyvctl
   get_url:
