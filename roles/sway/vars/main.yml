@@ -16,7 +16,6 @@ user_groups:
   - wheel
   - wireshark
   - libvirt
-  - docker
 
 user_dirs:
   - Documents
