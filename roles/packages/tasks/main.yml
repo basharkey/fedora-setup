@@ -39,12 +39,12 @@
     state: present
   become: yes
 
-- name: Install Fedora laptop packages
-  dnf:
-    name: "{{ fedora_laptop_packages }}"
-    state: present
-  tags: laptop
-  become: yes
+# - name: Install Fedora laptop packages
+#   dnf:
+#     name: "{{ fedora_laptop_packages }}"
+#     state: present
+#   tags: laptop
+#   become: yes
 
 - name: Enable Flathub repository
   flatpak_remote:
