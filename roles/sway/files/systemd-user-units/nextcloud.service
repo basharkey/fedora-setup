@@ -4,6 +4,7 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
+EnvironmentFile=-%h/.config/sway/env
 ExecStart=/usr/bin/nextcloud --background
 
 [Install]
