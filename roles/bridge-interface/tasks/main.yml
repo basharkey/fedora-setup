@@ -26,7 +26,7 @@
   become: yes
 
 - name: Check if bridge adapter is already the primary interface
-  when: bridge_primary_interface == bridge_secondary_interface
+  when: bridge_primary_interface != bridge_secondary_interface
   block:
     - name: Create primary bridge interface
       nmcli:
