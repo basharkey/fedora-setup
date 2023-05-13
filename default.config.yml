@@ -1,0 +1,4 @@
+---
+# roles/smb
+smb_share: "" # //nas.local/share
+smb_mountpoint: "{{ HOME }}/nas"
