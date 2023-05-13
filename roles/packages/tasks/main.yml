@@ -1,7 +1,7 @@
 ---
 - name: Load package vars
   include_vars:
-    dir: vars
+    dir: defaults
 
 - name: Install Fedora packages
   dnf:
