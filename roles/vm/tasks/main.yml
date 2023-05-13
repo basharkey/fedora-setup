@@ -7,6 +7,6 @@
 
 - name: Build VMs
   include_tasks: build-vm.yml
-  loop: "{{ vms  }}"
+  loop: "{{ vms }}"
   loop_control:
     loop_var: vm

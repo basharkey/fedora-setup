@@ -16,3 +16,4 @@
     - smb
     - bridge-interface
     - vfio
+    - vm
