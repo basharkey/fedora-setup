@@ -1,6 +1,6 @@
 ---
 - name: Check if require SMB role custom vars are defined
-  when: smb_share is defined and smb_password is defined
+  when: (smb_share is defined and smb_passwd is defined) and (smb_share | length > 0 and smb_passwd | length > 0)
   block:
     - name: Install cifs-utils
       dnf:
