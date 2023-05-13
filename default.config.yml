@@ -1,4 +1,37 @@
 ---
+# roles/sway
+user_groups:
+  - wheel
+  - wireshark
+  - libvirt
+
+user_dirs:
+  - Documents
+  - Downloads
+  - Pictures
+  - Videos
+  - Music
+  - Desktop
+  - Templates
+  - Public
+  - projects
+
+systemd_user_units:
+  - sway.service
+  - waybar.service
+  - dunst.service
+  - wlsunset.service
+  - lxpolkit.service
+  - easyeffects.service
+  - pcmanfm.service
+  - nextcloud.service
+  - ssh-agent.service
+  - nas-backup.timer
+  # - nas-prune.timer
+
+systemd_system_units:
+  - cups.service
+
 # roles/smb
 smb_share: "" # //nas.local/share
 smb_mountpoint: "{{ HOME }}/nas"

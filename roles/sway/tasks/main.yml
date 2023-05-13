@@ -48,6 +48,15 @@
     scope: user
   loop: "{{ systemd_user_units }}"
 
+- name: Start and enable systemd system units
+  systemd:
+    daemon_reload: yes
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: "{{ systemd_system_units }}"
+  become: yes
+
 - name: Add user to groups
   user:
     name: "{{ USER }}"
