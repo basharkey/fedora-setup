@@ -1,6 +1,6 @@
 # fedora-ansible
-1. Copy default.config.yml to <custom>.config.yml and customize variables
-2. Add secrets to vault.yml
+1. Copy `default.config.yml` to `<custom>.config.yml` and customize variables
+2. Add secrets to `vault.yml`
 3. `make deps` to install playbook dependencies
 4. `make vault` to encrypt vault.yml
 5. `make install` to run playbook
