@@ -35,3 +35,9 @@ systemd_system_units:
 # roles/smb
 smb_share: "" # //nas.local/share
 smb_mountpoint: "{{ HOME }}/nas"
+
+# roles/vfio
+# lspci -nn
+vfio_bind_ids:
+  - 10de:2684
+  - 10de:22ba
