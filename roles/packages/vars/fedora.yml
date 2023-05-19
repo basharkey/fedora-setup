@@ -32,6 +32,7 @@ fedora_packages:
   - "python3-virtualenv"		# Tool to create isolated Python environments
   - "pandoc"    			# Conversion between markup formats
   - "podman"                            # Manage Pods, Containers and Container Images
+  - "progress"                          # Coreutils Viewer
 
   # Sound server
   - "pipewire"    			# Media Sharing Server
