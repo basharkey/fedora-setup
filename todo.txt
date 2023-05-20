@@ -22,3 +22,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 # bluetooth manager
 exec --no-startup-id blueman-applet
+
+
+
+
+set fedora-ansible remote to ssh
