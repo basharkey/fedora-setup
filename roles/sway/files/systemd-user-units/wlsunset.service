@@ -4,9 +4,7 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
-# Pull args from config
-ExecStartPre=mapfile -t <%h/.config/wlsunset/config
-ExecStart=/usr/bin/wlsunset "${MAPFILE[@]}"
+ExecStart=/usr/bin/env bash -c '/usr/bin/wlsunset $(cat %h/.config/wlsunset/config)'
 
 [Install]
 WantedBy=sway-session.target
