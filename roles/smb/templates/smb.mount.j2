@@ -3,9 +3,9 @@ Description=nas mount
 
 [Mount]
 What={{ smb_share }}
-Where={{ smb_mount }}
+Where={{ smb_mountpoint }}
 Type=cifs
-Options=rw,file_mode=0660,dir_mode=0775,credentials={{ home }}/.smbpasswd,uid={{ uid }},gid={{ gid }},iocharset=utf8,vers=3
+Options=rw,file_mode=0660,dir_mode=0775,credentials={{ HOME }}/.smbpasswd,uid={{ UID }},gid={{ GID }},iocharset=utf8,vers=3
 DirectoryMode=0775
 
 [Install]

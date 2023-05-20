@@ -3,62 +3,58 @@
   include_vars:
     dir: vars
 
-- name: Import rpm fusion free gpg key
-  rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020"
-    state: present
-
-- name: Import rpm fusion non-free gpg key
-  rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020"
-    state: present
-
-- name: Enable rpm fusion free repository
-  dnf:
-    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
-    state: present
-
-- name: Enable rpm fusion non-free repository
-  dnf:
-    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
-    state: present
-
-- name: Install rpm fusion packages
-  dnf:
-    name: "{{ rpmfusion_packages }}"
-    state: present
-
-- name: Install fedora packages
+- name: Install Fedora packages
   dnf:
     name: "{{ fedora_packages }}"
     state: present
+  become: yes
 
-- name: Install fedora laptop packages
-  dnf:
-    name: "{{ fedora_laptop_packages }}"
+- name: Import RPM Fusion free GPG key
+  rpm_key:
+    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020"
     state: present
-  tags: laptop
+  become: yes
 
-- name: Setup flatpak
-  block:
-    - name: Enable flathub repository
-      flatpak_remote:
-        name: flathub
-        state: present
-        flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
-        method: user
+- name: Import RPM Fusion non-free GPG key
+  rpm_key:
+    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020"
+    state: present
+  become: yes
 
-    #- name: Install flatpak packages
-    #  flatpak:
-    #    # should work in future ansible versions
-    #    name: "{{ flatpak_packages }}"
-    #    state: present
-    #    method: user
+- name: Enable RPM Fusion free repository
+  dnf:
+    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
+    state: present
+  become: yes
 
-    - name: Install flatpak packages
-      flatpak:
-        name: "{{ item }}"
-        state: present
-        method: user
-      loop: "{{ flatpak_packages }}"
-  become: false
+- name: Enable RPM Fusion non-free repository
+  dnf:
+    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
+    state: present
+  become: yes
+
+- name: Install RPM Fusion packages
+  dnf:
+    name: "{{ rpmfusion_packages }}"
+    state: present
+  become: yes
+
+# - name: Install Fedora laptop packages
+#   dnf:
+#     name: "{{ fedora_laptop_packages }}"
+#     state: present
+#   tags: laptop
+#   become: yes
+
+- name: Enable Flathub repository
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
+    method: user
+
+- name: Install Flatpak packages
+  flatpak:
+    name: "{{ flatpak_packages }}"
+    state: present
+    method: user

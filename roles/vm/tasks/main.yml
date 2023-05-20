@@ -1,0 +1,12 @@
+---
+- name: List any already existing VMs
+  virt:
+    command: list_vms
+  register: existing_vms
+  become: yes
+
+- name: Build VMs
+  include_tasks: build-vm.yml
+  loop: "{{ vms }}"
+  loop_control:
+    loop_var: vm

@@ -1,0 +1,44 @@
+---
+- name: "Check if {{ vm.name }} already exists"
+  when: not vm.name in existing_vms
+  block:
+    - name: "Define {{ vm.name }} VM"
+      virt:
+        command: define
+        xml: "{{ lookup('file', vm.name + '.xml') }}"
+
+    - name: "Setup {{ vm.name }} libvirt hooks"
+      when: vm.libvirt_hooks
+      block:
+        - name: "Create {{ vm.name }} libvirt hook directories"
+          file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+          loop:
+            - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin"
+            - "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end"
+
+        - name: "Copy {{ vm.name }} libvirt hooks script"
+          copy:
+            src: qemu
+            dest: /etc/libvirt/hooks/qemu
+            mode: '0755'
+
+        - name: "Template {{ vm.name }} libvirt prepare CPU hook script"
+          template:
+            src: cpu-prepare.sh.j2
+            dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/prepare/begin/cpu-prepare.sh"
+            mode: '0755'
+
+        - name: "Template {{ vm.name }} libvirt release CPU hook script"
+          template:
+            src: cpu-release.sh.j2
+            dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end/cpu-release.sh"
+            mode: '0755'
+
+        - name: "Restart virtqemud to load {{ vm.name }} libvirt hooks"
+          systemd:
+            name: virtqemud
+            state: restarted
+  become: yes

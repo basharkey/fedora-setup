@@ -1,0 +1,11 @@
+[Unit]
+Description=The Nextcloud Client
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+EnvironmentFile=-%h/.config/sway/env
+ExecStart=/usr/bin/nextcloud --background
+
+[Install]
+WantedBy=sway-session.target

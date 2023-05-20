@@ -1,49 +1,54 @@
 ---
-- name: Grub enable iommu
+- name: Grub enable IOMMU
   block:
-    - name: Check if iommu enabled in grub config
+    - name: Check if IOMMU enabled in grub config
       command: egrep "(amd|intel)_iommu=on" /etc/default/grub
+  become: yes
   rescue:
-    - name: Grub enable amd iommu
-      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
+    - name: Grub enable AMD IOMMU
+      command: grubby --args=amd_iommu=on --update-kernel=ALL
       when: ansible_processor[1] == "AuthenticAMD"
-    
-    - name: Grub enable intel iommu
-      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
+
+    - name: Grub enable Intel IOMMU
+      command: grubby --args=intel_iommu=on --update-kernel=ALL
       when: ansible_processor[1] == "GenuineIntel"
     
     - name: Write grub config
-      command: grub2-mkconfig > /etc/grub2-efi.cfg 
+      command: grub2-mkconfig > /etc/grub2.cfg
+  become: yes
 
-- name: Template qemu.conf
+- name: Template QEMU config
   template:
     src: qemu.conf.j2
     dest: /etc/libvirt/qemu.conf
-    mode: 0644
+    mode: '0644'
+  become: yes
 
-- name: Install qemu jack dependencies
+- name: Install QEMU JACK dependencies
   dnf:
     name:
       - pipewire-jack-audio-connection-kit
       - qemu-audio-jack
     state: present
+  become: yes
 
-- name: Install libvirt-jack-socket selinux module
-  block: 
+- name: Install libvirt-jack-socket SELinux module
+  block:
     - name: Check if libvirt-jack-socket selinux module is installed
       shell: semodule -l | grep libvirt-jack-socket
+  become: yes
   rescue:
-    - name: Copy libvirt-jack-socket selinux type enforcement file
+    - name: Copy libvirt-jack-socket SELinux type enforcement file
       copy:
         src: libvirt-jack-socket.te
         dest: /tmp/libvirt-jack-socket.te
 
-    - name: Compile libvirt-jack-socket selinux module file
+    - name: Compile libvirt-jack-socket SELinux module file
       command: checkmodule -M -m -o libvirt-jack-socket.mod libvirt-jack-socket.te
       args:
         chdir: /tmp
 
-    - name: Build libvirt-jack-socket selinux policy package
+    - name: Build libvirt-jack-socket SELinux policy package
       command: semodule_package -o libvirt-jack-socket.pp -m libvirt-jack-socket.mod
       args:
         chdir: /tmp
@@ -52,37 +57,44 @@
       command: semodule -i libvirt-jack-socket.pp
       args:
         chdir: /tmp
+  become: yes
 
 - name: Start and enable virtqemud
   systemd:
     name: virtqemud
     state: started
     enabled: yes
+  become: yes
 
-- name: Copy vfio modules config
+- name: Copy VFIO modules config
   copy:
     src: vfio-modules.conf
     dest: /etc/modules-load.d/vfio.conf
   register: vfio_modules
+  become: yes
 
-- name: Template vfio module options config
+- name: Template VFIO module options config
   template:
     src: vfio-options.conf.j2
     dest: /etc/modprobe.d/vfio.conf
-    mode: 0644
+    mode: '0644'
   register: vfio_options
+  become: yes
 
 - name: Update initramfs
   when: vfio_modules.changed or vfio_options.changed
   command: dracut -fv
+  become: yes
 
 - name: Install virtio-win repo
   get_url:
     url: https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo
     dest: /etc/yum.repos.d/virtio-win.repo
+  become: yes
 
-- name: Install virtio-win drivers iso
+- name: Install virtio-win drivers ISO
   # /usr/share/virtio-win/virtio-win.iso
   dnf:
     name: virtio-win
     state: present
+  become: yes

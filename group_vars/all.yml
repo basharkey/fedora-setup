@@ -1,0 +1,5 @@
+---
+USER: "{{ ansible_user_id }}"
+HOME: "{{ ansible_user_dir }}"
+UID: "{{ ansible_user_uid }}"
+GID: "{{ ansible_user_gid }}"

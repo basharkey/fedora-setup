@@ -1,0 +1,10 @@
+[Unit]
+Description=
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=
+
+[Install]
+WantedBy=sway-session.target

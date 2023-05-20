@@ -1,0 +1,9 @@
+---
+vms:
+  - name: win10-vfio
+    libvirt_hooks: yes
+    host_cores: 13-19
+
+  - name: win10-dtx
+    libvirt_hooks: yes
+    host_cores: 14-19

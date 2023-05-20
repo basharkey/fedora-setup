@@ -1,0 +1,4 @@
+---
+bridge_primary_interface: br0
+bridge_secondary_interface: "{{ ansible_default_ipv4.interface }}"
+bridge_libvirt_network: bridge-network

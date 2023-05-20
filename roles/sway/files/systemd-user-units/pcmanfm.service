@@ -1,0 +1,10 @@
+[Unit]
+Description=Extremly fast and lightweight file manager
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pcmanfm --daemon-mode
+
+[Install]
+WantedBy=sway-session.target

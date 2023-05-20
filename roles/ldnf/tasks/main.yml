@@ -1,6 +1,0 @@
----
-- name: Install ldnf
-  copy:
-    src: ldnf.sh
-    dest: /usr/local/bin/ldnf
-    mode: 0755
