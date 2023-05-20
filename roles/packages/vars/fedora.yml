@@ -9,6 +9,7 @@ fedora_packages:
   - "wl-clipboard"    			# Command-line copy/paste utilities for Wayland
   - "wlsunset"    			# Day/night gamma adjustments for Sway
   - "xdg-desktop-portal-gnome"		# Backend implementation for xdg-desktop-portal using GNOME
+  - "desktop-backgrounds-compat"        # The default Fedora wallpaper for less common DEs
 
   # CLI utilities
   - "vim-enhanced"			# A version of the VIM editor which includes recent enhancements
