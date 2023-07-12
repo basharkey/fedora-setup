@@ -1,7 +1,0 @@
----
-rpmfusion_packages:
-  - "vlc"                                 # The cross-platform open-source multimedia framework, player and server
-  - "mpv"                                 # Movie player playing most video formats and DVDs
-  - "obs-studio"                          # Open Broadcaster Software Studio
-  - "wf-recorder"                         # Screen recorder for wlroots-based compositors eg swaywm
-  - "akmod-v4l2loopback"                  # Akmod package for v4l2loopback kernel module(s)

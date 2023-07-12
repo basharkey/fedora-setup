@@ -1,5 +1,6 @@
 ---
 flatpak_packages:
+  - "org.mozilla.firefox"           # Fast, Private & Safe Web Browser
   - "com.spotify.Client"            # Online music streaming service
   - "com.discordapp.Discord"        # Messaging, Voice, and Video Client
   - "io.github.spacingbat3.webcord" # A Discord and Fosscord web-based client made with the electron

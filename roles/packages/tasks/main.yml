@@ -1,50 +1,21 @@
 ---
+- name: Template Debian non-free repositories config
+  template:
+    src: non-free.list.j2
+    dest: /etc/apt/sources.list.d/non-free.list
+    mode: '0644'
+  become: yes
+
 - name: Load package vars
   include_vars:
     dir: vars
 
-- name: Install Fedora packages
-  dnf:
-    name: "{{ fedora_packages }}"
+- name: Install Debian packages
+  apt:
+    name: "{{ debian_packages }}"
     state: present
+    install_recommends: no
   become: yes
-
-- name: Import RPM Fusion free GPG key
-  rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020"
-    state: present
-  become: yes
-
-- name: Import RPM Fusion non-free GPG key
-  rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020"
-    state: present
-  become: yes
-
-- name: Enable RPM Fusion free repository
-  dnf:
-    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
-    state: present
-  become: yes
-
-- name: Enable RPM Fusion non-free repository
-  dnf:
-    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
-    state: present
-  become: yes
-
-- name: Install RPM Fusion packages
-  dnf:
-    name: "{{ rpmfusion_packages }}"
-    state: present
-  become: yes
-
-# - name: Install Fedora laptop packages
-#   dnf:
-#     name: "{{ fedora_laptop_packages }}"
-#     state: present
-#   tags: laptop
-#   become: yes
 
 - name: Enable Flathub repository
   flatpak_remote:
