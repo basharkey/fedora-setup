@@ -1,0 +1,7 @@
+---
+- name: Restart NetworkManager
+  systemd:
+    name: NetworkManager.service
+    state: restarted
+  become: yes
+  listen: "restart NetworkManager"

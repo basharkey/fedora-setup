@@ -1,0 +1,51 @@
+---
+- name: Install toggle dependencies
+  dnf:
+    name: festival
+    state: present
+  become: yes
+
+- name: Install toggle
+  copy:
+    src: toggle.sh
+    dest: /usr/local/bin/toggle.sh
+    mode: '0755'
+  become: yes
+
+- name: Install wayweather dependencies
+  dnf:
+    name:
+      - python3
+      - python3-pyyaml
+      - python3-beautifulsoup4
+    state: present
+  become: yes
+
+- name: Install wayweather
+  get_url:
+    url: https://raw.githubusercontent.com/basharkey/wayweather/main/wayweather.py
+    dest: /usr/local/bin/wayweather.py
+    mode: '0755'
+  become: yes
+
+- name: Install spotifyvctl dependencies
+  dnf:
+    name:
+      - python3
+      - pulseaudio-utils
+    state: present
+  become: yes
+
+- name: Install spotifyvctl
+  get_url:
+    url: https://raw.githubusercontent.com/basharkey/spotifyvctl/main/spotifyvctl.py
+    dest: /usr/local/bin/spotifyvctl.py
+    mode: '0755'
+  become: yes
+
+- name: Install ldnf
+  copy:
+    src: ldnf.sh
+    dest: /usr/local/bin/ldnf
+    mode: '0755'
+  become: yes

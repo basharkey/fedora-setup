@@ -1,0 +1,10 @@
+[Unit]
+Description=nas-prune timer
+
+[Timer]
+Unit=nas-prune.service
+OnCalendar=monthly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

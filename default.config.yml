@@ -1,8 +1,7 @@
 ---
 # roles/sway
 user_groups:
-  - wheel
-  - wireshark
+  - sudo
   - libvirt
 
 user_dirs:
@@ -17,14 +16,6 @@ user_dirs:
   - projects
 
 systemd_user_units:
-  - sway.service
-  - waybar.service
-  - dunst.service
-  - wlsunset.service
-  - lxpolkit.service
-  - easyeffects.service
-  - pcmanfm.service
-  - nextcloud.service
   - ssh-agent.service
   - nas-backup.timer
   # - nas-prune.timer

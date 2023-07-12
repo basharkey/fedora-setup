@@ -1,0 +1,10 @@
+[Unit]
+Description=nas-backup timer
+
+[Timer]
+Unit=nas-backup.service
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
