@@ -6,15 +6,15 @@
   become: yes
   rescue:
     - name: Grub enable AMD IOMMU
-      command: grubby --args=amd_iommu=on --update-kernel=ALL
+      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
       when: ansible_processor[1] == "AuthenticAMD"
 
     - name: Grub enable Intel IOMMU
-      command: grubby --args=intel_iommu=on --update-kernel=ALL
+      command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& intel_iommu=on|g' /etc/default/grub
       when: ansible_processor[1] == "GenuineIntel"
-    
+
     - name: Write grub config
-      command: grub2-mkconfig > /etc/grub2.cfg
+      command: update-grub
   become: yes
 
 - name: Template QEMU config
@@ -22,41 +22,6 @@
     src: qemu.conf.j2
     dest: /etc/libvirt/qemu.conf
     mode: '0644'
-  become: yes
-
-- name: Install QEMU JACK dependencies
-  dnf:
-    name:
-      - pipewire-jack-audio-connection-kit
-      - qemu-audio-jack
-    state: present
-  become: yes
-
-- name: Install libvirt-jack-socket SELinux module
-  block:
-    - name: Check if libvirt-jack-socket selinux module is installed
-      shell: semodule -l | grep libvirt-jack-socket
-  become: yes
-  rescue:
-    - name: Copy libvirt-jack-socket SELinux type enforcement file
-      copy:
-        src: libvirt-jack-socket.te
-        dest: /tmp/libvirt-jack-socket.te
-
-    - name: Compile libvirt-jack-socket SELinux module file
-      command: checkmodule -M -m -o libvirt-jack-socket.mod libvirt-jack-socket.te
-      args:
-        chdir: /tmp
-
-    - name: Build libvirt-jack-socket SELinux policy package
-      command: semodule_package -o libvirt-jack-socket.pp -m libvirt-jack-socket.mod
-      args:
-        chdir: /tmp
-
-    - name: Install libvirt-jack-socket selinux policy package
-      command: semodule -i libvirt-jack-socket.pp
-      args:
-        chdir: /tmp
   become: yes
 
 - name: Start and enable virtqemud
@@ -83,18 +48,19 @@
 
 - name: Update initramfs
   when: vfio_modules.changed or vfio_options.changed
-  command: dracut -fv
+  command: update-initramfs
   become: yes
 
-- name: Install virtio-win repo
+- name: Create virtio-win dir
+  file:
+    path: /usr/share/virtio-win
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Download virtio-win drivers ISO
   get_url:
-    url: https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo
-    dest: /etc/yum.repos.d/virtio-win.repo
-  become: yes
-
-- name: Install virtio-win drivers ISO
-  # /usr/share/virtio-win/virtio-win.iso
-  dnf:
-    name: virtio-win
-    state: present
+    url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
+    dest: /usr/share/virtio-win/virtio-win.iso
+    mode: '0644'
   become: yes

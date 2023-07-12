@@ -53,9 +53,9 @@
       <target dev='sda' bus='sata'/>
       <readonly/>
     </disk>
-    <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='writeback' discard='unmap' iothread='1' queues='12'/>
-      <source dev='/dev/disk/by-id/ata-Patriot_Burst_Elite_960GB_PBEEDCB22092001255'/>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='writeback' discard='unmap' iothread='1' queues='12'/>
+      <source file='/var/lib/libvirt/images/win10-dtx.qcow2'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
     </disk>
