@@ -1,20 +1,4 @@
 ---
-- name: Ensure NetworkManager is started and enabled
-  systemd:
-    name: NetworkManager.service
-    state: started
-    enabled: yes
-  become: yes
-
-- name: Enable NetworkManager to handle default interface
-  lineinfile:
-    path: /etc/NetworkManager/NetworkManager.conf
-    search_string: 'managed=false'
-    line: managed=true
-    state: present
-  become: yes
-  notify: "restart NetworkManager"
-
 - name: Copy xinit config
   copy:
     src: .xinitrc
