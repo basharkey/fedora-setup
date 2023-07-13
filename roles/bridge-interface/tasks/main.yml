@@ -34,6 +34,7 @@
 
 - name: Bring bridge interface up
   command: "ifup {{ bridge_primary_interface }}"
+  become: yes
 
 - name: Ensure libvirtd is running
   systemd:
