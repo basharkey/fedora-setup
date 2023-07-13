@@ -1,4 +1,3 @@
 ---
-bridge_primary_interface: br0
-bridge_secondary_interface: eth1
+bridge_interface: br0
 bridge_libvirt_network: bridge-network

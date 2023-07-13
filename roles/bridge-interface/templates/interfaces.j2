@@ -11,7 +11,6 @@ iface lo inet loopback
 allow-hotplug {{ ansible_default_ipv4.interface }}
 iface {{ ansible_default_ipv4.interface }} inet manual
 
-iface {{ bridge_secondary_interface }} inet manual
-
-iface {{ bridge_primary_interface }} inet dhcp
-   bridge_ports {{ ansible_default_ipv4.interface }} {{ bridge_secondary_interface }}
+auto {{ bridge_interface }}
+iface {{ bridge_interface }} inet dhcp
+   bridge_ports {{ ansible_default_ipv4.interface }}

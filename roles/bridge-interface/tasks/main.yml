@@ -25,16 +25,19 @@
     state: restarted
   become: yes
 
-- name: Template bridge network interfaces config
-  template:
-    src: interfaces.j2
-    dest: /etc/network/interfaces
-    mode: '0644'
-  become: yes
+- name: Check if bridge adapter is already the primary interface
+  when: bridge_interface != ansible_default_ipv4.interface
+  block:
+    - name: Template bridge network interfaces config
+      template:
+        src: interfaces.j2
+        dest: /etc/network/interfaces
+        mode: '0644'
+        become: yes
 
-- name: Bring bridge interface up
-  command: "ifup {{ bridge_primary_interface }}"
-  become: yes
+    - name: Bring bridge interface up
+      command: "ifup {{ bridge_primary_interface }}"
+      become: yes
 
 - name: Ensure libvirtd is running
   systemd:

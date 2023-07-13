@@ -38,8 +38,6 @@ debian_packages:
   - "usbutils"    			# Linux USB utilities
   - "cifs-utils"    			# Utilities for mounting and managing CIFS mounts
   - "bind9-utils"    			# Utilities for querying DNS name servers
-  - "network-manager"    		# NetworkManager curses-based UI
-  - "network-manager-gnome"             # Provides nm-applet
   - "python3"
   - "python3-pip"    			# A tool for installing and managing Python3 packages
   - "python3-virtualenv"		# Tool to create isolated Python environments
@@ -72,6 +70,7 @@ debian_packages:
 
   - "qemu-system"
   - "libvirt-daemon-system"
+  - "bridge-utils"
   - "virt-manager"
   - "flatpak"    			# Application deployment framework for desktop apps
   - "evolution"    			# Mail and calendar client for GNOME
