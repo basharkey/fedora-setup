@@ -58,9 +58,9 @@
       command: "nmcli connection down {{ bridge_secondary_interface }}"
   become: yes
 
-- name: Ensure virtqemud is running
+- name: Ensure libvirtd is running
   systemd:
-    name: virtqemud
+    name: libvirtd
     state: started
   become: yes
 

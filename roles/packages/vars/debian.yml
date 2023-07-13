@@ -18,6 +18,7 @@ debian_packages:
   - "i3status"
   - "i3lock"
   - "xss-lock"
+  - "redshift"
   - "dunst"
   - "suckless-tools"
   - "alacritty"

@@ -1,9 +1,16 @@
 ---
-- name: Template Debian non-free repositories config
-  template:
-    src: non-free.list.j2
-    dest: /etc/apt/sources.list.d/non-free.list
-    mode: '0644'
+- name: Add Debian non-free repositories
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - "deb http://deb.debian.org/debian/ {{ ansible_distribution_release }} main contrib non-free non-free-firmware"
+    - "deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release }} main contrib non-free non-free-firmware"
+    - "deb http://security.debian.org/debian-security {{ ansible_distribution_release }}-security main contrib non-free non-free-firmware"
+    - "deb-src http://security.debian.org/debian-security {{ ansible_distribution_release }}-security main contrib non-free non-free-firmware"
+    - "deb http://deb.debian.org/debian/ {{ ansible_distribution_release }}-updates main contrib non-free non-free-firmware"
+    - "deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release }}-updates main contrib non-free non-free-firmware"
   become: yes
 
 - name: Load package vars

@@ -24,9 +24,9 @@
     mode: '0644'
   become: yes
 
-- name: Start and enable virtqemud
+- name: Start and enable libvirtd
   systemd:
-    name: virtqemud
+    name: libvirtd
     state: started
     enabled: yes
   become: yes

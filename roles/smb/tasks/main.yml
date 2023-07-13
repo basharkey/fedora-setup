@@ -3,7 +3,7 @@
   when: (smb_share is defined and smb_passwd is defined) and (smb_share | length > 0 and smb_passwd | length > 0)
   block:
     - name: Install cifs-utils
-      dnf:
+      apt:
         name: cifs-utils
         state: present
       become: yes

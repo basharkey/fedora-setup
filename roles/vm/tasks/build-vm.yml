@@ -37,8 +37,8 @@
             dest: "/etc/libvirt/hooks/qemu.d/{{ vm.name }}/release/end/cpu-release.sh"
             mode: '0755'
 
-        - name: "Restart virtqemud to load {{ vm.name }} libvirt hooks"
+        - name: "Restart libvirtd to load {{ vm.name }} libvirt hooks"
           systemd:
-            name: virtqemud
+            name: libvirtd
             state: restarted
   become: yes
