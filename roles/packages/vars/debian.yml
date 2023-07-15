@@ -9,7 +9,9 @@ debian_packages:
   - "nvidia-driver"
   - "nvidia-settings"
   - "i3-wm"
-  - "i3status"
+  - "i3blocks" # hacker friendly i3status
+  - "lm-sensors" # i3blocks dependency
+  - "sysstat" # i3blocks cpu_usage dependency
   - "i3lock"
   - "xss-lock"
   - "rofi"

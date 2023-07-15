@@ -102,6 +102,11 @@
     chdir: "{{ HOME }}/dotfiles"
   become: yes
 
-# - name: Install custom scripts
-#   include_tasks:
-#     file: scripts.yml
+- name: Run lm-sensors auto detection for i3block temperature module
+  command: sensors-detect --auto
+  become: yes
+
+- name: Install custom scripts
+  include_tasks:
+    file: scripts.yml
+
