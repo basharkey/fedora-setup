@@ -1,0 +1,17 @@
+* TODO
+- [ ] Nvidia driver setup
+  - [ ] add akmod-nvidia to packages
+  - [ ] blacklist nouveau in modprode.d
+  - [ ] sway env vars for nvidia drivers to work well
+- [ ] sway startup fixes
+  - [ ] sometimes pipewire isnt started before discord
+  - [ ] sometimes keyring isnt started before evolution
+- [ ] Install ffmpeg from rpmfusion instead of fedora updates to include more codecs (i.e. eac3)
+
+
+** Debian TODO
+- [X] GTK Theme
+- [X] pcmanfm theme (still uses gtk2)
+- [ ] compositor
+- [ ] test h264/5 media share the bear s02 is good test case
+- [ ] i3bar

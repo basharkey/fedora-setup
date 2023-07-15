@@ -48,7 +48,7 @@
 
 - name: Update initramfs
   when: vfio_modules.changed or vfio_options.changed
-  command: update-initramfs
+  command: update-initramfs -u
   become: yes
 
 - name: Create virtio-win dir
