@@ -1,9 +1,10 @@
 ---
-- name: Copy xinit config
-  copy:
-    src: .xinitrc
-    dest: "{{ HOME }}/.xinitrc"
-    mode: '0644'
+- name: Change default target to multi-user.target
+  file:
+    src: /usr/lib/systemd/system/multi-user.target
+    dest: /etc/systemd/system/default.target
+    state: link
+  become: yes
 
 - name: Create getty service overrides directory
   file:
