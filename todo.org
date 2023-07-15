@@ -2,3 +2,4 @@
 - [ ] Do I need a compositor?
 - [ ] test h264/5 media share the bear s02 is good test case
 - [ ] i3blocks mediaplayer
+- [ ] xrandr commands
