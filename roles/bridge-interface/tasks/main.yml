@@ -21,7 +21,7 @@
 
 - name: Reload all kernel variables
   systemd:
-    name: systemd-sysctl
+    name: systemd-sysctl.service
     state: restarted
   become: yes
 
@@ -33,25 +33,28 @@
         src: interfaces.j2
         dest: /etc/network/interfaces
         mode: '0644'
-        become: yes
+      become: yes
 
-    - name: Bring bridge interface up
-      command: "ifup {{ bridge_primary_interface }}"
+    - name: Restart networking service
+      systemd:
+        name: networking.service
+        state: restarted
       become: yes
 
 - name: Ensure libvirtd is running
   systemd:
-    name: libvirtd
+    name: libvirtd.service
     state: started
   become: yes
 
 - name: Generate libvirt bridge network definition var
-  set_fact:
-    bridge_template: "{{ lookup('template', 'bridge-network.xml.j2') }}"
-  become: yes
+  template:
+    src: bridge-network.xml.j2
+    dest: /tmp/bridge-network.xml
+    mode: '0644'
 
 - name: Add libvirt bridge network definition
-  shell: "virsh net-define <(echo '{{ bridge_template | string }}')"
+  shell: virsh net-define /tmp/bridge-network.xml
   register: result
   failed_when: result.rc != 0 and "network '" ~ bridge_libvirt_network ~ "' already exists" not in result.stderr
   become: yes
