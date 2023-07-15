@@ -3,7 +3,6 @@
   block:
     - name: Check if IOMMU enabled in grub config
       command: egrep "(amd|intel)_iommu=on" /etc/default/grub
-  become: yes
   rescue:
     - name: Grub enable AMD IOMMU
       command: sed -i 's|GRUB_CMDLINE_LINUX="[^"]*|& amd_iommu=on|g' /etc/default/grub
