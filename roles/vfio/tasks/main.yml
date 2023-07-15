@@ -52,7 +52,7 @@
 
 - name: Create virtio-win dir
   file:
-    path: /usr/share/virtio-win
+    path: /var/lib/libvirt/virtio-win
     state: directory
     mode: '0755'
   become: yes
@@ -60,6 +60,6 @@
 - name: Download virtio-win drivers ISO
   get_url:
     url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
-    dest: /usr/share/virtio-win/virtio-win.iso
+    dest: /var/lib/libvirt/virtio-win/virtio-win.iso
     mode: '0644'
   become: yes

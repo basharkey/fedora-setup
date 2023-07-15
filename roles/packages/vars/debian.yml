@@ -46,6 +46,7 @@ debian_packages:
   - "pipewire"    			# Media Sharing Server
   - "pipewire-pulse"		# PipeWire PulseAudio implementation
   - "pipewire-jack"
+  - "wireplumber"
   - "pulseaudio-utils"    		# PulseAudio sound server utilities
   - "pavucontrol"    			# Volume control for PulseAudio
   - "qjackctl"    			# Qt based JACK control application
@@ -75,6 +76,8 @@ debian_packages:
   - "gvfs-backends"
   - "qemu-system"
   - "libvirt-daemon-system"
+  - "dnsmasq" # libvirt networking dependency
+  - "ovmf"
   - "bridge-utils"
   - "virt-manager"
   - "mpv"
