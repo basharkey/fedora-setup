@@ -30,6 +30,10 @@
     enabled: yes
   become: yes
 
+- name: Enable default NAT libvirt network at boot
+  command: virsh net-autostart default
+  become: yes
+
 - name: Copy VFIO modules config
   copy:
     src: vfio-modules.conf
