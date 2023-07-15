@@ -1,24 +1,17 @@
 ---
 debian_packages:
   # Desktop environment
-  # - "dunst"    				# Lightweight and customizable notification-daemon
-  # - "waybar"    			# Highly customizable Wayland bar for Sway and Wlroots based compositors
-  # - "fuzzel"    			# Application launcher for wlroots based Wayland compositors
-  # - "polkit"    			# An authorization framework
-  # - "alacritty"    			# Fast, cross-platform, OpenGL terminal emulator
-  # - "wl-clipboard"    			# Command-line copy/paste utilities for Wayland
-  # - "wlsunset"    			# Day/night gamma adjustments for Sway
-  # - "xdg-desktop-portal-gnome"		# Backend implementation for xdg-desktop-portal using GNOME
-  # - "desktop-backgrounds-compat"        # The default Fedora wallpaper for less common DEs
   - "xserver-xorg"
-  - "xinit"
-  - "x11-xserver-utils"
+  - "xinit" # startx
+  - "x11-xserver-utils" # xrandr
+  - "x11-utils" # xkill
   - "linux-headers-{{ ansible_kernel }}"
   - "nvidia-driver"
   - "i3-wm"
   - "i3status"
   - "i3lock"
   - "xss-lock"
+  - "rofi"
   - "redshift"
   - "dunst"
   - "suckless-tools"
@@ -56,22 +49,31 @@ debian_packages:
   - "easyeffects"    			# Audio effects for PipeWire applications
 
   # Themes and fonts
+  - "gnome-themes-extra"                # Adwaita-dark
   - "adwaita-qt"    			# Adwaita Qt5 theme
   - "adwaita-qt6"    			# Adwaita Qt6 theme
-  # - "gnome-themes-extra"  		# GNOME Extra Themes
   - "qt5ct"                             # Qt5 Configuration Tool
-  - "fonts-noto"               	        # Google “Noto Color Emoji” colored emoji font
+  - "fonts-noto-cjk"
+  - "fonts-noto-cjk-extra"
+  - "fonts-noto-color-emoji"
+  - "fonts-noto-core"
+  - "fonts-noto-extra"
+  - "fonts-noto-mono"
+  - "fonts-noto-ui-core"
+  - "fonts-noto-ui-extra"
+  - "fonts-noto-unhinted"
 
   # GUI applications
-  - "pcmanfm"    			# Extremly fast and lightweight file manager
+  - "firefox-esr"
+  - "pcmanfm-qt"    			# Extremly fast and lightweight file manager
   - "xarchiver"    			# Archive manager for Xfce
   - "gvfs-fuse"    			# FUSE support for gvfs
   - "gvfs-backends"
-
   - "qemu-system"
   - "libvirt-daemon-system"
   - "bridge-utils"
   - "virt-manager"
+  - "mpv"
   - "flatpak"    			# Application deployment framework for desktop apps
   - "evolution"    			# Mail and calendar client for GNOME
   - "evolution-ews"    			# Evolution extension for Exchange Web Services
