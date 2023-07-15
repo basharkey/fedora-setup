@@ -7,6 +7,7 @@ debian_packages:
   - "x11-utils" # xkill
   - "linux-headers-{{ ansible_kernel }}"
   - "nvidia-driver"
+  - "nvidia-settings"
   - "i3-wm"
   - "i3status"
   - "i3lock"
@@ -37,6 +38,7 @@ debian_packages:
   - "pandoc"    			# Conversion between markup formats
   - "podman"                            # Manage Pods, Containers and Container Images
   - "progress"                          # Coreutils Viewer
+  - "libglib2.0-bin" # gio
 
   # Sound server
   - "pipewire"    			# Media Sharing Server
@@ -65,7 +67,7 @@ debian_packages:
 
   # GUI applications
   - "firefox-esr"
-  - "pcmanfm-qt"    			# Extremly fast and lightweight file manager
+  - "pcmanfm"    			# Extremly fast and lightweight file manager
   - "xarchiver"    			# Archive manager for Xfce
   - "gvfs-fuse"    			# FUSE support for gvfs
   - "gvfs-backends"

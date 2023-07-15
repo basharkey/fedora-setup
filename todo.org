@@ -12,7 +12,11 @@
 ** Debian TODO
 - [X] GTK Theme
 - [X] pcmanfm theme (still uses gtk2)
+- [X] firefox config not applying
 - [ ] compositor
 - [ ] test h264/5 media share the bear s02 is good test case
 - [ ] i3bar
-- [ ] redshift
+- [X] redshift
+- [ ] aliases scu
+- [ ] autorun startx
+- [ ] fix gio trash alais tt
