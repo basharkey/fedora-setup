@@ -1,6 +1,3 @@
 ---
 collections:
   - name: community.libvirt
-
-roles:
-  - name: geerlingguy.docker

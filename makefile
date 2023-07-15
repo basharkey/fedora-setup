@@ -1,5 +1,5 @@
 deps:
-	sudo dnf install -y ansible
+	sudo apt install --no-install-recommends -y ansible
 	ansible-galaxy install -r requirements.yml
 vault:
 	ansible-vault encrypt vault.yml
