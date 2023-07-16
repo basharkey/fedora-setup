@@ -24,6 +24,15 @@
     install_recommends: no
   become: yes
 
+- name: Install Nvidia drivers
+  apt:
+    name:
+      - nvidia-driver
+      - nvidia-settings
+    state: present
+    install_recommends: no
+  become: yes
+
 - name: Enable Flathub repository
   flatpak_remote:
     name: flathub
