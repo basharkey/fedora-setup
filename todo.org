@@ -1,5 +1,9 @@
 * TODO
 - [ ] Do I need a compositor?
-- [ ] test h264/5 media share the bear s02 is good test case
 - [ ] i3blocks mediaplayer
-- [ ] xrandr commands
+- [ ] fix firefox config
+  - [ ] its asking to save passwords
+  - [ ] bookmarks bar not shows by default
+- [ ] i3 startup layout and apps
+- [ ] smb role doesnt run if default smb_share path is blank
+  - even if you have a custom config with defined path
