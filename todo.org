@@ -1,5 +1,6 @@
 * TODO
-- [ ] Do I need a compositor?
+- [X] Do I need a compositor?
+  - [X] yes there is tearing
 - [ ] i3blocks mediaplayer
 - [ ] fix firefox config
   - [ ] its asking to save passwords
@@ -15,3 +16,4 @@
     - [X] do we need to boot into graphical target by default? No we do not
 - [ ] xrandr sometimes not working corecctly on boot
   - [ ] try putting commands in xinit instead?
+    - [ ] seems to be working keep testing for now
