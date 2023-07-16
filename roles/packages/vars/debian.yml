@@ -20,6 +20,7 @@ debian_packages:
   - "suckless-tools"
   - "alacritty"
   - "policykit-1-gnome"
+  - "xdg-desktop-portal-gnome" # Fixes Flatpaks not being able to access dbus
 
   # CLI utilities
   - "vim"			# A version of the VIM editor which includes recent enhancements
@@ -41,6 +42,8 @@ debian_packages:
   - "podman"                            # Manage Pods, Containers and Container Images
   - "progress"                          # Coreutils Viewer
   - "libglib2.0-bin" # gio
+  - "yt-dlp"
+  - "ffmpeg"
 
   # Sound server
   - "pipewire"    			# Media Sharing Server

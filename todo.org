@@ -7,3 +7,11 @@
 - [ ] i3 startup layout and apps
 - [ ] smb role doesnt run if default smb_share path is blank
   - even if you have a custom config with defined path
+- [ ] cleanup debian.yml descriptions
+- [X] fix discord urls not opening in browser (flatpaks cant access dbus)
+  - [X] not it move dbus-update commands to i3 config
+  - [X] not it install xdg-portal-desktop and switch default target to graphical so it start
+  - [X] Thats it xdg-desktop-portal-gnome!
+    - [X] do we need to boot into graphical target by default? No we do not
+- [ ] xrandr sometimes not working corecctly on boot
+  - [ ] try putting commands in xinit instead?
