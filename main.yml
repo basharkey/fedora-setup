@@ -8,7 +8,7 @@
     - name: Include custom playbook config
       include_vars: "{{ item }}"
       with_fileglob:
-        - "{{ playbook_dir }}/*.config.yml"
+        - "{{ playbook_dir }}/config.yml"
 
   roles:
     - packages
