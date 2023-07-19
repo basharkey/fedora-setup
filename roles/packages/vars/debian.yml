@@ -8,6 +8,7 @@ debian_packages:
   - "linux-headers-{{ ansible_kernel }}"
   - "i3-wm"
   - "i3blocks" # hacker friendly i3status
+  - "libanyevent-i3-perl" # i3-save-tree dependency
   - "lm-sensors" # i3blocks dependency
   - "sysstat" # i3blocks cpu_usage dependency
   - "i3lock"
