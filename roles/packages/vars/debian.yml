@@ -106,6 +106,7 @@ debian_packages:
   - "emacs"    				# GNU Emacs text editor
   - "libsqlite3-dev" # emacs magit dependency
   - "gcc" # needed to build sqlite3 for emacs
+  - "flameshot" # screenshot tool
 
 debian_laptop_packages:
   - "iwl7260-firmware"    		# Firmware for Intel(R) Wireless WiFi Link 726x/8000/9000 Series Adapters
