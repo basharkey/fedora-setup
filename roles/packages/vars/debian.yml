@@ -104,7 +104,8 @@ debian_packages:
   - "gscan2pdf"    			# GUI for producing a multipage PDF from a scan
   - "cups"    				# CUPS printing system
   - "emacs"    				# GNU Emacs text editor
-  # - "libsqlite3x"                       # A C++ Wrapper for the SQLite3 embeddable SQL database engine (magit dependency)
+  - "libsqlite3-dev" # emacs magit dependency
+  - "gcc" # needed to build sqlite3 for emacs
 
 debian_laptop_packages:
   - "iwl7260-firmware"    		# Firmware for Intel(R) Wireless WiFi Link 726x/8000/9000 Series Adapters
