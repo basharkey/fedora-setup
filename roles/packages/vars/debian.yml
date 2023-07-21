@@ -1,66 +1,66 @@
 ---
 debian_packages:
   # Desktop environment
-  - "xserver-xorg"
-  - "xinit" # startx
-  - "x11-xserver-utils" # xrandr
-  - "x11-utils" # xkill
-  - "linux-headers-{{ ansible_kernel }}"
-  - "i3-wm"
-  - "i3blocks" # hacker friendly i3status
-  - "libanyevent-i3-perl" # i3-save-tree dependency
-  - "lm-sensors" # i3blocks dependency
-  - "sysstat" # i3blocks cpu_usage dependency
-  - "i3lock"
-  - "xss-lock"
-  - "rofi"
-  - "redshift"
-  - "dunst"
-  - "suckless-tools"
-  - "alacritty"
-  - "policykit-1-gnome"
-  - "xdg-desktop-portal-gnome" # Fixes Flatpaks not being able to access dbus
-  - "picom" # compositor to provide vsync and stop tearing
+  - "xserver-xorg"                       # X11 server
+  - "xinit"                              # startx
+  - "x11-xserver-utils"                  # xrandr
+  - "x11-utils"                          # xkill
+  - "linux-headers-{{ ansible_kernel }}" # Linux headers for compiling kernel modules
+  - "i3-wm"                              # i3 tiling window manager
+  - "i3blocks"                           # Hacker friendly i3status
+  - "libanyevent-i3-perl"                # i3-save-tree dependency
+  - "lm-sensors"                         # i3blocks temperature module dependency
+  - "sysstat"                            # i3blocks cpu_usage module dependency
+  - "i3lock"                             # i3 screen locker
+  - "xss-lock"                           # Auto screen locker
+  - "rofi"                               # Application launcher and dmenu replacement
+  - "redshift"                           # Adjust screen colour temperature based on time
+  - "dunst"                              # Notification daemon
+  - "suckless-tools"                     # Minimal tools for window managers
+  - "alacritty"                          # OpenGL terminal emulator
+  - "policykit-1-gnome"                  # GTK authentication agent for PolicyKit
+  - "xdg-desktop-portal-gnome"           # Fixes Flatpaks not being able to access dbus
+  - "picom"                              # X11 compositor, provides vsync to prevent screen tearing
 
   # CLI utilities
-  - "vim"			# A version of the VIM editor which includes recent enhancements
-  - "git"    				# Fast Version Control System
-  - "curl"    				# A utility for getting files from remote servers (FTP, HTTP, and others)
-  - "traceroute"    			# Traces the route taken by packets over an IPv4/IPv6 network
-  - "plocate"    			# An utility for finding files by name
-  - "p7zip"    				# Very high compression ratio file archiver
-  - "rsync"    				# A program for synchronizing files over a network
-  - "pciutils"    			# PCI bus related utilities
-  - "wireguard-tools"    		# Fast, modern, secure VPN tunnel
-  - "usbutils"    			# Linux USB utilities
-  - "cifs-utils"    			# Utilities for mounting and managing CIFS mounts
-  - "bind9-utils"    			# Utilities for querying DNS name servers
-  - "python3"
-  - "python3-pip"    			# A tool for installing and managing Python3 packages
-  - "python3-virtualenv"		# Tool to create isolated Python environments
-  - "pandoc"    			# Conversion between markup formats
-  - "podman"                            # Manage Pods, Containers and Container Images
-  - "progress"                          # Coreutils Viewer
-  - "libglib2.0-bin" # gio
-  - "yt-dlp"
-  - "ffmpeg"
+  - "vim"                                # vim
+  - "git"                                # git
+  - "curl"                               # curl
+  - "traceroute"                         # traceroute
+  - "plocate"                            # Faster version of mlocate
+  - "p7zip"                              # 7zip
+  - "rsync"                              # rsync
+  - "pciutils"                           # lspci
+  - "wireguard-tools"                    # Fast, modern, secure VPN tunnel
+  - "usbutils"                           # lsusb
+  - "cifs-utils"                         # Utilities for mounting and managing CIFS mounts
+  - "bind9-utils"                        # Utilities for querying DNS name servers
+  - "python3"                            # python
+  - "python3-pip"                        # python package manager
+  - "python3-virtualenv"                 # Tool to create isolated Python environments
+  - "pandoc"                             # Conversion between markup formats
+  - "podman"                             # Manage Pods, Containers and Container Images
+  - "progress"                           # Coreutils Viewer
+  - "libglib2.0-bin"                     # gio
+  - "yt-dlp"                             # YouTube downloader
+  - "ffmpeg"                             # ffmpeg
 
   # Sound server
-  - "pipewire"    			# Media Sharing Server
-  - "pipewire-pulse"		# PipeWire PulseAudio implementation
-  - "pipewire-jack"
-  - "wireplumber"
-  - "pulseaudio-utils"    		# PulseAudio sound server utilities
-  - "pavucontrol"    			# Volume control for PulseAudio
-  - "qjackctl"    			# Qt based JACK control application
-  - "playerctl"    			# Command-line MPRIS-compatible Media Player Controller
-  - "easyeffects"    			# Audio effects for PipeWire applications
+  - "pipewire"                           # Media server
+  - "pipewire-pulse"                     # PipeWire PulseAudio plugin
+  - "pipewire-jack"                      # PipeWire JACK plugin
+  - "wireplumber"                        # PipeWire session manager
+  - "pulseaudio-utils"                   # pactl
+  - "pavucontrol"                        # pavucontrol
+  - "qjackctl"                           # JACK control application
+  - "playerctl"                          # playerctl
+  - "easyeffects"                        # PipeWire equalizer
 
   # Themes and fonts
-  - "gnome-themes-extra"                # Adwaita-dark
-  - "adwaita-qt"    			# Adwaita Qt5 theme
-  - "adwaita-qt6"    			# Adwaita Qt6 theme
-  - "qt5ct"                             # Qt5 Configuration Tool
+  - "gnome-themes-extra"                 # Adwaita-dark
+  - "adwaita-qt"                         # Adwaita Qt5 theme
+  - "adwaita-qt6"                        # Adwaita Qt6 theme
+  - "qt5ct"                              # Qt5 Configuration Tool
   - "fonts-noto-cjk"
   - "fonts-noto-cjk-extra"
   - "fonts-noto-color-emoji"
@@ -72,41 +72,37 @@ debian_packages:
   - "fonts-noto-unhinted"
 
   # GUI applications
-  - "firefox-esr"
-  - "pcmanfm"    			# Extremly fast and lightweight file manager
-  - "xarchiver"    			# Archive manager for Xfce
-  - "gvfs-fuse"    			# FUSE support for gvfs
-  - "gvfs-backends"
-  - "qemu-system"
-  - "libvirt-daemon-system"
-  - "dnsmasq" # libvirt networking dependency
-  - "ovmf"
-  - "bridge-utils"
-  - "virt-manager"
-  - "mpv"
-  - "flatpak"    			# Application deployment framework for desktop apps
-  - "evolution"    			# Mail and calendar client for GNOME
-  - "evolution-ews"    			# Evolution extension for Exchange Web Services
-  #- "openh264"    			# H.264 codec library
-  - "keepassxc"    			# Cross-platform password manager
-  - "seahorse"    			# A GNOME application for managing encryption keys
-  - "gnome-keyring"    			# Framework for managing passwords and other secrets
-  - "blueman"    			# GTK+ Bluetooth Manager
-  - "libreoffice"    			# Free Software Productivity Suite
-  - "gimp"    				# GNU Image Manipulation Program
-  # - "grimshot"    			# Helper for screenshots within sway
-  # - "swappy"    			# Wayland native snapshot editing tool, inspired by Snappy on macOS
-  - "evince"    			# Document viewer
-  # - "vimiv"    				# An image viewer with vim-like keybindings
-  - "nextcloud-desktop"    		# The Nextcloud Client
-  - "lxpolkit"    			# Simple PolicyKit authentication agent
-  - "clementine"    			# A music player and library organizer
-  - "gscan2pdf"    			# GUI for producing a multipage PDF from a scan
-  - "cups"    				# CUPS printing system
-  - "emacs"    				# GNU Emacs text editor
-  - "libsqlite3-dev" # emacs magit dependency
-  - "gcc" # needed to build sqlite3 for emacs
-  - "flameshot" # screenshot tool
+  - "firefox-esr"                        # firefox
+  - "pcmanfm"                            # File manager
+  - "xarchiver"                          # Unzip utility for GTK file managers
+  - "gvfs-fuse"                          # gvfs
+  - "gvfs-backends"                      # SMB, MTP backends for fuse
+  - "qemu-system"                        # QEMU system emulation binaries
+  - "libvirt-daemon-system"              # libvirt daemon
+  - "dnsmasq"                            # libvirt networking dependency
+  - "ovmf"                               # UEFI firmware for virtual machines
+  - "bridge-utils"                       # Utlilities for bridge network interfaces
+  - "virt-manager"                       # GTK virtual machine manager
+  - "mpv"                                # Video player
+  - "flatpak"                            # Application deployment framework for desktop apps
+  - "evolution"                          # Email client
+  - "evolution-ews"                      # Evolution extension for Exchange Web Services
+  - "keepassxc"                          # Password manager
+  - "seahorse"                           # GTK keyring manager
+  - "gnome-keyring"                      # Gnome keyring daemon
+  - "blueman"                            # GTK bluetooth manager
+  - "libreoffice"                        # Office suite
+  - "gimp"    				 # Photo editor
+  - "feh"    			         # Image viewer
+  - "evince"    			 # PDF viewer
+  - "nextcloud-desktop"                  # Nextcloud client
+  - "clementine"                         # A music player and library organizer
+  - "gscan2pdf"                          # GUI for producing a multipage PDF from a scan
+  - "cups"                               # CUPS printing daemon
+  - "emacs"                              # The best text editor
+  - "libsqlite3-dev"                     # Emacs magit dependency
+  - "gcc"                                # Needed to build sqlite3-api module for emacs
+  - "flameshot"                          # Screenshot tool
 
 debian_laptop_packages:
   - "iwl7260-firmware"    		# Firmware for Intel(R) Wireless WiFi Link 726x/8000/9000 Series Adapters

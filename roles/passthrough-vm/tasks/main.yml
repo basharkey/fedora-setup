@@ -1,6 +1,0 @@
----
-- name: Build virtual machines
-  include_tasks: build-vm.yml
-  loop: "{{ passthrough_vms  }}"
-  loop_control:
-    loop_var: vm
