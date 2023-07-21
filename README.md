@@ -41,4 +41,4 @@ EndSection
 ```
 
 
-The nice part about using GPU driver vsync is that you can use multiple monitors with different refresh rates and still not experience tearing. If just try to do this with only a compositor you will probably still have tearing issues and you will experience lag when running GPU two accelerated applications on two different monitors with two different refresh rates. For example your YouTube video will stutter when scrolling through Discord.
+The nice part about using GPU driver vsync is that you can use multiple monitors with different refresh rates and still not experience tearing. If just try to do this with only a compositor you will probably still have tearing issues and you will experience lag when running two GPU accelerated applications on two different monitors with two different refresh rates (e.g your YouTube video will stutter when scrolling through Discord).
