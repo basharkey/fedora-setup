@@ -55,6 +55,7 @@ debian_packages:
   - "qjackctl"                           # JACK control application
   - "playerctl"                          # playerctl
   - "easyeffects"                        # PipeWire equalizer
+  - "lsp-plugins-vst"                    # easyeffects equalizer dependency
 
   # Themes and fonts
   - "gnome-themes-extra"                 # Adwaita-dark
