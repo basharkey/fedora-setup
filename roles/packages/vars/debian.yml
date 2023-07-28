@@ -20,7 +20,7 @@ debian_packages:
   - "alacritty"                          # OpenGL terminal emulator
   - "policykit-1-gnome"                  # GTK authentication agent for PolicyKit
   - "xdg-desktop-portal-gnome"           # Fixes Flatpaks not being able to access dbus
-  - "picom"                              # X11 compositor, provides vsync to prevent screen tearing
+  # - "picom"                              # X11 compositor, provides vsync to prevent screen tearing
 
   # CLI utilities
   - "vim"                                # vim

@@ -40,5 +40,4 @@ Section "Screen"
 EndSection
 ```
 
-
-The nice part about using GPU driver vsync is that you can use multiple monitors with different refresh rates and still not experience tearing. If just try to do this with only a compositor you will probably still have tearing issues and you will experience lag when running two GPU accelerated applications on two different monitors with two different refresh rates (e.g your YouTube video will stutter when scrolling through Discord).
+I have personally disabled picom because it causes stuttering issues when running mulitple GPU accelerated apps on multiple displays with different refresh rates (e.g your YouTube video will stutter when scrolling on Discord). Disabling picom doesn't seem to cause tearing issues as long as GPU driver vsync is enabled.
