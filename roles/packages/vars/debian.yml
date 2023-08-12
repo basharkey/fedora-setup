@@ -98,6 +98,7 @@ debian_packages:
   - "evince"    			 # PDF viewer
   - "nextcloud-desktop"                  # Nextcloud client
   - "clementine"                         # A music player and library organizer
+  - "gstreamer1.0-libav"                 # ffmpeg plugin for gstreamer (enabled playing m4a files)
   - "gscan2pdf"                          # GUI for producing a multipage PDF from a scan
   - "cups"                               # CUPS printing daemon
   - "emacs"                              # The best text editor
