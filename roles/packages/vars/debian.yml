@@ -102,6 +102,7 @@ debian_packages:
   - "gscan2pdf"                          # GUI for producing a multipage PDF from a scan
   - "djvulibre-bin"                      # gscan2pdf dependency
   - "pdftk"                              # gscan2pdf dependency
+  - "unpaper"                            # gscan2pdf dependency
   - "sane-airscan"                       # Required for sane scanning over IP
   - "cups"                               # CUPS printing daemon
   - "emacs"                              # The best text editor
