@@ -98,8 +98,11 @@ debian_packages:
   - "evince"    			 # PDF viewer
   - "nextcloud-desktop"                  # Nextcloud client
   - "clementine"                         # A music player and library organizer
-  - "gstreamer1.0-libav"                 # ffmpeg plugin for gstreamer (enabled playing m4a files)
+  - "gstreamer1.0-libav"                 # ffmpeg plugin for gstreamer (enable playing m4a files)
   - "gscan2pdf"                          # GUI for producing a multipage PDF from a scan
+  - "djvulibre-bin"                      # gscan2pdf dependency
+  - "pdftk"                              # gscan2pdf dependency
+  - "sane-airscan"                       # Required for sane scanning over IP
   - "cups"                               # CUPS printing daemon
   - "emacs"                              # The best text editor
   - "libsqlite3-dev"                     # Emacs magit dependency
