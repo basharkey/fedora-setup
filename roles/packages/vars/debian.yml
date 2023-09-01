@@ -37,6 +37,7 @@ debian_packages:
   - "bind9-utils"                        # Utilities for querying DNS name servers
   - "python3"                            # python
   - "python3-pip"                        # python package manager
+  - "python3-venv"                       # Python virtual environment module
   - "python3-virtualenv"                 # Tool to create isolated Python environments
   - "pandoc"                             # Conversion between markup formats
   - "podman"                             # Manage Pods, Containers and Container Images
