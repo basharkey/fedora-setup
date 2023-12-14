@@ -19,6 +19,7 @@ systemd_user_units:
   - ssh-agent.service
   - nas-backup.timer
   # - nas-prune.timer
+  - emacs.service
 
 systemd_system_units:
   - cups.service
