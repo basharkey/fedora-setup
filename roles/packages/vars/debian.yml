@@ -100,7 +100,7 @@ debian_packages:
   - "gimp"    				 # Photo editor
   - "feh"    			         # Image viewer
   - "evince"    			 # PDF viewer
-  - "nextcloud-desktop"                  # Nextcloud client
+  - "syncthing"                          # Decentralized file synchronization
   - "clementine"                         # A music player and library organizer
   - "gstreamer1.0-libav"                 # ffmpeg plugin for gstreamer (enable playing m4a files)
   - "gscan2pdf"                          # GUI for producing a multipage PDF from a scan

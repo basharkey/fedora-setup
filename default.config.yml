@@ -17,8 +17,7 @@ user_dirs:
 
 systemd_user_units:
   - ssh-agent.service
-  - nas-backup.timer
-  # - nas-prune.timer
+  - syncthing.service
   - emacs.service
 
 systemd_system_units:
