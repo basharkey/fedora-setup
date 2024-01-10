@@ -87,6 +87,7 @@ debian_packages:
   - "dnsmasq"                            # libvirt networking dependency
   - "ovmf"                               # UEFI firmware for virtual machines
   - "bridge-utils"                       # Utlilities for bridge network interfaces
+  - "qemu-utils"                         # QEMU utilities
   - "virt-manager"                       # GTK virtual machine manager
   - "mpv"                                # Video player
   - "flatpak"                            # Application deployment framework for desktop apps
