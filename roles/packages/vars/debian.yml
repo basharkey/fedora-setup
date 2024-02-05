@@ -97,6 +97,7 @@ debian_packages:
   - "seahorse"                           # GTK keyring manager
   - "gnome-keyring"                      # Gnome keyring daemon
   - "blueman"                            # GTK bluetooth manager
+  - "firmware-realtek"                   # Binary firmware for Realtek wired/wifi/BT adapters
   - "libreoffice"                        # Office suite
   - "gimp"    				 # Photo editor
   - "feh"    			         # Image viewer
