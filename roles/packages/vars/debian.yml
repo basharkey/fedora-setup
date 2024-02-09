@@ -28,7 +28,7 @@ debian_packages:
   - "curl"                               # curl
   - "traceroute"                         # traceroute
   - "plocate"                            # Faster version of mlocate
-  - "p7zip"                              # 7zip
+  - "7zip"                               # 7zip
   - "rsync"                              # rsync
   - "pciutils"                           # lspci
   - "wireguard-tools"                    # Fast, modern, secure VPN tunnel
