@@ -5,7 +5,7 @@ debian_packages:
   - "xinit"                              # startx
   - "x11-xserver-utils"                  # xrandr
   - "x11-utils"                          # xkill
-  - "linux-headers-{{ ansible_kernel }}" # Linux headers for compiling kernel modules
+  - "linux-headers-amd64"                # Linux headers for compiling kernel modules
   - "i3-wm"                              # i3 tiling window manager
   - "i3blocks"                           # Hacker friendly i3status
   - "libanyevent-i3-perl"                # i3-save-tree dependency
