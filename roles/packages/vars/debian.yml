@@ -91,6 +91,7 @@ debian_packages:
   - "bridge-utils"                       # Utlilities for bridge network interfaces
   - "qemu-utils"                         # QEMU utilities
   - "virt-manager"                       # GTK virtual machine manager
+  - "spice-client-gtk"                   # Simple clients for interacting with SPICE servers
   - "mpv"                                # Video player
   - "flatpak"                            # Application deployment framework for desktop apps
   - "evolution"                          # Email client
