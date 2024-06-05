@@ -41,6 +41,7 @@ debian_packages:
   - "python3-virtualenv"                 # Tool to create isolated Python environments
   - "pandoc"                             # Conversion between markup formats
   - "podman"                             # Manage Pods, Containers and Container Images
+  - "aardvark-dns"                       # Container-focused DNS server
   - "rootlesskit"                        # podman dependency
   - "slirp4netns"                        # podman dependency
   - "progress"                           # Coreutils Viewer
