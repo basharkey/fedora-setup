@@ -23,10 +23,6 @@ systemd_user_units:
 systemd_system_units:
   - cups.service
 
-# roles/smb
-smb_share: "" # //nas.local/share
-smb_mountpoint: "{{ HOME }}/nas"
-
 # roles/vfio
 # lspci -nn
 vfio_bind_ids:

@@ -13,7 +13,6 @@
   roles:
     - packages
     - home
-    - smb
     - bridge-interface
     - vfio
     - vm
