@@ -6,6 +6,15 @@
     mode: '0644'
   become: yes
 
+- name: Configure apt to not install recommended packages
+  lineinfile:
+    path: /etc/apt/apt.conf.d/01norecommends
+    line: 'APT::Install-Recommends "0";'
+    state: present
+    create: true
+    mode: '0644'
+  become: yes
+
 - name: Load package vars
   include_vars:
     dir: vars
