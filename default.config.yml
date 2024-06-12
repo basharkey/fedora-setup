@@ -3,6 +3,7 @@
 user_groups:
   - sudo
   - libvirt
+  - lpadmin
 
 user_dirs:
   - Documents

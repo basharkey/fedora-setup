@@ -114,7 +114,6 @@ debian_packages:
   - "unpaper"                            # gscan2pdf dependency
   - "sane-airscan"                       # Required for sane scanning over IP
   - "cups"                               # CUPS printing daemon
-  - "system-config-printer"              # Printer configuration utility (must be run as root)
   - "printer-driver-brlaser"             # Brother printer drivers
   - "emacs"                              # The best text editor
   - "libsqlite3-dev"                     # Emacs magit dependency
