@@ -122,4 +122,3 @@
 - name: Install custom scripts
   include_tasks:
     file: scripts.yml
-
