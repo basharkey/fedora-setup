@@ -26,6 +26,7 @@
   unarchive:
     src: https://www.reaper.fm/files/7.x/reaper717_linux_x86_64.tar.xz
     dest: /tmp/reaper
+    remote_src: yes
 
 - name: Install Reaper
   script: /tmp/reaper/install-reaper.sh --install /opt --integrate-sys-desktop --usr-local-bin-symlink
