@@ -11,8 +11,9 @@
         - "{{ playbook_dir }}/config.yml"
 
   roles:
-    - packages
-    - home
-    - bridge-interface
-    - vfio
-    - vm
+    - { role: "packages", tags: ["desktop", "music"] }
+    - { role: "home", tags: ["desktop", "music"] }
+    - { role: "music", tags: "music" }
+    - { role: "bridge-interface", tags: "desktop" }
+    - { role: "vfio", tags: "desktop" }
+    - { role: "vm", tags: "desktop" }

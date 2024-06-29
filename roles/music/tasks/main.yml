@@ -1,0 +1,6 @@
+---
+- name: Install Reaper
+  flatpak:
+    name: fm.reaper.Reaper
+    state: present
+    method: user

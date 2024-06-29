@@ -27,7 +27,13 @@
     install_recommends: no
   become: yes
 
+- name: Check if a Nvidia GPU is installed
+  shell: lspci | grep "NVIDIA"
+  register: nvidia_gpu
+  ignore_errors: true
+
 - name: Install Nvidia drivers
+  when: nvidia_gpu.rc == 0
   apt:
     name:
       - nvidia-driver
