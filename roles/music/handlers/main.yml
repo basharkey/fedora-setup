@@ -1,0 +1,4 @@
+---
+- name: Update dynamic links
+  command: ldconfig
+  become: yes

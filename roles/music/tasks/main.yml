@@ -17,16 +17,22 @@
     dest: /etc/ld.so.conf.d/
     mode: '0644'
   become: yes
-
-- name: Update dynamic links
-  command: ldconfig
-  become: yes
+  notify:
+    - Update dynamic links
 
 - name: Download and extract Reaper
   unarchive:
     src: https://www.reaper.fm/files/7.x/reaper717_linux_x86_64.tar.xz
-    dest: /tmp/reaper
+    dest: /tmp
     remote_src: yes
 
 - name: Install Reaper
-  script: /tmp/reaper/install-reaper.sh --install /opt --integrate-sys-desktop --usr-local-bin-symlink
+  command: ./install-reaper.sh --install /opt --integrate-sys-desktop --usr-local-bin-symlink
+  args:
+    chdir: /tmp/reaper_linux_x86_64
+  become: yes
+
+- name: Remove Reaper temp installation dir
+  file:
+    path: /tmp/reaper_linux_x86_64
+    state: absent
