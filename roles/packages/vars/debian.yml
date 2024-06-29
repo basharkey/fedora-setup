@@ -53,13 +53,11 @@ debian_packages:
   # Sound server
   - "pipewire"                           # Media server
   - "pipewire-pulse"                     # PipeWire PulseAudio plugin
-  - "pipewire-jack"                      # PipeWire JACK plugin
   - "wireplumber"                        # PipeWire session manager
   - "libspa-0.2-bluetooth"               # PipeWire bluetooth libraries
   - "firmware-realtek"                   # Binary firmware for Realtek wired/wifi/BT adapters
   - "pulseaudio-utils"                   # pactl
   - "pavucontrol"                        # pavucontrol
-  - "qjackctl"                           # JACK control application
   - "playerctl"                          # playerctl
   - "easyeffects"                        # PipeWire equalizer
   - "lsp-plugins-lv2"                    # easyeffects equalizer dependency

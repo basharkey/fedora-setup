@@ -1,6 +1,31 @@
 ---
-- name: Install Reaper
-  flatpak:
-    name: fm.reaper.Reaper
+# https://wiki.debian.org/PipeWire#Debian_12
+- name: Install packages for JACK compatibility with PipeWire
+  apt:
+    name:
+      - pipewire-audio-client-libraries
+      - libspa-0.2-jack
+      - qjackctl
+    update_cache: yes
     state: present
-    method: user
+    install_recommends: no
+  become: yes
+
+- name: Copy PipeWire JACK ldconfig
+  copy:
+    src: /usr/share/doc/pipewire/examples/ld.so.conf.d/pipewire-jack-x86_64-linux-gnu.conf
+    dest: /etc/ld.so.conf.d/
+    mode: '0644'
+  become: yes
+
+- name: Update dynamic links
+  command: ldconfig
+  become: yes
+
+- name: Download and extract Reaper
+  unarchive:
+    src: https://www.reaper.fm/files/7.x/reaper717_linux_x86_64.tar.xz
+    dest: /tmp/reaper
+
+- name: Install Reaper
+  script: /tmp/reaper/install-reaper.sh --install /opt --integrate-sys-desktop --usr-local-bin-symlink
