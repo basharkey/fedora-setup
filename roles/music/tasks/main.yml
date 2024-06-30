@@ -20,6 +20,13 @@
   notify:
     - Update dynamic links
 
+- name: Install VLC for playback of m4a files
+  apt:
+    name: vlc
+    state: present
+    install_recommends: no
+  become: yes
+
 - name: Download and extract Reaper
   unarchive:
     src: https://www.reaper.fm/files/7.x/reaper717_linux_x86_64.tar.xz
