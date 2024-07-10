@@ -79,11 +79,12 @@ debian_packages:
 
   # GUI applications
   - "firefox-esr"                        # firefox
-  - "pcmanfm"                            # File manager
+  - "pcmanfm-qt"                         # File manager
   - "xarchiver"                          # Unzip utility for GTK file managers
   - "gvfs-fuse"                          # gvfs
   - "gvfs-backends"                      # SMB, MTP backends for fuse
   - "eject"                              # Ejects CDs and operates CD-Changers under Linux
+  - "ffmpegthumbnailer"                  # Fast and lightweight video thumbnailer
   - "qemu-system"                        # QEMU system emulation binaries
   - "libvirt-daemon-system"              # libvirt daemon
   - "dnsmasq"                            # libvirt networking dependency
