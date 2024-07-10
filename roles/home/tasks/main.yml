@@ -23,8 +23,15 @@
 - name: Add line to .profile to automatically run startx on login
   lineinfile:
     path: "{{ HOME }}/.profile"
-    line: '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx'
+    line: '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx /etc/X11/Xsession'
     state: present
+
+- name: Stop ssh-agent from being started by default Xsession scripts
+  lineinfile:
+    path: /etc/X11/Xsession.options
+    line: use-ssh-agent
+    state: absent
+  become: yes
 
 - name: Copy systemd user units
   copy:
