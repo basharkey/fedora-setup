@@ -83,6 +83,7 @@ debian_packages:
   - "xarchiver"                          # Unzip utility for GTK file managers
   - "gvfs-fuse"                          # gvfs
   - "gvfs-backends"                      # SMB, MTP backends for fuse
+  - "eject"                              # Ejects CDs and operates CD-Changers under Linux
   - "qemu-system"                        # QEMU system emulation binaries
   - "libvirt-daemon-system"              # libvirt daemon
   - "dnsmasq"                            # libvirt networking dependency
