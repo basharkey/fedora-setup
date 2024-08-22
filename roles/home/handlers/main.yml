@@ -1,7 +1,6 @@
 ---
-- name: Restart NetworkManager
+- name: Reload udev rules
   systemd:
-    name: NetworkManager.service
-    state: restarted
+    name: systemd-udevd
+    state: reloaded
   become: yes
-  listen: "restart NetworkManager"

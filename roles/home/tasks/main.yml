@@ -122,3 +122,12 @@
 - name: Install custom scripts
   include_tasks:
     file: scripts.yml
+
+- name: Setup Bose QC 35 II easyeffects udev rules
+  template:
+    src: 50-bose-qc-35-ii.rules.j2
+    dest: /etc/udev/rules.d/50-bose-qc-35-ii.rules
+    mode: '0644'
+  notify:
+    - Reload udev rules
+  become: yes
