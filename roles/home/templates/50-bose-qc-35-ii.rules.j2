@@ -1,2 +1,2 @@
-ACTION=="add", SUBSYSTEM=="input", ENV{NAME}=="\"LE-Bose QuietComfort 35 Series 2 (AVRCP)\"", RUN+="/usr/bin/sudo -u {{ USER }} bash -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$$(id -u)/bus; easyeffects --load-preset boseqc35ii'"
-ACTION=="remove", SUBSYSTEM=="input", ENV{NAME}=="\"LE-Bose QuietComfort 35 Series 2 (AVRCP)\"", RUN+="/usr/bin/sudo -u {{ USER }} bash -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$$(id -u)/bus; easyeffects --load-preset hd598cs'"
+ACTION=="add", SUBSYSTEM=="input", ENV{NAME}=="\"Bose QuietComfort 35 Series 2 (AVRCP)\"", RUN+="/usr/bin/sudo -u {{ USER }} bash -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$$(id -u)/bus; easyeffects --load-preset boseqc35ii'"
+ACTION=="remove", SUBSYSTEM=="input", ENV{NAME}=="\"Bose QuietComfort 35 Series 2 (AVRCP)\"", RUN+="/usr/bin/sudo -u {{ USER }} bash -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$$(id -u)/bus; easyeffects --load-preset hd598cs'"

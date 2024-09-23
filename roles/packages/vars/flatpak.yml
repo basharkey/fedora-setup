@@ -1,7 +1,8 @@
 ---
 flatpak_packages:
-  - "com.spotify.Client"            # Online music streaming service
-  - "com.discordapp.Discord"        # Messaging, Voice, and Video Client
-  - "io.github.spacingbat3.webcord" # A Discord and Fosscord web-based client made with the electron
-  - "io.freetubeapp.FreeTube"       # An Open Source YouTube app for privacy
-  - "org.musicbrainz.Picard"        # MusicBrainz's music tagger
+  - "com.spotify.Client"               # Online music streaming service
+  - "com.discordapp.Discord"           # Messaging, Voice, and Video Client
+  - "io.github.spacingbat3.webcord"    # A Discord and Fosscord web-based client made with the electron
+  - "io.freetubeapp.FreeTube"          # An Open Source YouTube app for privacy
+  - "org.musicbrainz.Picard"           # MusicBrainz's music tagger
+  - "org.gnome.gitlab.dqpb.GMetronome" # Metronome
