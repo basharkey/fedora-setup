@@ -44,6 +44,7 @@ debian_packages:
   - "aardvark-dns"                       # Container-focused DNS server
   - "rootlesskit"                        # podman dependency
   - "slirp4netns"                        # podman dependency
+  - "fuse-overlayfs"                     # podman overlay storage driver
   - "progress"                           # Coreutils Viewer
   - "libglib2.0-bin"                     # gio
   - "yt-dlp"                             # YouTube downloader
