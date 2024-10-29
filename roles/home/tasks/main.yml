@@ -91,26 +91,26 @@
 
 - name: Copy user dotfiles
   when: not dotfiles.stat.isdir is defined
-  command: "./install.sh user"
+  command: "./install.sh -e user"
   args:
     chdir: "{{ HOME }}/dotfiles"
 
 - name: Copy user dotfiles with overrides
   when: not dotfiles.stat.isdir is defined and override is defined
-  command: "./install.sh user {{ override }}"
+  command: "./install.sh -e user -o {{ override }}"
   args:
     chdir: "{{ HOME }}/dotfiles"
 
 - name: Copy system dotfiles
   when: not dotfiles.stat.isdir is defined
-  command: "./install.sh system"
+  command: "./install.sh -e system"
   args:
     chdir: "{{ HOME }}/dotfiles"
   become: yes
 
 - name: Copy system dotfiles with overrides
   when: not dotfiles.stat.isdir is defined and override is defined
-  command: "./install.sh system {{ override }}"
+  command: "./install.sh -e system -o {{ override }}"
   args:
     chdir: "{{ HOME }}/dotfiles"
   become: yes
