@@ -1,26 +1,22 @@
 ---
 debian_packages:
   # Desktop environment
-  - "xserver-xorg"                       # X11 server
-  - "xinit"                              # startx
-  - "x11-xserver-utils"                  # xrandr
-  - "x11-utils"                          # xkill
   - "linux-headers-amd64"                # Linux headers for compiling kernel modules
-  - "i3-wm"                              # i3 tiling window manager
-  - "i3blocks"                           # Hacker friendly i3status
-  - "libanyevent-i3-perl"                # i3-save-tree dependency
+  - "xwayland"                           # X server for running X clients under Wayland
+  - "sway"                               # sway tiling window manager
+  - "sway-backgrounds"                   # sway backgrounds
+  - "swaylock"                           # sway screen locker
+  - "xdg-desktop-portal-wlr"             # xdg-desktop-portal backend for wlroots
+  - "i3blocks"                           # Hacker friendly i3status that also works with sway
   - "lm-sensors"                         # i3blocks temperature module dependency
   - "sysstat"                            # i3blocks cpu_usage module dependency
-  - "i3lock"                             # i3 screen locker
-  - "xss-lock"                           # Auto screen locker
-  - "rofi"                               # Application launcher and dmenu replacement
-  - "redshift"                           # Adjust screen colour temperature based on time
+  - "wofi"                               # Application launcher and dmenu replacement
+  - "wlsunset"                           # Adjust screen colour temperature based on time
   - "dunst"                              # Notification daemon
   - "suckless-tools"                     # Minimal tools for window managers
   - "alacritty"                          # OpenGL terminal emulator
   - "policykit-1-gnome"                  # GTK authentication agent for PolicyKit
   - "xdg-desktop-portal-gnome"           # Fixes Flatpaks not being able to access dbus
-  # - "picom"                              # X11 compositor, provides vsync to prevent screen tearing
 
   # CLI utilities
   - "vim"                                # vim
