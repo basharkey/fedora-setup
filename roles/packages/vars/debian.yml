@@ -6,6 +6,7 @@ debian_packages:
   - "sway"                               # sway tiling window manager
   - "sway-backgrounds"                   # sway backgrounds
   - "swaylock"                           # sway screen locker
+  - "swayidle"                           # sway idle management daemon
   - "xdg-desktop-portal-wlr"             # xdg-desktop-portal backend for wlroots
   - "i3blocks"                           # Hacker friendly i3status that also works with sway
   - "lm-sensors"                         # i3blocks temperature module dependency
