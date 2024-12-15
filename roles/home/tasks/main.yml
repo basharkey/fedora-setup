@@ -20,10 +20,14 @@
     mode: '0644'
   become: yes
 
-- name: Add line to .profile to automatically run startx on login
-  lineinfile:
+- name: Add block to .profile to automatically run sway on login
+  blockinfile:
     path: "{{ HOME }}/.profile"
-    line: '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx /etc/X11/Xsession'
+    block: |
+
+      if [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
+        exec sway
+      fi
     state: present
 
 - name: Copy systemd user units
