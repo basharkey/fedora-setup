@@ -1,2 +1,2 @@
 * TODO
-- [ ] i3blocks mediaplayer
+- [ ] Test swayidle screen timeout on lock

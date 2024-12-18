@@ -11,13 +11,14 @@ debian_packages:
   - "i3blocks"                           # Hacker friendly i3status that also works with sway
   - "lm-sensors"                         # i3blocks temperature module dependency
   - "sysstat"                            # i3blocks cpu_usage module dependency
-  - "wofi"                               # Application launcher and dmenu replacement
+  - "fuzzel"                             # Application launcher for wlroots based Wayland compositors
   - "wlsunset"                           # Adjust screen colour temperature based on time
   - "dunst"                              # Notification daemon
   - "suckless-tools"                     # Minimal tools for window managers
   - "alacritty"                          # OpenGL terminal emulator
   - "policykit-1-gnome"                  # GTK authentication agent for PolicyKit
   - "xdg-desktop-portal-gnome"           # Fixes Flatpaks not being able to access dbus
+  - "qtwayland5"                         # QtWayland platform plugin
 
   # CLI utilities
   - "vim"                                # vim
@@ -116,7 +117,8 @@ debian_packages:
   - "emacs"                              # The best text editor
   - "libsqlite3-dev"                     # Emacs magit dependency
   - "gcc"                                # Needed to build sqlite3-api module for emacs
-  - "flameshot"                          # Screenshot tool
+  # - "flameshot"                          # Screenshot tool
+  - "grimshot"                           # Screenshot tool
 
 debian_laptop_packages:
   - "iwl7260-firmware"    		# Firmware for Intel(R) Wireless WiFi Link 726x/8000/9000 Series Adapters
